@@ -1,0 +1,4 @@
+<jboss-web>
+	<security-domain>java:/jaas/other</security-domain>
+	<context-root>/i2me2</context-root>
+</jboss-web>

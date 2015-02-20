@@ -1,0 +1,62 @@
+#Prerequisites
+
+java7, maven 3, JBoss AS7 
+
+#Building the war from source
+Clone the project in a local directory, access it and:
+
+    mvn clean package
+
+It will execute automatically all unit tests. To execute unit tests without compiling:
+
+    mvn test
+     
+To execute integration tests using Arquillian on an existing JBoss AS server instance running:
+
+    mvn clean -Dtest=*IT test -Parq-jbossas-remote 
+    
+To execute integration tests using Arquillian with no JBoss server running (it will start one and will do all the necessary deployments):
+
+    mvn clean -Dtest=*IT test -Parq-jbossas-remote
+    
+#Deploying the war
+
+If JBoss is installed in the same machine:
+
+    mvn jboss-as:deploy
+    
+If JBoss is somewhere else, just copy the generated war to 
+
+    $JBOSS_HOME/standalone/deployments
+    
+Also, it is possible to use the administration web application of JBoss to deploy war files remotely, by accessing the root of the port 9990 in a navigator. In a local installation:
+
+    http://localhost:9990/
+    
+It requires an administration user of JBoss, which can be added in the JBoss server as follows:
+
+
+    cd $JBOSS_HOME/bin
+    ./add-user.sh
+    
+#Testing the correct installation
+
+If deployed in a local workbench with default configuration parameters the following URL should response a welcome message:
+
+    http://localhost:8080/i2me2
+    
+There is also a getEcho Rest method that can be tested in the browser as follows:
+
+    http://localhost:8080/i2me2/rest/echo/getEcho/testing_the_echo
+    
+It should produce the following JSON String
+
+     {"var":"Echo: testing_the_echo"}
+     
+#Deploying in an i2b2 server
+
+The easiest way is to create a JBoss Admin user in i2b2 server and use the Admin web application at port 9990 to upload the generated war file.    
+
+
+
+ 
