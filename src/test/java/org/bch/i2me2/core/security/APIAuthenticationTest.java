@@ -4,10 +4,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 
 import javax.security.auth.login.LoginException;
 
+import org.apache.commons.codec.binary.Base64;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -17,6 +24,42 @@ import org.junit.Test;
  */
 public class APIAuthenticationTest {
 
+	@Ignore
+	public void DemoTest() throws Exception {
+		OutputStream out;
+		BufferedReader in;
+		HttpURLConnection con;
+		String response = "";
+
+		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");	
+		con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+		//con.setRequestProperty("Content-type: ", "text/plain");
+		//con.setRequestProperty("Authorization", "Basic "+ "MedRec:MedRecApp1_");
+		//byte[] b = Base64.encodeBase64("MedRec:MedRecApp1_".getBytes("UTF-8"));
+		//String auth = new String(b);
+		String authetication = "MedRec:MedRecApp1_";
+		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authetication.getBytes("UTF-8"));	
+		con.setRequestProperty("Authorization", "Basic " + encoding);
+		//out = con.getOutputStream();
+		//out.write(httpReq.getBytes());
+		//out.flush();		
+		in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		char[] cbuf = new char[200 + 1];			
+		while (true) {		
+			int numCharRead = in.read(cbuf, 0, 200);
+			if (numCharRead == -1) {
+					break;
+			}
+			String line = new String(cbuf, 0, numCharRead);
+			response += line;
+		}
+		System.out.println(response);
+		in.close();
+		//out.close();
+		con.disconnect();
+	}
+	
 	@Test
     public void getTokenTestBaseCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
