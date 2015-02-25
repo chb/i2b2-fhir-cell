@@ -63,7 +63,7 @@ public class APIAuthenticationTest {
 	@Test
     public void getTokenTestBaseCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
-		
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		// Test1: null parameters
 		try {
 			apiAuth.getToken(null, null);
@@ -100,6 +100,7 @@ public class APIAuthenticationTest {
 	@Test
 	public void getTokenTestGeneralCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		// Test1: App exists, but not service key
 		try {
 			apiAuth.getToken("not real", APIAuthenticator.MEDREC_APP_NAME);
@@ -124,6 +125,7 @@ public class APIAuthenticationTest {
 	@Test
 	public void isTokenValidTestBaseCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		boolean b;
 		// Test1: null values
 		b = apiAuth.isTokenValid(null, null);
@@ -143,6 +145,7 @@ public class APIAuthenticationTest {
 	@Test
 	public void isTokenValidTestGeneralCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		String token = apiAuth.getToken(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		
 		boolean b;
@@ -163,7 +166,7 @@ public class APIAuthenticationTest {
 	@Test
 	public void releaseTokenTestBaseCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
-		
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		// Test1: nulls
 		try {
 			apiAuth.releaseToken(null, null);
@@ -199,6 +202,7 @@ public class APIAuthenticationTest {
 	@Test
 	public void releaseTokenTestGeneralCase() throws Exception {
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		String token = apiAuth.getToken(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		assertTrue(apiAuth.isTokenValid(APIAuthenticator.MEDREC_APP_KEY, token));
 		
@@ -232,6 +236,7 @@ public class APIAuthenticationTest {
 		// Test to validate that the same App can request two different tokens without any problem and are 
 		// properly released
 		APIAuthenticator apiAuth = APIAuthenticator.getInstance();
+		apiAuth.addServiceKey(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		String token1 = apiAuth.getToken(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		String token2 = apiAuth.getToken(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);
 		String token3 = apiAuth.getToken(APIAuthenticator.MEDREC_APP_KEY, APIAuthenticator.MEDREC_APP_NAME);

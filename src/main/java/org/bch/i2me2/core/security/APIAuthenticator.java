@@ -26,8 +26,6 @@ public final class APIAuthenticator {
 	private final Map<String, String> authorizationTokensStorage = new HashMap();
 	
 	public APIAuthenticator() {
-		//TODO: put in a configuration file
-		this.serviceKeysStorage.put(MEDREC_APP_KEY, MEDREC_APP_NAME);
 	}
 	
 	public static APIAuthenticator getInstance() {
@@ -87,5 +85,11 @@ public final class APIAuthenticator {
 			}
 		}
 		throw new GeneralSecurityException("Invalid key and token");
+	}
+	
+	// For testing purposes only
+	public void addServiceKey(String serviceKey, String appName) {
+		//TODO: just for Testing purposes
+		this.serviceKeysStorage.put(serviceKey, appName);		
 	}
 }
