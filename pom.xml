@@ -20,6 +20,7 @@
         <jboss.resteasy.version>2.2.1.GA</jboss.resteasy.version>
         <commons-io.version>2.0.1</commons-io.version>
         <javax.servlet.version>3.0.1</javax.servlet.version>
+        <json.version>20090211</json.version>
     </properties>
     <licenses>
         <license>
@@ -166,7 +167,13 @@
 		    <version>${javax.servlet.version}</version>
 		    <scope>provided</scope>
 		</dependency>
-
+    
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
+    
 		<dependency>
             <groupId>org.jboss.spec.javax.servlet</groupId>
             <artifactId>jboss-servlet-api_3.0_spec</artifactId>
