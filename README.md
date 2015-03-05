@@ -17,7 +17,7 @@ To execute integration tests using Arquillian on an existing JBoss AS server ins
     
 To execute integration tests using Arquillian with no JBoss server running (it will start one and will do all the necessary deployments):
 
-    mvn clean -Dtest=*IT test -Parq-jbossas-remote
+    mvn clean -Dtest=*IT test -Parq-jbossas-managed
     
 #Deploying the war
 
