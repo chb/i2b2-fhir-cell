@@ -47,7 +47,7 @@ public class EchoIT {
     public void tearDown() throws Exception {
     }
     
-    // Requires credentials in JBoss for MedRec:MedRecApp1_
+    // Requires credentials in JBoss for MedRec2:MedRecApp1_
 	@Test
 	public void getEchoIT() throws Exception {
 		OutputStream out;
@@ -61,13 +61,13 @@ public class EchoIT {
 		//con.setRequestProperty("Authorization", "Basic "+ "MedRec:MedRecApp1_");
 		//byte[] b = Base64.encodeBase64("MedRec:MedRecApp1_".getBytes("UTF-8"));
 		//String auth = new String(b);
-		String authetication = "MedRec:MedRecApp1_";
+		String authetication = "MedRec2:MedRecApp1_";
 		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authetication.getBytes("UTF-8"));	
 		con.setRequestProperty("Authorization", "Basic " + encoding);
 		//out = con.getOutputStream();
 		//out.write(httpReq.getBytes());
 		//out.flush();		
-		assertEquals(con.getResponseCode(), HttpURLConnection.HTTP_OK);
+		assertEquals(HttpURLConnection.HTTP_OK, con.getResponseCode());
 		in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		char[] cbuf = new char[200 + 1];			
 		while (true) {		
