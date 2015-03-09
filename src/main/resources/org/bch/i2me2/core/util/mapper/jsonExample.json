@@ -1,0 +1,80 @@
+{
+   "PatientSegments":  
+      {
+         "messageType": "PID",
+         "msgCtrlID": "",
+         "patientId": 1238,
+         "patientIdType": "i2b2",
+         "patientIdSourceSystemId": "001",
+         "patientIdSourceSystemName": "BCH",
+         "patientFamilyName": "TESTONE",
+         "patientGivenName": "TESTER",
+         "patientMiddleName": "",
+         "patientSuffix": "",
+         "patientPrefix": "",
+         "patientGender": "F",
+         "patientDOB": 19981225,
+         "patientPostalCode": 99998
+      }
+   ,
+   "RxHistorySegments":  
+      {
+         "messageType": "RDS", 
+         "msgCtrlID": "050045624",
+         "msgDateTime": "Feb 12, 2015 12:00:00 AM", 
+         "sendingSystem": "RXHUB", 
+         "orders": [
+            {
+               "orc": {
+                  "messageType": "ORC",
+                  "orderControl": "OK",
+                  "placerOrderNumber": "MSG63B1E07214844D71BCFABBD5DEAD2B55",
+                  "fillerOrderNumber": "050045624",
+                  "orderStatus": "CM",
+                  "duration": "30",
+                  "providerId": "BM0441232",
+                  "providerFamilyName": "MCINNIS",
+                  "providerGivenName": "CHARLES",
+                  "providerAssigningAuthority": "DEA",
+                  "enteringOrganizationIdentifier": "T00000000020286",
+                  "enteringOrganizationText": "CVS",
+                  "enteringOrganizationNameOfCodingSystem": "99RXHUB",
+                  "enteringOrganizationAlternativeId": "Fill"
+               },
+               "rxd": {
+                  "messageType": "RXD",
+                  "dispenseSubIdCounter": "1", 
+                  "dispenseCodeIdentifier": "00024540131",
+                  "dispenseCodeText": "AMBIEN 5 MG TABLET SAN",
+                  "dispenseCodeNameOfCodingSystem": "NDC",
+                  "dispenseCodeAlternativeText": "ZOLPIDEM TARTRATE",
+                  "dispenseCodeAlternativeCodingSys": "Generic Name",
+                  "dateTime": "Aug 12, 2014 12:00:00 AM", 
+                  "actualDispenseAmount": "30",
+                  "actualDispenseUnitsIdentifier": "ZZ",
+                  "actualDispenseUnitsText": "Mutually Defined",
+                  "actualDispenseUnitsNameOfCodingSys": "XXXX",
+                  "actualDosageFormIdentifier": "YYYY",
+                  "actualDosageFormText": "ZZZZ",
+                  "actualDosageFormNameOfCodingSys": "",
+                  "prescriptionNumber": "588751", 
+                  "numberOfRefillsRemaining": "0",
+                  "dispenseNotes": "TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP",
+                  "dispenseProviderIdNumber": "2235782",
+                  "dispenseProviderFamilyName": "CVS Pharmacy # 2070 ",
+                  "dispenseProviderSourceTable": "NCPDP0128",
+                  "dispenseProviderAssigningAuth": "NCPDP Provider ID Number",
+                  "dispenseProviderIdentifierTypeCode": "D3",
+                  "totalDailyDoseQuantity": "AAAA", 
+                  "actualStrengthUnitText": "BBBB",
+                  "actualStrengthUnitAltId": "CCCC", 
+                  "actualStrengthUnitAltText": "DDDD",
+                  "actualStrengthUnitNameOfAltCodingSys": "EEEE",
+                  "pharmacyPhoneNumber": ""
+               }
+            }
+         ],
+         "rxRecsReturned": "ALL",
+         "statusMsg": ""
+      }
+}
