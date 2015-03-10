@@ -27,7 +27,7 @@ public abstract class Mapper {
 	private String prePost = "F_F";
 	
 	// Tab: 4 blank spaces
-	public static String TAB = "    "; 
+	private static final String TAB = "    ";
 	/**
 	 * The enum class for the xml pdo set tags 
 	 * @author CH176656
@@ -42,7 +42,7 @@ public abstract class Mapper {
 		TAG_MODIFIERS ("modifier_set"),
 		TAG_PATIENTS ("patient_set");
 		
-		private String tagValue;
+		private final String tagValue;
 		XmlPdoTag(String tagValue) {
 			this.tagValue = tagValue;
 		}
@@ -61,13 +61,12 @@ public abstract class Mapper {
 	public static String RX_ORC = "orc";
 	*/
 	
-	private JSONObject jsonRoot =null;
-	
-	Map<XmlPdoTag, String> mapTemplate = new HashMap<>();
-	Map<XmlPdoTag, String> mapResult = new HashMap<>();
-	
+	private final Map<XmlPdoTag, String> mapTemplate = new HashMap<>();
+	private final Map<XmlPdoTag, String> mapResult = new HashMap<>();
+
+    /*
 	public static void main(String [] args) throws Exception {
-        /*
+
 		InputStream in = Mapper.class.getResourceAsStream("jsonExample.json");
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		StringBuffer sBuffer = new StringBuffer();
@@ -90,10 +89,9 @@ public abstract class Mapper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		*/
 	}
-	
-	public Mapper() {
+	*/
+	protected Mapper() {
 		mapTemplate.put(XmlPdoTag.TAG_OBSERVATIONS, null);
 		mapTemplate.put(XmlPdoTag.TAG_EVENTS, null);
 		mapTemplate.put(XmlPdoTag.TAG_CONCEPTS, null);
@@ -119,14 +117,15 @@ public abstract class Mapper {
 	 * @throws IOException		If there is a problem reading the xml template
 	 * @throws JSONException	If there is a problem parsing the json 
 	 */
-    public String doMap(String jsonInput) throws IOException, JSONException {
+    protected String doMap(String jsonInput) throws IOException, JSONException {
         loadXMLTemplate();
         if (jsonInput==null) {
             throw new JSONException("Input cannot be null");
         }
-        this.jsonRoot = new JSONObject(jsonInput);
-        List<JSONObject> jsonObjects = getJSONObjects(this.jsonRoot);
-        JSONArray jsonArray = getJSONArray(this.jsonRoot);
+        JSONObject jsonRoot =null;
+        jsonRoot = new JSONObject(jsonInput);
+        List<JSONObject> jsonObjects = getJSONObjects(jsonRoot);
+        JSONArray jsonArray = getJSONArray(jsonRoot);
         for (int i=0; i < jsonArray.length(); i++) {
             JSONObject jsonObjectInArray = jsonArray.getJSONObject(i);
             List<JSONObject> jsonObjectsInArray = getJSONObjectsInArray(jsonObjectInArray);
@@ -173,21 +172,21 @@ public abstract class Mapper {
      * It will be called only once
      * @return the list of jsonObjects
      */
-    public abstract List<JSONObject> getJSONObjects(JSONObject root) throws JSONException;
+    protected abstract List<JSONObject> getJSONObjects(JSONObject root) throws JSONException;
 
     /**
      * Returns the jsonArray
      * It will be called only once
      * @return The JSONArray instance
      */
-    public abstract JSONArray getJSONArray(JSONObject root) throws JSONException;
+    protected abstract JSONArray getJSONArray(JSONObject root) throws JSONException;
 
     /**
      * Returns the list of jsonObjects in an object of the array
      * It will be called one time for each object of the array
      * @return The List of JSONObjects
      */
-    public abstract List<JSONObject> getJSONObjectsInArray(JSONObject jsonObjectInArray) throws JSONException;
+    protected abstract List<JSONObject> getJSONObjectsInArray(JSONObject jsonObjectInArray) throws JSONException;
 
 	/**
 	 * Returns the xml elements for the given tag set
@@ -217,7 +216,7 @@ public abstract class Mapper {
 		return out.toString();
 	}
 
-    private void performElementMap(List<JSONObject> jsonObjects, List<JSONObject> jsonObjectsInArray, XmlPdoTag tag) throws JSONException {
+    private void performElementMap(List<JSONObject> jsonObjects, List<JSONObject> jsonObjectsInArray, XmlPdoTag tag) {
         String out = mapTemplate.get(tag);
         for(JSONObject jsonObj:jsonObjects) {
             out = mapElements(jsonObj, out);
@@ -251,7 +250,7 @@ public abstract class Mapper {
 		return out;
 	}
 */
-	private String mapElements(JSONObject json, String baseXML) throws JSONException {
+	private String mapElements(JSONObject json, String baseXML) {
 		String out = baseXML;
 		Iterator<?> keys = json.keys();
 		while( keys.hasNext() ){

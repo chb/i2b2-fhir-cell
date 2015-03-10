@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +16,15 @@ import java.util.List;
  */
 public class MapperRxToPDO extends Mapper{
 
-    public static String RX_PATIENTSEGMENT= "PatientSegments";
-    public static String RX_HISTORYSEGMENT = "RxHistorySegments";
-    public static String RX_ORDERS = "orders";
-    public static String RX_RXD = "rxd";
-    public static String RX_ORC = "orc";
+    private static final String RX_PATIENTSEGMENT= "PatientSegments";
+    private static final String RX_HISTORYSEGMENT = "RxHistorySegments";
+    private static final String RX_ORDERS = "orders";
+    private static final String RX_RXD = "rxd";
+    private static final String RX_ORC = "orc";
 
 
     public String getPDOXML(String jsonString) throws I2ME2Exception {
-        String result=null;
+        String result;
         try {
             result = doMap(jsonString);
         } catch (Exception e) {

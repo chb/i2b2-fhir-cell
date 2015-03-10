@@ -1,6 +1,7 @@
 package org.bch.i2me2.core.exception;
 
 /**
+ * I2ME2Exception
  * Created by CH176656 on 3/10/2015.
  */
 public class I2ME2Exception extends Exception {

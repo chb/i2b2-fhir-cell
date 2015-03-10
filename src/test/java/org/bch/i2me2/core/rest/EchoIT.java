@@ -17,8 +17,7 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 //import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 //import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
 //import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 //import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
@@ -38,7 +37,8 @@ public class EchoIT {
                //.addAsWebInfResource("arquillian-ds.xml")
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
       }
-    
+
+    /*
     @Before
     public void setUp() throws Exception {
     }
@@ -46,7 +46,7 @@ public class EchoIT {
     @After
     public void tearDown() throws Exception {
     }
-    
+    */
     // Requires credentials in JBoss for MedRec2:MedRecApp1_
 	@Test
 	public void getEchoIT() throws Exception {
