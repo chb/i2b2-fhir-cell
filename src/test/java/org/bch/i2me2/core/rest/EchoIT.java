@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -50,23 +49,15 @@ public class EchoIT {
     // Requires credentials in JBoss for MedRec2:MedRecApp1_
 	@Test
 	public void getEchoIT() throws Exception {
-		OutputStream out;
 		BufferedReader in;
 		HttpURLConnection con;
 		String response = "";
 		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");	
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
-		//con.setRequestProperty("Content-type: ", "text/plain");
-		//con.setRequestProperty("Authorization", "Basic "+ "MedRec:MedRecApp1_");
-		//byte[] b = Base64.encodeBase64("MedRec:MedRecApp1_".getBytes("UTF-8"));
-		//String auth = new String(b);
-		String authetication = "MedRec2:MedRecApp1_";
-		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authetication.getBytes("UTF-8"));	
+		String authentication = "MedRec2:MedRecApp1_";
+		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
 		con.setRequestProperty("Authorization", "Basic " + encoding);
-		//out = con.getOutputStream();
-		//out.write(httpReq.getBytes());
-		//out.flush();		
 		assertEquals(HttpURLConnection.HTTP_OK, con.getResponseCode());
 		in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		char[] cbuf = new char[200 + 1];			
@@ -81,55 +72,32 @@ public class EchoIT {
 		assertEquals(response.trim(), "{\"var\":\"Echo: hola\"}");
 		System.out.println(response);
 		in.close();
-		//out.close();
 		con.disconnect();
 	}
 	
 	@Test
 	public void getEchoNoPermIT() throws Exception {
-		OutputStream out;
-		BufferedReader in;
 		HttpURLConnection con;
-		String response = "";
-		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");	
+		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
-		//con.setRequestProperty("Content-type: ", "text/plain");
-		//con.setRequestProperty("Authorization", "Basic "+ "MedRec:MedRecApp1_");
-		//byte[] b = Base64.encodeBase64("MedRec:MedRecApp1_".getBytes("UTF-8"));
-		//String auth = new String(b);
-		String authetication = "MedRec:MedRe";
-		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authetication.getBytes("UTF-8"));	
+		String authentication = "MedRec:MedRe";
+		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
 		con.setRequestProperty("Authorization", "Basic " + encoding);
-		//out = con.getOutputStream();
-		//out.write(httpReq.getBytes());
-		//out.flush();		
 		assertEquals(con.getResponseCode(), HttpURLConnection.HTTP_UNAUTHORIZED);
-		//out.close();
 		con.disconnect();
 	}
 	
 	@Test
 	public void getEchoNoPerm2IT() throws Exception {
-		OutputStream out;
-		BufferedReader in;
 		HttpURLConnection con;
-		String response = "";
-		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");	
+		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
-		//con.setRequestProperty("Content-type: ", "text/plain");
-		//con.setRequestProperty("Authorization", "Basic "+ "MedRec:MedRecApp1_");
-		//byte[] b = Base64.encodeBase64("MedRec:MedRecApp1_".getBytes("UTF-8"));
-		//String auth = new String(b);
-		String authetication = "MedRe:MedRecApp1_";
-		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authetication.getBytes("UTF-8"));	
+		String authentication = "MedRe:MedRecApp1_";
+		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
 		con.setRequestProperty("Authorization", "Basic " + encoding);
-		//out = con.getOutputStream();
-		//out.write(httpReq.getBytes());
-		//out.flush();		
 		assertEquals(con.getResponseCode(), HttpURLConnection.HTTP_UNAUTHORIZED);
-		//out.close();
 		con.disconnect();
 	}
 }

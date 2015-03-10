@@ -122,8 +122,7 @@ public abstract class Mapper {
         if (jsonInput==null) {
             throw new JSONException("Input cannot be null");
         }
-        JSONObject jsonRoot =null;
-        jsonRoot = new JSONObject(jsonInput);
+        JSONObject jsonRoot = new JSONObject(jsonInput);
         List<JSONObject> jsonObjects = getJSONObjects(jsonRoot);
         JSONArray jsonArray = getJSONArray(jsonRoot);
         for (int i=0; i < jsonArray.length(); i++) {
@@ -192,12 +191,12 @@ public abstract class Mapper {
 	 * Returns the xml elements for the given tag set
 	 * @param tag The tag
 	 * @return the XML string
-	 * @throws MapperException
+	 * @throws Exception
 	 */
-    public String getXMLElements(XmlPdoTag tag) throws MapperException {
+    public String getXMLElements(XmlPdoTag tag) throws Exception {
 		String output = this.mapResult.get(tag);
 		if (output == null) {
-			throw new MapperException("Fatal Error: No mapping for the given tag");
+			throw new Exception("Fatal Error: No mapping for the given tag");
 		}
 		return output;
 	}

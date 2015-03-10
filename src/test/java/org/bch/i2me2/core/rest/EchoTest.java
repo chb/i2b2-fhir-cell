@@ -37,8 +37,7 @@ public class EchoTest {
         assertEquals("Echo: " + send, ret.getVar());
         
         //Test bad request
-        send = null;
-        resp = echo.getEcho(send, null);
+        resp = echo.getEcho(null, null);
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), resp.getStatus());
     }
 
