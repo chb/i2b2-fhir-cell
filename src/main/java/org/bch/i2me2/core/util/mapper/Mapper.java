@@ -39,22 +39,26 @@ public abstract class Mapper {
 	 *
 	 */
 	public static enum XmlPdoTag {
-		TAG_OBSERVATIONS ("observation_set"),
-		TAG_EVENTS ("event_set"),
-		TAG_CONCEPTS ("concept_set"),
-		TAG_EIDS ("eid_set"),
-		TAG_PIDS ("pid_set"),
-		TAG_MODIFIERS ("modifier_set"),
-		TAG_PATIENTS ("patient_set");
+		TAG_OBSERVATIONS ("observation_set", "observation"),
+		TAG_EVENTS ("event_set", "event"),
+		TAG_CONCEPTS ("concept_set", "concept"),
+		TAG_EIDS ("eid_set", "eid"),
+		TAG_PIDS ("pid_set", "pid"),
+		TAG_MODIFIERS ("modifier_set", "modifier"),
+		TAG_PATIENTS ("patient_set", "patient");
 		
 		private final String tagValue;
-		XmlPdoTag(String tagValue) {
-			this.tagValue = tagValue;
+        private final String tagValueIn;
+		XmlPdoTag(String tagValue, String tagValueIn) {
+            this.tagValueIn = tagValueIn;
+            this.tagValue = tagValue;
 		}
-		
 		public String toString() {
-			return this.tagValue;
+            return this.tagValue;
 		}
+        public String getTagValueIn() {
+            return this.tagValueIn;
+        }
 	}
 
     /*
@@ -344,6 +348,7 @@ public abstract class Mapper {
             out = out + rem;
         }
         mapResult.put(tag, out);
+        //filter(jsonDataMap, jsonDataMapInArray, tag);
     }
 /*
 	private void mapComplex(JSONObject patientSegments, JSONObject rxHistorySegments, JSONObject rdx, JSONObject ord, XmlPdoTag tag) throws JSONException {
@@ -434,6 +439,40 @@ public abstract class Mapper {
         }
 		return xmlString.substring(init+tagInit.length(), end);
 	}
+
+    /**
+     * Can be override if special filter is needed after the mapping is completed.
+     * The function will be called for each xml individual element of the tag <observation><patiend><eid> etc...
+     * @param xmlElem               The current xmlElement
+     * @param jsonDataMap           The json Data Map
+     * @param jsonDataMapInArray    The jsonDataMapIn Array
+     * @param tag                   The XmlPdoTag
+     * @return                      Return a transformation of the new element
+     */
+    protected String filterExtra(String xmlElem, Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+
+        return xmlElem;
+    }
+    // Filter elements that has not been assigned and where formatted for
+    private void filter(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+        String out = mapTemplate.get(tag);
+        String newOut = "";
+        String tagValueIn = tag.getTagValueIn();
+
+        String tagInit ="<" + tagValueIn +">";
+        String tagEnd = "</" + tagValueIn +">";
+
+        int start = out.indexOf(tagInit);
+        int end = out.indexOf(tagInit);
+        while (start > 0 && end > 0) {
+            String elem = out.substring(start, end+tagEnd.length());
+            String newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
+            newOut = newOut + newElem;
+            start = out.indexOf(tagInit, end+1);
+            end = out.indexOf(tagEnd, end+1);
+        }
+        mapTemplate.put(tag, newOut);
+    }
 
     public void setXmlMapFileTemplate(String xmlMapFileTemplate) {
         this.xmlMapFileTemplate = xmlMapFileTemplate;
