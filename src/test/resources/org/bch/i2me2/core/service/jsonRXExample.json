@@ -1,23 +1,5 @@
 {
-   "PatientSegments":  
-      {
-         "messageType": "PID",
-         "msgCtrlID": "",
-         "patientId": 1238,
-         "patientIdType": "i2b2",
-         "patientIdSourceSystemId": "001",
-         "patientIdSourceSystemName": "BCH",
-         "patientFamilyName": "TESTONE",
-         "patientGivenName": "TESTER",
-         "patientMiddleName": "",
-         "patientSuffix": "",
-         "patientPrefix": "",
-         "patientGender": "F",
-         "patientDOB": 19981225,
-         "patientPostalCode": 99998
-      }
-   ,
-   "RxHistorySegments":  
+   "RxHistorySegments":
       {
          "messageType": "RDS", 
          "msgCtrlID": "050045624",

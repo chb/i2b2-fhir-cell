@@ -5,247 +5,180 @@
     xsi:schemaLocation="http://i2b2.mgh.harvard.edu/repository_cell/patient_data.xsd">
     <pid_set>
         <pid>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
         </pid>
     </pid_set>
     <eid_set>
         <eid>
-            <event_id patient_id="F_FpatientIdF_F" patient_id_source="F_FpatientIdSourceSystemNameF_F" source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
+            <event_id patient_id="F__PatientSegments.patientId__F" patient_id_source="F__PatientSegments.patientIdSourceSystemName__F" source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
         </eid>
     </eid_set>
     <event_set>
         <event>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FmsgDateTimeF_F</start_date>
-            <end_date>F_FmsgDateTimeF_F</end_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__RxHistorySegments.msgDateTime__F</start_date>
         </event>
     </event_set>
     <patient_set>
         <patient>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <param column="zip_cd">F_FpatientPostalCodeF_F</param>
-            <param column="sex_cd">F_FpatientGenderF_F</param>
-            <param column="birth_date">F_FpatientDOBF_F</param>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <param column="zip_cd">F__PatientSegments.patientPostalCode__F</param>
+            <param column="sex_cd">F__PatientSegments.patientGender__F</param>
+            <param column="birth_date">F__PatientSegments.patientDOB__F</param>
         </patient>
     </patient_set>
     <observation_set>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <nval_num>F_FdurationF_F</nval_num>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <nval_num>F__orc.duration__F</nval_num>
             <units_cd>days</units_cd>
             <modifier_cd>expectedSupplyDuration</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseCodeTextF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseCodeText__F</tval_char>
             <modifier_cd>medication</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseCodeAlternativeTextF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseCodeAlternativeText__F</tval_char>
             <modifier_cd>medicationGeneric</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <nval_num>F_FactualDispenseAmountF_F</nval_num>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <nval_num>F__rxd.actualDispenseAmount__F</nval_num>
             <modifier_cd>dosageQuantity</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualDispenseUnitsIdentifierF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualDispenseUnitsIdentifier__F</tval_char>
             <modifier_cd>actualDispenseUnitsIdentifier</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualDispenseUnitsTextF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualDispenseUnitsText__F</tval_char>
             <modifier_cd>actualDispenseUnitsText</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualDosageFormIdentifierF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualDosageFormIdentifier__F</tval_char>
             <modifier_cd>dosageFormIdentifier</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualDosageFormTextF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualDosageFormText__F</tval_char>
             <modifier_cd>dosageFormText</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <nval_num>F_FnumberOfRefillsRemainingF_F</nval_num>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <nval_num>F__rxd.numberOfRefillsRemaining__F</nval_num>
             <modifier_cd>remainingRefills</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseNotesF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseNotes__F</tval_char>
             <modifier_cd>dosageInstructionText</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualStrengthUnitTextF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualStrengthUnitText__F</tval_char>
             <modifier_cd>actualStrengthUnitText</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">050045624</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualStrengthUnitAltTextF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualStrengthUnitAltText__F</tval_char>
             <modifier_cd>actualStrengthUnitAltText</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FfillerOrderNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FactualStrengthUnitAltIdF_F</tval_char>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.actualStrengthUnitAltId__F</tval_char>
             <modifier_cd>actualStrengthUnitAltIdentifier</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
     </observation_set>
-    <concept_set>
-        <concept>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <name_char>F_FdispenseCodeTextF_F</name_char>
-        </concept>
-    </concept_set>
-    <modifier_set>
-        <modifier>
-            <modifier_cd>dosageQuantity</modifier_cd>
-            <modifier_name>Amount and Units of Medication Dispensed Provided</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\quantity\dosageQuantity</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualDispenseUnitsIdentifier</modifier_cd>
-            <modifier_name>Actual Dispense Units Identifier</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\quantity\actualDispenseUnitsIdentifier</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualDispenseUnitsText</modifier_cd>
-            <modifier_name>Actual Dispense Units Text</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\quantity\actualDispenseUnitsText</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualStrengthUnitText</modifier_cd>
-            <modifier_name>Actual Strength Units Text</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\quantity\strength\actualStrengthUnitText</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualStrengthUnitAltText</modifier_cd>
-            <modifier_name>Actual Strength Units Alternative Identifier</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\quantity\strength\actualStrengthUnitAltText</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualStrengthUnitAltIdentifier</modifier_cd>
-            <modifier_name>Actual Strength Units Alternative Text</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\quantity\strength\actualStrengthUnitAltIdentifier</modifier_path>
-            </modifier>
-        <modifier>
-            <modifier_cd>medication</modifier_cd>
-            <modifier_name>Medication to be Dispensed</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\medication</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>medicationGeneric</modifier_cd>
-            <modifier_name>Medication to be Dispensed</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\medicationGeneric</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>expectedSupplyDuration</modifier_cd>
-            <modifier_name>Duration of Merication Order</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\expectedSupplyDuration</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>dosageInstructionText</modifier_cd>
-            <modifier_name>Duration of Merication Order</modifier_name>
-            <modifier_path>MedicationPrescription\dosageInstruction\dosageInstructionText</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualDosageFormIdentifier</modifier_cd>
-            <modifier_name>Dosage Form Identifier</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\form\actualDosageFormIdentifier</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>actualDosageFormText</modifier_cd>
-            <modifier_name>Dosage Form Description</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\form\actualDosageFormText</modifier_path>
-        </modifier>
-        <modifier>
-            <modifier_cd>remainingRefills</modifier_cd>
-            <modifier_name>Number of Refills Reminging</modifier_name>
-            <modifier_path>MedicationPrescription\dispense\remainingRefills</modifier_path>
-        </modifier>
-    </modifier_set>
+
+    <!--
+    Other we want to capture for post process and formatting
+
+    Will be used to discriminate between different modifiers
+    orc.enteringOrganizationAlternativeId: F__orc.enteringOrganizationAlternativeId__F
+    -->
 </repository:patient_data>

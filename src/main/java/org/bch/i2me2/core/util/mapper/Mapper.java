@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +27,9 @@ public abstract class Mapper {
 	private String xmlMapFileTemplate="xmlpdoTemplate.xml";
 	
 	// delimiter between fields
-	private String prePost = "F_F";
+	private String delPre = "F__";
+    private String delPost = "__F";
+
 	
 	// Tab: 4 blank spaces
 	private static final String TAB = "    ";
@@ -61,9 +66,12 @@ public abstract class Mapper {
 	public static String RX_ORC = "orc";
 	*/
 	
-	private final Map<XmlPdoTag, String> mapTemplate = new HashMap<>();
+	private final Map< XmlPdoTag, String> mapTemplate = new HashMap<>();
 	private final Map<XmlPdoTag, String> mapResult = new HashMap<>();
+    private String xmlTemplate=null;
 
+    // Will contains the key for which the abstract method 'format' will be called
+    private List<String> keysToFormat = new ArrayList<>();
     /*
 	public static void main(String [] args) throws Exception {
 
@@ -109,36 +117,114 @@ public abstract class Mapper {
 		mapResult.put(XmlPdoTag.TAG_PATIENTS, null);
 		
 	}
-	
+
+    protected void addKeyToFormat(String key) {
+        this.keysToFormat.add(key);
+    }
+
+    /**
+     * Perform the map
+     * @param jsonInput			The JSON-formatted string
+     * @param extraJsonKey      Extra json key
+     * @param extraJsonInput    Extra json object that will be included in the root of the element
+     * @return					The entire XML PDO as String
+     * @throws IOException		If there is a problem reading the xml template
+     * @throws JSONException	If there is a problem parsing the json
+     * @throws I2ME2Exception   If XML PDO template is malformed
+     */
+    protected String doMap(String jsonInput, String extraJsonKey, String extraJsonInput) throws IOException, JSONException, I2ME2Exception {
+        String xmlTemplate = loadXMLTemplate();
+        if (jsonInput==null) {
+            throw new JSONException("Input cannot be null");
+        }
+        JSONObject jsonRoot = new JSONObject(jsonInput);
+        if (extraJsonKey!=null && extraJsonInput!=null) {
+            JSONObject jsonExtra = new JSONObject(extraJsonInput);
+            jsonRoot.put(extraJsonKey, jsonExtra);
+        }
+        List<String> keys = findJSONKeys(xmlTemplate);
+        Map<String, String> jsonDataMap = buildDataMap(jsonRoot, keys);
+        //List<JSONObject> jsonObjects = getJSONObjects(jsonRoot);
+        JSONArray jsonArray = getJSONArray(jsonRoot);
+        for (int i=0; i < jsonArray.length(); i++) {
+            Map<String, String> jsonDataMapInArray = buildDataMap(jsonArray.getJSONObject(i), keys);
+            //JSONObject jsonObjectInArray = jsonArray.getJSONObject(i);
+            //List<JSONObject> jsonObjectsInArray = getJSONObjectsInArray(jsonObjectInArray);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_OBSERVATIONS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_EVENTS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_CONCEPTS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_PATIENTS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_PIDS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_EIDS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_MODIFIERS);
+        }
+        return buildXMLOutput();
+    }
+
 	/**
 	 * Perform the map
 	 * @param jsonInput			The RXConnect JSON-formatted string
 	 * @return					The entire XML PDO as String
 	 * @throws IOException		If there is a problem reading the xml template
-	 * @throws JSONException	If there is a problem parsing the json 
+	 * @throws JSONException	If there is a problem parsing the json
+     * @throws I2ME2Exception   If XML PDO template is malformed
 	 */
-    protected String doMap(String jsonInput) throws IOException, JSONException {
-        loadXMLTemplate();
-        if (jsonInput==null) {
-            throw new JSONException("Input cannot be null");
-        }
-        JSONObject jsonRoot = new JSONObject(jsonInput);
-        List<JSONObject> jsonObjects = getJSONObjects(jsonRoot);
-        JSONArray jsonArray = getJSONArray(jsonRoot);
-        for (int i=0; i < jsonArray.length(); i++) {
-            JSONObject jsonObjectInArray = jsonArray.getJSONObject(i);
-            List<JSONObject> jsonObjectsInArray = getJSONObjectsInArray(jsonObjectInArray);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_OBSERVATIONS);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_EVENTS);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_CONCEPTS);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_PATIENTS);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_PIDS);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_EIDS);
-            performElementMap(jsonObjects, jsonObjectsInArray, XmlPdoTag.TAG_MODIFIERS);
-
-        }
-        return buildXMLOutput();
+    protected String doMap(String jsonInput) throws IOException, JSONException, I2ME2Exception {
+        return doMap(jsonInput, null, null);
     }
+
+    private Map<String, String> buildDataMap(JSONObject jsonRoot, List<String> keys) throws JSONException {
+        Map<String, String> dataMap = new HashMap<>();
+        for(String key:keys) {
+            try {
+                String value = getValueFromJSONObject(jsonRoot, key);
+                dataMap.put(key,value);
+            } catch (Exception e) {}
+        }
+        return dataMap;
+    }
+
+    private String getValueFromJSONObject(JSONObject jsonRoot, String key) throws JSONException {
+        String [] subKeys = key.split("\\.");
+        JSONObject aux = jsonRoot;
+
+        // We follow the entire path assuming they are objects
+        for(int i=0; i<subKeys.length-1;i++) {
+            aux = aux.getJSONObject(subKeys[i]);
+        }
+        // Here we are at the root element, so, we can access the element directly
+        String value = null;
+        try {
+            // We try if it's a String
+            value = aux.getString(subKeys[subKeys.length-1]);
+            return value;
+        } catch (JSONException e) {
+            // We try if it's a numerical value
+            try {
+                Long longValue = aux.getLong(subKeys[subKeys.length - 1]);
+                value = longValue.toString();
+            } catch (Exception ee) {
+                // Don't do anything. We assume the value is not there
+            }
+        }
+        return value;
+    }
+
+    private List<String> findJSONKeys(String xmlTemplate) {
+        // Build the pattern
+        Pattern pattern = Pattern.compile(this.delPre + "(.*?)" + this.delPost);
+        Matcher m = pattern.matcher(xmlTemplate);
+        List<String> keys = new ArrayList<>();
+        while (m.find()) {
+            String key = m.group();
+            String realKey = key.substring(this.delPre.length(), key.length()-this.delPost.length());
+            if (!keys.contains(realKey)) {
+                keys.add(realKey);
+            }
+        }
+        return keys;
+    }
+
     /*
 	public String doMap(String jsonInput) throws IOException, JSONException {
 
@@ -167,13 +253,6 @@ public abstract class Mapper {
 
 
     /**
-     * Returns the list ob jsonObjects that are in the root of the element, so, that are not in the array
-     * It will be called only once
-     * @return the list of jsonObjects
-     */
-    protected abstract List<JSONObject> getJSONObjects(JSONObject root) throws JSONException;
-
-    /**
      * Returns the jsonArray
      * It will be called only once
      * @return The JSONArray instance
@@ -181,11 +260,19 @@ public abstract class Mapper {
     protected abstract JSONArray getJSONArray(JSONObject root) throws JSONException;
 
     /**
-     * Returns the list of jsonObjects in an object of the array
-     * It will be called one time for each object of the array
-     * @return The List of JSONObjects
+     * Provides a way to format the actual value that will be place in the final XML
+     * It will be called every time a value from a key included in keysToFormat list is found.
+     * It must be override if special formatting is needed for some keys.
+     *
+     * @param key               The key as it is in the xmlTemplate
+     * @param value             The actual value found in the JSON
+     * @param dataMap           The current mapping of the root object
+     * @param dataMapInArray    The current mapping of the element in the array
+     * @return                  The formatted value
      */
-    protected abstract List<JSONObject> getJSONObjectsInArray(JSONObject jsonObjectInArray) throws JSONException;
+    protected String format(String key, String value, Map<String, String> dataMap, Map<String, String> dataMapInArray) {
+        return value;
+    }
 
 	/**
 	 * Returns the xml elements for the given tag set
@@ -214,7 +301,7 @@ public abstract class Mapper {
 		}
 		return out.toString();
 	}
-
+/*
     private void performElementMap(List<JSONObject> jsonObjects, List<JSONObject> jsonObjectsInArray, XmlPdoTag tag) {
         String out = mapTemplate.get(tag);
         for(JSONObject jsonObj:jsonObjects) {
@@ -223,6 +310,34 @@ public abstract class Mapper {
         for(JSONObject jsonObj:jsonObjectsInArray) {
             out = mapElements(jsonObj, out);
         }
+        out = out + '\n';
+        String rem = mapResult.get(tag);
+        if (rem!=null) {
+            out = out + rem;
+        }
+        mapResult.put(tag, out);
+    }
+*/
+    private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+        String out = mapTemplate.get(tag);
+        Set<String> keys = jsonDataMap.keySet();
+        for(String key: keys) {
+            String value = jsonDataMap.get(key);
+            if (this.keysToFormat.contains(key)) {
+                value = this.format(key, value, jsonDataMap, jsonDataMapInArray);
+            }
+            out = out.replaceAll(delPre+key+delPost, value);
+        }
+
+        keys = jsonDataMapInArray.keySet();
+        for(String key: keys) {
+            String value = jsonDataMapInArray.get(key);
+            if (this.keysToFormat.contains(key)) {
+                value = this.format(key, value, jsonDataMap, jsonDataMapInArray);
+            }
+            out = out.replaceAll(delPre+key+delPost, value);
+        }
+
         out = out + '\n';
         String rem = mapResult.get(tag);
         if (rem!=null) {
@@ -248,7 +363,7 @@ public abstract class Mapper {
 		out = mapElements(json4, out);
 		return out;
 	}
-*/
+
 	private String mapElements(JSONObject json, String baseXML) {
 		String out = baseXML;
 		Iterator<?> keys = json.keys();
@@ -256,13 +371,13 @@ public abstract class Mapper {
             String key = (String)keys.next();
             try {
             	String value = json.getString(key);
-            	out = out.replaceAll(prePost+key+prePost, value);
+            	out = out.replaceAll(delPre+key+delPost, value);
             	
             } catch (Exception e) {
             	try {
             		// We check if it is a long value instead
             		Long value = json.getLong(key);
-            		out = out.replaceAll(prePost+key+prePost, value.toString());
+            		out = out.replaceAll(delPre+key+delPost, value.toString());
             	} catch (Exception ee) {
             		// Its neither, so, we don't really need to do anything
             	}
@@ -270,8 +385,8 @@ public abstract class Mapper {
 		}
 		return out;
 	}
-	
-	private void loadXMLTemplate() throws IOException{
+*/
+	private String loadXMLTemplate() throws IOException, I2ME2Exception{
         InputStream in = Mapper.class.getResourceAsStream(xmlMapFileTemplate);
         if (in==null) {
             throw new IOException("Template File not found:" + xmlMapFileTemplate);
@@ -289,20 +404,34 @@ public abstract class Mapper {
 		} finally {
 			in.close();
 		}
-		String completeXMLTemplate = sBuffer.toString();
+		String xmlTemplate = sBuffer.toString();
 		Set<XmlPdoTag> keys = mapTemplate.keySet();
 		for(XmlPdoTag keyTag:keys) {
 			String key = keyTag.toString();
-			String aux = getPart(key, completeXMLTemplate);
+			String aux = getPart(key, xmlTemplate);
 			mapTemplate.put(keyTag, aux);
 		}
+        return xmlTemplate;
 	}
 	
-	private String getPart(String xmlTag, String xmlString) {
+	private String getPart(String xmlTag, String xmlString) throws I2ME2Exception {
 		String tagInit ="<" + xmlTag +">";
 		String tagEnd = "</" + xmlTag +">";
 		int init = xmlString.indexOf(tagInit);
 		int end = xmlString.indexOf(tagEnd);
+        if (init>=0 && end <0) {
+            // Malformed XM. Missing tagEnd
+            throw new I2ME2Exception("Malformed XML template. Missing " + tagEnd);
+        }
+
+        if (init<0 && end >= 0) {
+            // Malformed XM. Missing tagInit
+            throw new I2ME2Exception("Malformed XML template. Missing " + tagInit);
+        }
+        if (init<0 || end <0) {
+            // Tag dies not exists, which is find
+            return "";
+        }
 		return xmlString.substring(init+tagInit.length(), end);
 	}
 
@@ -313,11 +442,16 @@ public abstract class Mapper {
         return this.xmlMapFileTemplate;
     }
 
-    public void setPrePost(String prePost) {
-        this.prePost = prePost;
+    public void setDelPrePost(String delPre, String delPost) {
+        this.delPre = delPre;
+        this.delPost = delPost;
     }
 
-    public String getPrePost(){
-        return this.prePost;
+    public String getDelPre(){
+        return this.delPre;
+    }
+
+    public String getDepPost() {
+        return this.delPost;
     }
 }

@@ -46,7 +46,7 @@ public class EchoIT {
     public void tearDown() throws Exception {
     }
     */
-    // Requires credentials in JBoss for MedRec2:MedRecApp1_
+    // Requires credentials in JBoss for MedRec2:MedRecApp1_ in the role RestClient
 	@Test
 	public void getEchoIT() throws Exception {
 		BufferedReader in;
