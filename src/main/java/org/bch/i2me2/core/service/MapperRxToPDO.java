@@ -6,6 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +22,13 @@ import java.util.Map;
  * Created by CH176656 on 3/10/2015.
  */
 public class MapperRxToPDO extends Mapper{
+
+    // Name files where claim and fill modifier_cd are listed
+    private static final String CLAIM_MODIFIERS_FILE = "claimModifiers.i2me2";
+    private static final String FILL_MODIFIERS_FILE = "fillModifiers.i2me2";
+
+    private List<String> fillsModifiers;
+    private List<String> claimModifiers;
 
     // Some RX names
     private static final String RX_HISTORYSEGMENT = "RxHistorySegments";
@@ -34,6 +44,12 @@ public class MapperRxToPDO extends Mapper{
     private static final String RXD_DATETIME_KEY = "rxd.dateTime";
     private static final String PATIENTSEGMENTS_DOB_KEY = PATIENTSEGMENTS + "."+ PATIENTSEGMENTS_DOB;
     private static final String RX_HISTORYSEGMENT_MSGDATETIME_KEY = "RxHistorySegments.msgDateTime";
+
+    // Used to discriminate between claim and fills
+    private static final String ORD_ENTERING_ORGANIZATION_ALTERNATIVE_ID_KEY = "orc.enteringOrganizationAlternativeId";
+
+    // The above key value will store CLAIM_VALUE if it is a Claim
+    private static final String CLAIM_VALUE = "Claim";
 
     MapperRxToPDO() {
         super();
@@ -56,6 +72,7 @@ public class MapperRxToPDO extends Mapper{
         String result;
         validate(subjectId, zip, dob, gender);
         try {
+            loadModifiers();
             String jsonExtra = generatePatientInfo(subjectId, zip, dob, gender, source);
             result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
@@ -147,6 +164,28 @@ public class MapperRxToPDO extends Mapper{
             // We do not want observations that has not been set.
             return "";
         }
+
+        // filter claims/fills depending on orc.enteringOrganizationAlternativeId
+        boolean isFill=true;
+        if (jsonDataMapInArray.containsKey(ORD_ENTERING_ORGANIZATION_ALTERNATIVE_ID_KEY)) {
+            String val = jsonDataMapInArray.get(ORD_ENTERING_ORGANIZATION_ALTERNATIVE_ID_KEY);
+            if (val == null) {
+                isFill=true;
+            } else {
+                isFill = !(val.trim().equals(CLAIM_VALUE));
+            }
+        }
+
+        // At this point we now whether it is a claim or a fill. Lets get the modifier_cd
+        String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD);
+        String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
+        modifier_cd = modifier_cd.replace("</"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
+        boolean isInClaim = this.claimModifiers.contains(modifier_cd);
+        boolean isInFill = this.fillsModifiers.contains(modifier_cd);
+
+        if (isInClaim && isFill) return "";
+        if (isInFill && !isFill) return "";
+
         return xmlElem;
     }
 
@@ -220,6 +259,48 @@ public class MapperRxToPDO extends Mapper{
         newValue = newValue + value.substring(4,6) + "-";
         newValue = newValue + value.substring(6,8);
         return newValue;
+    }
+
+    private void loadModifiers() throws Exception {
+
+        String fillModifiers = readTextFile(FILL_MODIFIERS_FILE, ",");
+        String claimModifiers = readTextFile(FILL_MODIFIERS_FILE, ",");
+
+        String [] fills = fillModifiers.split(",");
+        this.fillsModifiers = new ArrayList<>();
+        for (int i=0;i<fills.length;i++) {
+            String name = fills[i];
+            if (!name.trim().equals("")) {
+                this.fillsModifiers.add(name);
+            }
+        }
+
+        String [] claims = claimModifiers.split(",");
+        this.claimModifiers = new ArrayList<>();
+        for (int i=0;i<claims.length;i++) {
+            String name = claims[i];
+            if (!name.trim().equals("")) {
+                this.claimModifiers.add(name);
+            }
+        }
+    }
+
+    private String readTextFile(String fileName, String sep) throws Exception {
+        InputStream in = MapperRxToPDO.class.getResourceAsStream(fileName);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        StringBuilder sBuffer = new StringBuilder();
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                sBuffer.append(line).append(sep);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            in.close();
+        }
+        return sBuffer.toString();
     }
 }
 

@@ -228,7 +228,7 @@ public class MapperRxToPDOTest {
         // Accepting gender 'M', 'F' and ''
         mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "F", source);
         mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "M", source);
-        mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "", source);
+        System.out.println(mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "", source));
 
         //System.out.println(mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source));
         //mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source);
@@ -267,14 +267,14 @@ public class MapperRxToPDOTest {
         mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         String xmlResult = mapper.getPDOXML(jsonInput,subjectId,zip,dob,gender,source);
-        if (jsonFile.equals("rxJSON2.json")) System.out.println(xmlResult);
+        //if (jsonFile.equals("rxJSON2.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        System.out.println(diff.toString());
+        //System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 
