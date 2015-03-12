@@ -7,9 +7,13 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 
 import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
 import org.json.JSONException;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.custommonkey.xmlunit.Diff;
+
 import static org.junit.Assert.*;
 
 public class MapperRxToPDOTest {
@@ -18,8 +22,10 @@ public class MapperRxToPDOTest {
      * Test base exception paths
      * @throws Exception
      */
+    private static String XML_TEMPLATE_FILE = "xmlpdoTemplate.xml";
+
     private String subjectId ="1234";
-    private String zip = "21334";
+    private String zip = "12345";
     private String dob = "19451001";
     private String gender = "F";
     private String source = "BCH";
@@ -38,7 +44,7 @@ public class MapperRxToPDOTest {
             assertTrue(e.getInnerException() instanceof IOException);
         }
 
-        mapper.setXmlMapFileTemplate("xmlpdoTemplate.xml");
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
         // Null
         try {
             mapper.getPDOXML(null, subjectId, zip, dob, gender, source);
@@ -71,7 +77,7 @@ public class MapperRxToPDOTest {
     @Test
     public void getPDOXMLExceptionPathSubjectId() throws Exception {
         MapperRxToPDO mapper = new MapperRxToPDO();
-        mapper.setXmlMapFileTemplate("xmlpdoTemplate.xml");
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         // Null subjectId
         try {
@@ -101,7 +107,7 @@ public class MapperRxToPDOTest {
     @Test
     public void getPDOXMLExceptionPathZip() throws Exception {
         MapperRxToPDO mapper = new MapperRxToPDO();
-        mapper.setXmlMapFileTemplate("xmlpdoTemplate.xml");
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         // Null zip code
         try {
@@ -131,7 +137,7 @@ public class MapperRxToPDOTest {
     @Test
     public void getPDOXMLExceptionPathDOB() throws Exception {
         MapperRxToPDO mapper = new MapperRxToPDO();
-        mapper.setXmlMapFileTemplate("xmlpdoTemplate.xml");
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         // Null DOB
         try {
@@ -157,6 +163,7 @@ public class MapperRxToPDOTest {
             mapper.getPDOXML(validJSON, subjectId, zip, "1970-11-10qqwq", gender, source);
             fail();
         } catch (I2ME2Exception e) {}
+
         // Proper format but invalid data
         try {
             mapper.getPDOXML(validJSON, subjectId, zip, "19703030", gender, source);
@@ -171,7 +178,7 @@ public class MapperRxToPDOTest {
     @Test
     public void getPDOXMLExceptionPathGender() throws Exception {
         MapperRxToPDO mapper = new MapperRxToPDO();
-        mapper.setXmlMapFileTemplate("xmlpdoTemplate.xml");
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         // Null gender
         try {
@@ -192,12 +199,11 @@ public class MapperRxToPDOTest {
         } catch (I2ME2Exception e) {}
 
     }
-
-    // Happy path formatting fine
+    // Happy path formatting check
     @Test
-    public void mainTest() throws Exception {
+    public void getPDOXMLHappyPathFormattingCheckTest() throws Exception {
         MapperRxToPDO mapper = new MapperRxToPDO();
-        mapper.setXmlMapFileTemplate("xmlpdoTemplate.xml");
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
         InputStream in = MapperRxToPDOTest.class.getResourceAsStream("jsonRXExample.json");
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         StringBuilder sBuffer = new StringBuilder();
@@ -226,6 +232,67 @@ public class MapperRxToPDOTest {
 
         //System.out.println(mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source));
         //mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source);
+        //mapper.getPDOXML(validJSON, subjectId, zip, dob, "M", source));
     }
 
+    // test 0; No orders with field orders present
+    @Test
+    public void getPDOXMLDetail_0Test() throws Exception {
+        String jsonFileName = "rxJSON0.json";
+        String expectedXMLFileName = "rxXMLPDO0.xml";
+        doTest(jsonFileName,expectedXMLFileName);
+    }
+
+    // test 1: No orders with no field orders present
+    @Test
+    public void getPDOXMLDetail_1Test() throws Exception {
+        String jsonFileName = "rxJSON1.json";
+        String expectedXMLFileName = "rxXMLPDO1.xml";
+        doTest(jsonFileName,expectedXMLFileName);
+    }
+
+    // test 2: Two orders with NDC codes and duration
+    @Test
+    public void getPDOXMLDetail_2Test() throws Exception {
+        String jsonFileName = "rxJSON2.json";
+        String expectedXMLFileName = "rxXMLPDO2.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+
+    private void doTest(String jsonFile, String expectedXMLFile) throws Exception {
+        String jsonInput = readTextFile(jsonFile);
+        String xmlExpected = readTextFile(expectedXMLFile);
+
+        MapperRxToPDO mapper = new MapperRxToPDO();
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
+
+        String xmlResult = mapper.getPDOXML(jsonInput,subjectId,zip,dob,gender,source);
+        if (jsonFile.equals("rxJSON2.json")) System.out.println(xmlResult);
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setIgnoreAttributeOrder(true);
+
+        Diff diff = new Diff(xmlExpected, xmlResult);
+        // We override the ElementQualifier so, order of elements does not matter in the comparison
+        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        System.out.println(diff.toString());
+        assertTrue(diff.similar());
+    }
+
+    private String readTextFile(String fileName) throws Exception {
+        InputStream in = MapperRxToPDOTest.class.getResourceAsStream(fileName);
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        StringBuilder sBuffer = new StringBuilder();
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                sBuffer.append(line).append('\n');
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            in.close();
+        }
+        return sBuffer.toString();
+    }
 }

@@ -21,6 +21,7 @@
         <commons-io.version>2.0.1</commons-io.version>
         <javax.servlet.version>3.0.1</javax.servlet.version>
         <json.version>20090211</json.version>
+        <xmlunit.version>1.4</xmlunit.version>
     </properties>
     <licenses>
         <license>
@@ -133,8 +134,16 @@
          	<artifactId>resteasy-jaxrs</artifactId>
          	<scope>provided</scope>  
          	<version>${jboss.resteasy.version}</version>
-      	</dependency>  
-      
+      	</dependency>
+
+        <!--For unit test XMLs  -->
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <scope>test</scope>
+            <version>${xmlunit.version}</version>
+        </dependency>
+
         <dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-multipart-provider</artifactId>

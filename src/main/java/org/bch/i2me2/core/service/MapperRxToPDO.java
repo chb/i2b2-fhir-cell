@@ -59,10 +59,10 @@ public class MapperRxToPDO extends Mapper{
             String jsonExtra = generatePatientInfo(subjectId, zip, dob, gender, source);
             result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new I2ME2Exception(e.getMessage(), e);
         }
         return result;
@@ -135,6 +135,33 @@ public class MapperRxToPDO extends Mapper{
     }
 
     @Override
+    protected String filterExtra(String xmlElem, Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+        // We do not filter anything but Observations
+        if (!tag.toString().equals(XmlPdoTag.TAG_OBSERVATIONS.toString())){
+            return xmlElem;
+        }
+        // we eliminate observations that have not been updated
+        String tval = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_TVAL);
+        String nval = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_NVAL);
+        if (isNotSet(tval) || isNotSet(nval)) {
+            // We do not want observations that has not been set.
+            return "";
+        }
+        return xmlElem;
+    }
+
+    /**
+     * return true if the value has not been set, so, if there is still the template information
+     * @param value The field to check
+     * @return True if the value has not been set. i.e, if F__ and __F are the delimiters, returns true is found both
+     * of them.
+     */
+    private boolean isNotSet(String value) {
+        if (value==null) return false;
+        return (value.indexOf(this.getDelPre())>0 && value.indexOf(this.getDepPost())>0);
+    }
+
+    @Override
     protected String format(String key, String value, Map<String, String> dataMap, Map<String, String> dataMapInArray) {
         String newValue = value;
         switch(key) {
@@ -175,6 +202,8 @@ public class MapperRxToPDO extends Mapper{
             return newValue;
         } catch (ParseException e) {
             return value;
+        } catch (Exception ee) {
+            return "";
         }
     }
 
