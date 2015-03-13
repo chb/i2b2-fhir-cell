@@ -145,7 +145,7 @@ public abstract class Mapper {
         performElementMap(jsonDataMap, emptyMap, XmlPdoTag.TAG_OBSERVATIONS);
         for (int i = 0; i < jsonArray.length(); i++) {
             Map<String, String> jsonDataMapInArray = buildDataMap(jsonArray.getJSONObject(i), keys);
-            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_OBSERVATIONS);
+            performElementMap(jsonDataMap, jsonDataMapInArray, XmlPdoTag.TAG_OBSERVATIONS, true);
         }
         return buildXMLOutput();
     }
@@ -308,6 +308,10 @@ public abstract class Mapper {
 	}
 
     private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+        performElementMap(jsonDataMap, jsonDataMapInArray, tag, false);
+    }
+
+    private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag, boolean doFilter) {
         String out = mapTemplate.get(tag);
         Set<String> keys = jsonDataMap.keySet();
         for(String key: keys) {
@@ -332,12 +336,13 @@ public abstract class Mapper {
         }
 
         out = out + '\n';
+        out = filter(out, jsonDataMap, jsonDataMapInArray, tag, doFilter);
         String rem = mapResult.get(tag);
         if (rem!=null) {
-            out = out + rem;
+            out = rem+out;
         }
         mapResult.put(tag, out);
-        filter(jsonDataMap, jsonDataMapInArray, tag);
+
     }
 
 	private String loadXMLTemplate() throws IOException, I2ME2Exception{
@@ -412,8 +417,7 @@ public abstract class Mapper {
         return xmlElem;
     }
     // Filter elements
-    private void filter(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
-        String out = mapResult.get(tag);
+    private String filter(String out, Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag, boolean doFilter) {
         String newOut = "";
         String tagValueIn = tag.getTagValueIn();
 
@@ -423,7 +427,16 @@ public abstract class Mapper {
         int end = out.indexOf(tagEnd);
         while (start > 0 && end > 0) {
             String elem = TAB+TAB+out.substring(start, end+tagEnd.length());
-            String newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
+            // we eliminate observations that have not been updated
+            String tval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_TVAL);
+            String nval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_NVAL);
+            String newElem=elem;
+            if (isNotSet(tval) || isNotSet(nval)) {
+                // We eliminate anything that has not been updated
+                newElem = "";
+            } else if(doFilter){
+                newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
+            }
             // If the element already exists, we do not add it.
             if (newOut.indexOf(newElem.trim())<0) {
                 newOut = newOut + newElem;
@@ -434,7 +447,19 @@ public abstract class Mapper {
             start = out.indexOf(tagInit, end+1);
             end = out.indexOf(tagEnd, end+1);
         }
-        mapResult.put(tag, newOut);
+
+        return newOut;
+    }
+
+    /**
+     * return true if the value has not been set, so, if there is still the template information
+     * @param value The field to check
+     * @return True if the value has not been set. i.e, if F__ and __F are the delimiters, returns true is found both
+     * of them.
+     */
+    private boolean isNotSet(String value) {
+        if (value==null) return false;
+        return (value.indexOf(this.getDelPre())>0 && value.indexOf(this.getDepPost())>0);
     }
 
     public void setXmlMapFileTemplate(String xmlMapFileTemplate) {

@@ -300,6 +300,14 @@ public class MapperRxToPDOTest {
         doTest(jsonFileName, expectedXMLFileName);
     }
 
+    // test 8: testing all modifiers. Two orders, one claim and one fill
+    @Test
+    public void getPDOXMLDetail_8Test() throws Exception {
+        String jsonFileName = "rxJSON8.json";
+        String expectedXMLFileName = "rxXMLPDO8.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+
     private void doTest(String jsonFile, String expectedXMLFile) throws Exception {
         String jsonInput = readTextFile(jsonFile);
         String xmlExpected = readTextFile(expectedXMLFile);
@@ -308,14 +316,14 @@ public class MapperRxToPDOTest {
         mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         String xmlResult = mapper.getPDOXML(jsonInput,subjectId,zip,dob,gender,source);
-        //if (jsonFile.equals("rxJSON7.json")) System.out.println(xmlResult);
+        //if (jsonFile.equals("rxJSON8.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
         //diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        //if (jsonFile.equals("rxJSON7.json")) System.out.println(diff.toString());
+        //if (jsonFile.equals("rxJSON8.json")) System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 

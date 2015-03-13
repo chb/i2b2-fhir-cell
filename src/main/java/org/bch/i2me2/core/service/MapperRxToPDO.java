@@ -32,6 +32,8 @@ public class MapperRxToPDO extends Mapper{
 
     // Some RX names
     private static final String RX_HISTORYSEGMENT = "RxHistorySegments";
+    private static final String RX_HISTORYSEGMENT_RX_RECS_RETURNED = "rxRecsReturned";
+    private static final String RX_HISTORYSEGMENT_STATUS_MSG = "statusMsg";
     private static final String RX_ORDERS = "orders";
 
     private static final String PATIENTSEGMENTS = "PatientSegments";
@@ -157,13 +159,11 @@ public class MapperRxToPDO extends Mapper{
         if (!tag.toString().equals(XmlPdoTag.TAG_OBSERVATIONS.toString())){
             return xmlElem;
         }
-        // we eliminate observations that have not been updated
-        String tval = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_TVAL);
-        String nval = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_NVAL);
-        if (isNotSet(tval) || isNotSet(nval)) {
-            // We do not want observations that has not been set.
-            return "";
-        }
+
+        // We also eliminate observations whose modifier_cd is rxRecsReturned and statusMsg
+        String modifier_cd = getModifierCode(xmlElem);
+        if (modifier_cd.trim().equals(RX_HISTORYSEGMENT_RX_RECS_RETURNED)) return "";
+        if (modifier_cd.trim().equals(RX_HISTORYSEGMENT_STATUS_MSG)) return "";
 
         // filter claims/fills depending on orc.enteringOrganizationAlternativeId
         boolean isFill=true;
@@ -176,10 +176,8 @@ public class MapperRxToPDO extends Mapper{
             }
         }
 
-        // At this point we now whether it is a claim or a fill. Lets get the modifier_cd
-        String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD);
-        String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
-        modifier_cd = modifier_cd.replace("</"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
+        // At this point we now whether it is a claim or a fill.
+
         boolean isInClaim = this.claimModifiers.contains(modifier_cd.trim());
         boolean isInFill = this.fillsModifiers.contains(modifier_cd.trim());
 
@@ -189,15 +187,11 @@ public class MapperRxToPDO extends Mapper{
         return xmlElem;
     }
 
-    /**
-     * return true if the value has not been set, so, if there is still the template information
-     * @param value The field to check
-     * @return True if the value has not been set. i.e, if F__ and __F are the delimiters, returns true is found both
-     * of them.
-     */
-    private boolean isNotSet(String value) {
-        if (value==null) return false;
-        return (value.indexOf(this.getDelPre())>0 && value.indexOf(this.getDepPost())>0);
+    private String getModifierCode(String xmlElem) {
+        String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD);
+        String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
+        modifier_cd = modifier_cd.replace("</"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
+        return modifier_cd;
     }
 
     @Override

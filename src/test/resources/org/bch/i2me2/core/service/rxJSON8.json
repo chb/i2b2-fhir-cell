@@ -1,0 +1,61 @@
+{
+  "RxHistorySegments":
+  {
+    "messageType": "RDS",
+    "msgCtrlID": "050045624",
+    "msgDateTime": "Feb 12, 2015 12:00:00 AM",
+    "sendingSystem": "RXHUB",
+    "rxRecsReturned": "SOME",
+    "statusMsg": "ONLY SOME",
+    "orders":[
+      {
+        "orc": {
+          "duration": 30,
+          "enteringOrganizationAlternativeId": "Claim"
+        },
+        "rxd": {
+          "dateTime":"Feb 20, 2015 10:11:12 AM",
+          "dispenseCodeIdentifier": 66667777,
+          "dispenseNotes": "TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP",
+          "dispenseCodeText":"CODETEXT",
+          "dispenseCodeAlternativeText":"CODE_ALTER-TEXT",
+          "actualDispenseUnitsText":"DISPENSE_UNITS_TEXT",
+          "actualDispenseUnitsNameOfCodingSys":"DISPENSE_UNITS_NAME_OF_CODIG_SYSTEM",
+          "actualDosageFormIdentifier":"DOSAGE_FORM_ID",
+          "actualDosageFormText":"DOSAGE_FORM_TEXT",
+          "actualDosageFormNameOfCodingSys":"DOSAGE_FORM_NAME",
+          "actualStrengthUnitText":"STRENGTH_UNIT_TEXT",
+          "actualStrengthUnitAltId":"STRENGTH_UNIT_ALT_ID",
+          "actualStrengthUnitAltText":"STRENGTH_UNIT_ALT_TEXT",
+          "actualDispenseAmount":12,
+          "actualDispenseUnitsIdentifier":11,
+          "fillNumber":10
+        }
+      },
+      {
+        "orc": {
+          "duration": 302,
+          "enteringOrganizationAlternativeId": "Fill"
+        },
+        "rxd": {
+          "dateTime":"Feb 20, 2015 10:11:12 AM",
+          "dispenseCodeIdentifier": 88888888,
+          "dispenseNotes": "TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP2",
+          "dispenseCodeText":"CODETEXT2",
+          "dispenseCodeAlternativeText":"CODE_ALTER-TEXT2",
+          "actualDispenseUnitsText":"DISPENSE_UNITS_TEXT2",
+          "actualDispenseUnitsNameOfCodingSys":"DISPENSE_UNITS_NAME_OF_CODIG_SYSTEM2",
+          "actualDosageFormIdentifier":"DOSAGE_FORM_ID2",
+          "actualDosageFormText":"DOSAGE_FORM_TEXT2",
+          "actualDosageFormNameOfCodingSys":"DOSAGE_FORM_NAME2",
+          "actualStrengthUnitText":"STRENGTH_UNIT_TEXT2",
+          "actualStrengthUnitAltId":"STRENGTH_UNIT_ALT_ID2",
+          "actualStrengthUnitAltText":"STRENGTH_UNIT_ALT_TEXT2",
+          "actualDispenseAmount":122,
+          "actualDispenseUnitsIdentifier":112,
+          "fillNumber":102
+        }
+      }
+    ]
+  }
+}
