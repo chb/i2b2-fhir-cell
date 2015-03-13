@@ -32,7 +32,10 @@ public abstract class Mapper {
 
     // The header
     private String tagRepositoryValue="";
-	
+
+    // The order inwhich the xml tags will appear in the xml pdo
+    private static final List <XmlPdoTag> orderXmlTags = new ArrayList<>();
+
 	// Tab: 4 blank spaces
 	private static final String TAB = "    ";
 	/**
@@ -95,33 +98,7 @@ public abstract class Mapper {
 
     // Will contains the key for which the abstract method 'format' will be called
     private List<String> keysToFormat = new ArrayList<>();
-    /*
-	public static void main(String [] args) throws Exception {
 
-		InputStream in = Mapper.class.getResourceAsStream("jsonExample.json");
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		StringBuffer sBuffer = new StringBuffer();
-		String line;
-		try {
-			while ((line = br.readLine()) != null) {
-				sBuffer.append(line).append('\n');
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-			
-		} finally {
-			in.close();
-		}
-		
-		Mapper a = new Mapper();
-		try {
-			String result = a.doMap(sBuffer.toString());
-			System.out.println(result);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 	protected Mapper() {
 		initialize();
 	}
@@ -191,6 +168,7 @@ public abstract class Mapper {
     private void initialize() {
         this.mapResult.clear();
         this.mapTemplate.clear();
+        this.orderXmlTags.clear();
 
         this.mapResult.put(XmlPdoTag.TAG_PATIENTS, null);
         this.mapResult.put(XmlPdoTag.TAG_EIDS, null);
@@ -203,6 +181,12 @@ public abstract class Mapper {
         this.mapTemplate.put(XmlPdoTag.TAG_PIDS, null);
         this.mapTemplate.put(XmlPdoTag.TAG_EVENTS, null);
         this.mapTemplate.put(XmlPdoTag.TAG_OBSERVATIONS, null);
+
+        this.orderXmlTags.add(XmlPdoTag.TAG_PIDS);
+        this.orderXmlTags.add(XmlPdoTag.TAG_EIDS);
+        this.orderXmlTags.add(XmlPdoTag.TAG_EVENTS);
+        this.orderXmlTags.add(XmlPdoTag.TAG_PATIENTS);
+        this.orderXmlTags.add(XmlPdoTag.TAG_OBSERVATIONS);
 
         this.tagRepositoryValue="";
         this.xmlTemplate=null;
@@ -271,33 +255,6 @@ public abstract class Mapper {
         return keys;
     }
 
-    /*
-	public String doMap(String jsonInput) throws IOException, JSONException {
-
-		loadXMLTemplate();
-		this.jsonRoot = new JSONObject(jsonInput);
-		JSONObject patientSegments = jsonRoot.getJSONObject(RX_PATIENTSEGMENT);
-		JSONObject rxHistorySegments = jsonRoot.getJSONObject(RX_HISTORYSEGMENT);
-		JSONArray orders = rxHistorySegments.getJSONArray(RX_ORDERS);
-
-		// Map medications
-		for (int i = 0; i < orders.length(); i++) {
-			JSONObject order = orders.getJSONObject(i);
-			JSONObject rdx = order.getJSONObject(RX_RXD);
-			JSONObject orc = order.getJSONObject(RX_ORC);
-
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_OBSERVATIONS);
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_EVENTS);
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_CONCEPTS);
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_PATIENTS);
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_PIDS);
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_EIDS);
-			mapComplex(patientSegments, rxHistorySegments, rdx, orc, XmlPdoTag.TAG_MODIFIERS);
-		}
-		return buildXMLOutput();
-	}*/
-
-
     /**
      * Returns the jsonArray
      * It will be called only once
@@ -336,10 +293,9 @@ public abstract class Mapper {
 	
 	private String buildXMLOutput() {
 		StringBuilder out = new StringBuilder();
-		Set<XmlPdoTag> keys = mapTemplate.keySet();
         // We append the header
         out.append(this.tagRepositoryValue);
-		for(XmlPdoTag keyTag:keys) {
+		for(XmlPdoTag keyTag:this.orderXmlTags) {
             String key = keyTag.toString();
             String tagInit = "<" + key + ">";
             String tagEnd = "</" + key + ">";
@@ -350,23 +306,7 @@ public abstract class Mapper {
         out.append("</" + XmlPdoTag.TAG_REPOSITORY.toString() + ">");
 		return out.toString();
 	}
-/*
-    private void performElementMap(List<JSONObject> jsonObjects, List<JSONObject> jsonObjectsInArray, XmlPdoTag tag) {
-        String out = mapTemplate.get(tag);
-        for(JSONObject jsonObj:jsonObjects) {
-            out = mapElements(jsonObj, out);
-        }
-        for(JSONObject jsonObj:jsonObjectsInArray) {
-            out = mapElements(jsonObj, out);
-        }
-        out = out + '\n';
-        String rem = mapResult.get(tag);
-        if (rem!=null) {
-            out = out + rem;
-        }
-        mapResult.put(tag, out);
-    }
-*/
+
     private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
         String out = mapTemplate.get(tag);
         Set<String> keys = jsonDataMap.keySet();
@@ -399,47 +339,7 @@ public abstract class Mapper {
         mapResult.put(tag, out);
         filter(jsonDataMap, jsonDataMapInArray, tag);
     }
-/*
-	private void mapComplex(JSONObject patientSegments, JSONObject rxHistorySegments, JSONObject rdx, JSONObject ord, XmlPdoTag tag) throws JSONException {
-		String aux = mapElementsExtended(patientSegments, rxHistorySegments, rdx, ord, mapTemplate.get(tag));
-		aux = aux + '\n';
-		String rem = mapResult.get(tag);
-		if (rem!=null) {
-			aux = aux + rem;
-		}
-		mapResult.put(tag, aux);
-	}
-	
-	private String mapElementsExtended(JSONObject json1, JSONObject json2, JSONObject json3, JSONObject json4, String baseXML) throws JSONException{
-		String out = mapElements(json1, baseXML);
-		out = mapElements(json2, out);
-		out = mapElements(json3, out);
-		out = mapElements(json4, out);
-		return out;
-	}
 
-	private String mapElements(JSONObject json, String baseXML) {
-		String out = baseXML;
-		Iterator<?> keys = json.keys();
-		while( keys.hasNext() ){
-            String key = (String)keys.next();
-            try {
-            	String value = json.getString(key);
-            	out = out.replaceAll(delPre+key+delPost, value);
-            	
-            } catch (Exception e) {
-            	try {
-            		// We check if it is a long value instead
-            		Long value = json.getLong(key);
-            		out = out.replaceAll(delPre+key+delPost, value.toString());
-            	} catch (Exception ee) {
-            		// Its neither, so, we don't really need to do anything
-            	}
-            }
-		}
-		return out;
-	}
-*/
 	private String loadXMLTemplate() throws IOException, I2ME2Exception{
         InputStream in = Mapper.class.getResourceAsStream(xmlMapFileTemplate);
         if (in==null) {

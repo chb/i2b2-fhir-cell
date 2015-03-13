@@ -228,7 +228,7 @@ public class MapperRxToPDOTest {
         // Accepting gender 'M', 'F' and ''
         mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "F", source);
         mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "M", source);
-        System.out.println(mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "", source));
+        mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, "", source);
 
         //System.out.println(mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source));
         //mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source);
@@ -259,6 +259,31 @@ public class MapperRxToPDOTest {
         doTest(jsonFileName, expectedXMLFileName);
     }
 
+    // test 3: Testing claims vf fills basic. Here, we have a claim, so enteringOrganizationAlternativeId = "Claim'
+    @Test
+    public void getPDOXMLDetail_3Test() throws Exception {
+        String jsonFileName = "rxJSON3.json";
+        String expectedXMLFileName = "rxXMLPDO3.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+
+    // test 4: Testing claims vf fills basic. Same as 3Test but enteringOrganizationAlternativeId = "Fill'
+    @Test
+    public void getPDOXMLDetail_4Test() throws Exception {
+        String jsonFileName = "rxJSON4.json";
+        String expectedXMLFileName = "rxXMLPDO4.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+
+    // test 5: Testing claims vf fills basic. Same as 4Test where enteringOrganizationAlternativeId is not present.
+    // It should act as Fill
+    @Test
+    public void getPDOXMLDetail_5Test() throws Exception {
+        String jsonFileName = "rxJSON5.json";
+        String expectedXMLFileName = "rxXMLPDO5.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+
     private void doTest(String jsonFile, String expectedXMLFile) throws Exception {
         String jsonInput = readTextFile(jsonFile);
         String xmlExpected = readTextFile(expectedXMLFile);
@@ -267,14 +292,14 @@ public class MapperRxToPDOTest {
         mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
 
         String xmlResult = mapper.getPDOXML(jsonInput,subjectId,zip,dob,gender,source);
-        //if (jsonFile.equals("rxJSON2.json")) System.out.println(xmlResult);
+        //if (jsonFile.equals("rxJSON4.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
-        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        //System.out.println(diff.toString());
+        //diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        //if (jsonFile.equals("rxJSON4.json")) System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 

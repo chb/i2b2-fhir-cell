@@ -180,8 +180,8 @@ public class MapperRxToPDO extends Mapper{
         String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD);
         String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
         modifier_cd = modifier_cd.replace("</"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
-        boolean isInClaim = this.claimModifiers.contains(modifier_cd);
-        boolean isInFill = this.fillsModifiers.contains(modifier_cd);
+        boolean isInClaim = this.claimModifiers.contains(modifier_cd.trim());
+        boolean isInFill = this.fillsModifiers.contains(modifier_cd.trim());
 
         if (isInClaim && isFill) return "";
         if (isInFill && !isFill) return "";
@@ -264,7 +264,7 @@ public class MapperRxToPDO extends Mapper{
     private void loadModifiers() throws Exception {
 
         String fillModifiers = readTextFile(FILL_MODIFIERS_FILE, ",");
-        String claimModifiers = readTextFile(FILL_MODIFIERS_FILE, ",");
+        String claimModifiers = readTextFile(CLAIM_MODIFIERS_FILE, ",");
 
         String [] fills = fillModifiers.split(",");
         this.fillsModifiers = new ArrayList<>();

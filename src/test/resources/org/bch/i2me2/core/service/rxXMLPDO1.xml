@@ -47,7 +47,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>@</concept_cd>
             <tval_char></tval_char>
-            <modifier_cd>rxRecsReturned</modifier_cd>
+            <modifier_cd>statusMsg</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>

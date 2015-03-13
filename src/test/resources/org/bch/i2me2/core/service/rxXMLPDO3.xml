@@ -35,7 +35,7 @@
             <start_date>2015-02-12T12:00:00.00</start_date>
             <observer_cd>@</observer_cd>
             <concept_cd>@</concept_cd>
-            <tval_char>ALL</tval_char>
+            <tval_char>SOME</tval_char>
             <modifier_cd>rxRecsReturned</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
@@ -46,8 +46,31 @@
             <start_date>2015-02-12T12:00:00.00</start_date>
             <observer_cd>@</observer_cd>
             <concept_cd>@</concept_cd>
-            <tval_char></tval_char>
+            <tval_char>ONLY SOME</tval_char>
             <modifier_cd>statusMsg</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="BCH">050045624</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-20T10:11:12.00</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>NDC:66667777</concept_cd>
+            <nval_num>30</nval_num>
+            <units_cd>days</units_cd>
+            <modifier_cd>expectedSupplyDuration</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="BCH">050045624</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-20T10:11:12.00</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>NDC:66667777</concept_cd>
+            <tval_char>TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP</tval_char>
+            <modifier_cd>dosageAdditionalInstructionsClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
