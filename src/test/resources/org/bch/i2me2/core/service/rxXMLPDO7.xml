@@ -70,7 +70,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>CODETEXT</tval_char>
-            <modifier_cd>medicationName</modifier_cd>
+            <modifier_cd>medicationNameClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -81,7 +81,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>CODE_ALTER-TEXT</tval_char>
-            <modifier_cd>medicationNameAlter</modifier_cd>
+            <modifier_cd>medicationNameAlterClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -92,7 +92,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <nval_num>12</nval_num>
-            <modifier_cd>quantityValue</modifier_cd>
+            <modifier_cd>quantityValueClaim</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -103,7 +103,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <nval_num>11</nval_num>
-            <modifier_cd>quantityCode</modifier_cd>
+            <modifier_cd>quantityCodeClaim</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -114,7 +114,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>DISPENSE_UNITS_TEXT</tval_char>
-            <modifier_cd>quantityUnits</modifier_cd>
+            <modifier_cd>quantityUnitsClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -125,7 +125,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>DOSAGE_FORM_ID</tval_char>
-            <modifier_cd>medicationProductFormCodingCode</modifier_cd>
+            <modifier_cd>medicationProductFormCodingCodeClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -136,7 +136,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>DOSAGE_FORM_TEXT</tval_char>
-            <modifier_cd>medicationProductFormText</modifier_cd>
+            <modifier_cd>medicationProductFormTextClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -147,7 +147,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <nval_num>10</nval_num>
-            <modifier_cd>fillNumber</modifier_cd>
+            <modifier_cd>fillNumberClaim</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -158,7 +158,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP</tval_char>
-            <modifier_cd>dosageAdditionalInstructions</modifier_cd>
+            <modifier_cd>dosageAdditionalInstructionsClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -169,7 +169,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>STRENGTH_UNIT_TEXT</tval_char>
-            <modifier_cd>medicationProductIngredientAmount</modifier_cd>
+            <modifier_cd>medicationProductIngredientAmountClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -180,7 +180,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>STRENGTH_UNIT_ALT_TEXT</tval_char>
-            <modifier_cd>medicationProductIngredientAmountText</modifier_cd>
+            <modifier_cd>medicationProductIngredientAmountTextClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -191,7 +191,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>STRENGTH_UNIT_ALT_ID</tval_char>
-            <modifier_cd>medicationProductIngredientAmountQualifier</modifier_cd>
+            <modifier_cd>medicationProductIngredientAmountQualifierClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -202,7 +202,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>DOSAGE_FORM_NAME</tval_char>
-            <modifier_cd>medicationProductFormCodingSystem</modifier_cd>
+            <modifier_cd>medicationProductFormCodingSystemClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
@@ -213,7 +213,7 @@
             <observer_cd>@</observer_cd>
             <concept_cd>NDC:66667777</concept_cd>
             <tval_char>DISPENSE_UNITS_NAME_OF_CODIG_SYSTEM</tval_char>
-            <modifier_cd>quantitySystem</modifier_cd>
+            <modifier_cd>quantitySystemClaim</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>

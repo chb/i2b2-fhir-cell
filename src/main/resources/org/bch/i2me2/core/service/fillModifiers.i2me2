@@ -10,5 +10,5 @@ medicationProductIngredientAmount
 medicationProductIngredientAmountQualifier
 medicationProductIngredientAmountText
 quantityValue
-quantityCode
+quantityUnits
 fillNumber

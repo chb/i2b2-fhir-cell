@@ -10,5 +10,6 @@ medicationProductIngredientAmountClaim
 medicationProductIngredientAmountQualifierClaim
 medicationProductIngredientAmountTextClaim
 quantityValueClaim
-quantityCodeClaim
+quantityUnitsClaim
 fillNumberClaim
+actualStrengthUnitAltIdentifierClaim
