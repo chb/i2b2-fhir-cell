@@ -45,6 +45,7 @@ public class MapperRxToPDO extends Mapper{
     private static final String PATIENTSEGMENTS_GENDER = "patientGender";
     private static final String PATIENTSEGMENTS_SUBJECTID = "patientId";
     private static final String PATIENTSEGMENTS_SOURCESYSTEM = "patientIdSourceSystemName";
+    private static final String PATIENTSEGMENTS_SOURCESYSTEM_EVENT = "eventIdSourceSystemName";
 
     private static final String RXD_DATETIME_KEY = "rxd.dateTime";
     private static final String PATIENTSEGMENTS_DOB_KEY = PATIENTSEGMENTS + "."+ PATIENTSEGMENTS_DOB;
@@ -72,13 +73,14 @@ public class MapperRxToPDO extends Mapper{
      * @return          The XML PDO
      * @throws I2ME2Exception See IME-28
      */
-    public String getPDOXML(String rxJson, String subjectId, String dob, String gender, String source) throws I2ME2Exception {
+    public String getPDOXML(String rxJson, String subjectId, String dob, String gender, String source,
+                            String sourceEvent) throws I2ME2Exception {
         String result;
-        validate(subjectId, dob, gender, source);
+        validate(subjectId, dob, gender, source, sourceEvent);
         try {
             loadModifiers();
             loadRealModifiers();
-            String jsonExtra = generatePatientInfo(subjectId, dob, gender, source);
+            String jsonExtra = generatePatientInfo(subjectId, dob, gender, source, sourceEvent);
             result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
             //e.printStackTrace();
@@ -90,7 +92,7 @@ public class MapperRxToPDO extends Mapper{
         return result;
     }
 
-    private String generatePatientInfo(String subjectId, String dob, String gender, String source) {
+    private String generatePatientInfo(String subjectId, String dob, String gender, String source, String sourceEvent) {
         String outJson = "{";
         outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_SUBJECTID, subjectId,false) + ",";
         if (dob!=null) {
@@ -99,7 +101,8 @@ public class MapperRxToPDO extends Mapper{
         if (gender!=null) {
             outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_GENDER, gender, true) + ",";
         }
-        outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_SOURCESYSTEM, source,true);
+        outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_SOURCESYSTEM, source,true) + ",";
+        outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_SOURCESYSTEM_EVENT, sourceEvent,true);
         return outJson + "}";
     }
 
@@ -111,7 +114,8 @@ public class MapperRxToPDO extends Mapper{
         }
     }
 
-    private void validate(String subjectId, String dob, String gender, String source) throws I2ME2Exception {
+    private void validate(String subjectId, String dob, String gender, String source,
+                          String sourceEvent) throws I2ME2Exception {
         if (subjectId==null) throw new I2ME2Exception("SubjectId cannot be null");
         if (subjectId.trim().equals("")) throw new I2ME2Exception("SubjectId cannot be empty");
         try {
@@ -155,6 +159,8 @@ public class MapperRxToPDO extends Mapper{
 
         if (source==null) throw new I2ME2Exception("Source cannot be null");
         if (source.trim().equals("")) throw new I2ME2Exception("Source cannot be empty");
+        if (sourceEvent==null) throw new I2ME2Exception("Source event cannot be null");
+        if (sourceEvent.trim().equals("")) throw new I2ME2Exception("Source event cannot be empty");
     }
 
     @Override

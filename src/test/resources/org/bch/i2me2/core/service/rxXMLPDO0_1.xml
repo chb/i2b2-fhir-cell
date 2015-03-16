@@ -10,12 +10,12 @@
     </pid_set>
     <eid_set>
         <eid>
-            <event_id patient_id="1234" patient_id_source="BCH" source="BCH">050045624</event_id>
+            <event_id patient_id="1234" patient_id_source="BCH" source="SCR">050045624</event_id>
         </eid>
     </eid_set>
     <event_set>
         <event>
-            <event_id source="BCH">050045624</event_id>
+            <event_id source="SCR">050045624</event_id>
             <patient_id source="BCH">1234</patient_id>
             <start_date>2015-02-12T12:00:00.00</start_date>
         </event>
@@ -28,7 +28,7 @@
     </patient_set>
     <observation_set>
         <observation>
-            <event_id source="BCH">050045624</event_id>
+            <event_id source="SCR">050045624</event_id>
             <patient_id source="BCH">1234</patient_id>
             <start_date>2015-02-12T12:00:00.00</start_date>
             <observer_cd>@</observer_cd>
@@ -39,7 +39,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="BCH">050045624</event_id>
+            <event_id source="SCR">050045624</event_id>
             <patient_id source="BCH">1234</patient_id>
             <start_date>2015-02-12T12:00:00.00</start_date>
             <observer_cd>@</observer_cd>

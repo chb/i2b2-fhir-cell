@@ -22,6 +22,7 @@ public class MapperRxToPDOTest {
     private String dob = "19451001";
     private String gender = "F";
     private String source = "BCH";
+    private String sourceEvent = "SCR";
     private String validJSON = "{\"RxHistorySegments\":{\"orders\":[]}}";
 
     /**
@@ -35,7 +36,7 @@ public class MapperRxToPDOTest {
         // test no template file is found
         mapper.setXmlMapFileTemplate("no_file_test");
         try {
-            mapper.getPDOXML("", subjectId, dob, gender, source);
+            mapper.getPDOXML("", subjectId, dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getInnerException() instanceof IOException);
@@ -44,7 +45,7 @@ public class MapperRxToPDOTest {
         mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
         // Null
         try {
-            mapper.getPDOXML(null, subjectId, dob, gender, source);
+            mapper.getPDOXML(null, subjectId, dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getInnerException() instanceof JSONException);
@@ -52,7 +53,7 @@ public class MapperRxToPDOTest {
 
         // Empty String
         try {
-            mapper.getPDOXML("", subjectId, dob, gender, source);
+            mapper.getPDOXML("", subjectId, dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getInnerException() instanceof JSONException);
@@ -60,7 +61,7 @@ public class MapperRxToPDOTest {
 
         // Malformed json
         try {
-            mapper.getPDOXML("{\"a\":\"b}", subjectId, dob, gender, source);
+            mapper.getPDOXML("{\"a\":\"b}", subjectId, dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getInnerException() instanceof JSONException);
@@ -78,7 +79,7 @@ public class MapperRxToPDOTest {
 
         // Null subjectId
         try {
-            mapper.getPDOXML(validJSON, null, dob, gender, source);
+            mapper.getPDOXML(validJSON, null, dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -86,7 +87,7 @@ public class MapperRxToPDOTest {
 
         // Empty subjectId
         try {
-            mapper.getPDOXML(validJSON, "", dob, gender, source);
+            mapper.getPDOXML(validJSON, "", dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -94,7 +95,7 @@ public class MapperRxToPDOTest {
 
         // Empty subjectId
         try {
-            mapper.getPDOXML(validJSON, "NotNum", dob, gender, source);
+            mapper.getPDOXML(validJSON, "NotNum", dob, gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getInnerException() instanceof NumberFormatException);
@@ -112,7 +113,7 @@ public class MapperRxToPDOTest {
 
         // No proper format
         try {
-            mapper.getPDOXML(validJSON, subjectId, "1970pp22", gender, source);
+            mapper.getPDOXML(validJSON, subjectId, "1970pp22", gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getInnerException() instanceof ParseException);
@@ -120,7 +121,7 @@ public class MapperRxToPDOTest {
 
         // No proper format
         try {
-            mapper.getPDOXML(validJSON, subjectId, "19701110qqwq", gender, source);
+            mapper.getPDOXML(validJSON, subjectId, "19701110qqwq", gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -128,7 +129,7 @@ public class MapperRxToPDOTest {
 
         // No proper format
         try {
-            mapper.getPDOXML(validJSON, subjectId, "1970-11-10qqwq", gender, source);
+            mapper.getPDOXML(validJSON, subjectId, "1970-11-10qqwq", gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -136,7 +137,7 @@ public class MapperRxToPDOTest {
 
         // Proper format but invalid data
         try {
-            mapper.getPDOXML(validJSON, subjectId, "19703030", gender, source);
+            mapper.getPDOXML(validJSON, subjectId, "19703030", gender, source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -154,7 +155,7 @@ public class MapperRxToPDOTest {
 
         // Gender length is longer that 1
         try {
-            mapper.getPDOXML(validJSON, subjectId, dob, "FF", source);
+            mapper.getPDOXML(validJSON, subjectId, dob, "FF", source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -162,7 +163,7 @@ public class MapperRxToPDOTest {
 
         // Gender length is 1 but different from 'M' and 'F'
         try {
-            mapper.getPDOXML(validJSON, subjectId, dob, "G", source);
+            mapper.getPDOXML(validJSON, subjectId, dob, "G", source, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -181,7 +182,7 @@ public class MapperRxToPDOTest {
 
         // Null source
         try {
-            mapper.getPDOXML(validJSON, subjectId, dob, gender, null);
+            mapper.getPDOXML(validJSON, subjectId, dob, gender, null, sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -189,7 +190,7 @@ public class MapperRxToPDOTest {
 
         // Empty source
         try {
-            mapper.getPDOXML(validJSON, subjectId, dob, gender, "");
+            mapper.getPDOXML(validJSON, subjectId, dob, gender, "", sourceEvent);
             fail();
         } catch (I2ME2Exception e) {
             /* OK */
@@ -217,18 +218,18 @@ public class MapperRxToPDOTest {
         }
 
         // Accepting dob in format 19900101
-        mapper.getPDOXML(sBuffer.toString(), subjectId, "19900101", gender, source);
+        mapper.getPDOXML(sBuffer.toString(), subjectId, "19900101", gender, source, sourceEvent);
 
         // Accepting dob in format 1990-01-01
-        mapper.getPDOXML(sBuffer.toString(), subjectId, "1990-01-01", gender, source);
+        mapper.getPDOXML(sBuffer.toString(), subjectId, "1990-01-01", gender, source, sourceEvent);
 
         // Accepting null dob
-        mapper.getPDOXML(sBuffer.toString(), subjectId, null, gender, source);
+        mapper.getPDOXML(sBuffer.toString(), subjectId, null, gender, source, sourceEvent);
 
         // Accepting gender 'M', 'F' and null
-        mapper.getPDOXML(sBuffer.toString(), subjectId, dob, "F", source);
-        mapper.getPDOXML(sBuffer.toString(), subjectId, dob, "M", source);
-        mapper.getPDOXML(sBuffer.toString(), subjectId, dob, "", source);
+        mapper.getPDOXML(sBuffer.toString(), subjectId, dob, "F", source, sourceEvent);
+        mapper.getPDOXML(sBuffer.toString(), subjectId, dob, "M", source, sourceEvent);
+        mapper.getPDOXML(sBuffer.toString(), subjectId, dob, "", source, sourceEvent);
 
         //System.out.println(mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source));
         //mapper.getPDOXML(sBuffer.toString(), subjectId, zip, dob, gender, source);
@@ -248,7 +249,7 @@ public class MapperRxToPDOTest {
     public void getPDOXMLDetail_0_0Test() throws Exception {
         String jsonFileName = "rxJSON0.json";
         String expectedXMLFileName = "rxXMLPDO0_0.xml";
-        doTest(jsonFileName,expectedXMLFileName, subjectId, dob, null, source);
+        doTest(jsonFileName,expectedXMLFileName, subjectId, dob, null, source, sourceEvent);
     }
 
     // test 0_1; No orders. testing optional patient data: No DOB
@@ -256,7 +257,7 @@ public class MapperRxToPDOTest {
     public void getPDOXMLDetail_0_1Test() throws Exception {
         String jsonFileName = "rxJSON0.json";
         String expectedXMLFileName = "rxXMLPDO0_1.xml";
-        doTest(jsonFileName,expectedXMLFileName, subjectId, null, gender, source);
+        doTest(jsonFileName,expectedXMLFileName, subjectId, null, gender, source, sourceEvent);
     }
 
     // test 0_2; No orders. testing optional patient data: No DOB and No gender
@@ -264,7 +265,7 @@ public class MapperRxToPDOTest {
     public void getPDOXMLDetail_0_2Test() throws Exception {
         String jsonFileName = "rxJSON0.json";
         String expectedXMLFileName = "rxXMLPDO0_2.xml";
-        doTest(jsonFileName,expectedXMLFileName, subjectId, null, null, source);
+        doTest(jsonFileName,expectedXMLFileName, subjectId, null, null, source, sourceEvent);
     }
 
     // test 1: No orders with no field orders present
@@ -333,27 +334,28 @@ public class MapperRxToPDOTest {
     }
 
     private void doTest(String jsonFile, String expectedXMLFile) throws Exception {
-        doTest(jsonFile, expectedXMLFile, subjectId, dob, gender, source);
+        doTest(jsonFile, expectedXMLFile, subjectId, dob, gender, source, sourceEvent);
     }
 
-    private void doTest(String jsonFile, String expectedXMLFile, String subjectId, String dob, String gender, String source) throws Exception {
+    private void doTest(String jsonFile, String expectedXMLFile, String subjectId, String dob, String gender,
+                        String source, String sourceEvent) throws Exception {
         String jsonInput = readTextFile(jsonFile);
         String xmlExpected = readTextFile(expectedXMLFile);
 
         MapperRxToPDO mapper = new MapperRxToPDO();
         mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
-        String xmlResult = mapper.getPDOXML(jsonInput,subjectId, dob, gender, source);
+        String xmlResult = mapper.getPDOXML(jsonInput,subjectId, dob, gender, source, sourceEvent);
 
         // We place replace internal modifier_cd with the real ones
         xmlExpected = mapper.placeRealModifiersCodes(xmlExpected);
-        //if (jsonFile.equals("rxJSON6.json")) System.out.println(xmlResult);
+        //if (jsonFile.equals("rxJSON0.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
         //diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        //if (jsonFile.equals("rxJSON6.json")) System.out.println(diff.toString());
+        //if (jsonFile.equals("rxJSON0.json")) System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 
