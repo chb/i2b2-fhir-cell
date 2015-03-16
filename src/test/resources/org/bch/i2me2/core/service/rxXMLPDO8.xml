@@ -23,7 +23,6 @@
     <patient_set>
         <patient>
             <patient_id source="BCH">1234</patient_id>
-            <param column="zip_cd">12345</param>
             <param column="sex_cd">F</param>
             <param column="birth_date">1945-10-01</param>
         </patient>

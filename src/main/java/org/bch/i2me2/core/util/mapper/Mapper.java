@@ -33,8 +33,8 @@ public abstract class Mapper {
     // The header
     private String tagRepositoryValue="";
 
-    // The order inwhich the xml tags will appear in the xml pdo
-    private static final List <XmlPdoTag> orderXmlTags = new ArrayList<>();
+    // The order in which the xml tags will appear in the xml pdo
+    private final List <XmlPdoTag> orderXmlTags = new ArrayList<>();
 
 	// Tab: 4 blank spaces
 	private static final String TAB = "    ";
@@ -83,6 +83,24 @@ public abstract class Mapper {
         }
     }
 
+    public static enum XmlPdoPatientTag {
+        TAG_PARAM_SEX_CD ("param", "sex_cd"),
+        TAG_PARAM_DOB ("param", "birth_date");
+
+        private final String tagValue;
+        private final String column;
+        XmlPdoPatientTag(String tagValue, String column) {
+            this.tagValue = tagValue;
+            this.column = column;
+        }
+        public String getTagValue() {
+            return this.tagValue;
+        }
+        public String toString() {
+            return this.tagValue + " column=\"" + this.column + "\"";
+        }
+    }
+
     /*
 	// Keys of RXConnect JSON
 	public static String RX_PATIENTSEGMENT= "PatientSegments";
@@ -94,7 +112,6 @@ public abstract class Mapper {
 	
 	private final Map< XmlPdoTag, String> mapTemplate = new HashMap<>();
 	private final Map<XmlPdoTag, String> mapResult = new HashMap<>();
-    private String xmlTemplate=null;
 
     // Will contains the key for which the abstract method 'format' will be called
     private List<String> keysToFormat = new ArrayList<>();
@@ -117,7 +134,8 @@ public abstract class Mapper {
      * @throws JSONException	If there is a problem parsing the json
      * @throws I2ME2Exception   If XML PDO template is malformed
      */
-    protected String doMap(String jsonInput, String extraJsonKey, String extraJsonInput) throws IOException, JSONException, I2ME2Exception {
+    protected String doMap(String jsonInput, String extraJsonKey, String extraJsonInput)
+            throws IOException, JSONException, I2ME2Exception {
         initialize();
         String xmlTemplate = loadXMLTemplate();
 
@@ -135,7 +153,9 @@ public abstract class Mapper {
         JSONArray jsonArray = new JSONArray();
         try {
             jsonArray = getJSONArray(jsonRoot);
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+            // it's ok. It means orders are not present
+        }
 
         Map<String,String> emptyMap = new HashMap<>();
         performElementMap(jsonDataMap, emptyMap, XmlPdoTag.TAG_PATIENTS);
@@ -155,9 +175,13 @@ public abstract class Mapper {
      * @param tag the tag to find
      * @return The xml element. empty string if the tag is not found or any other problem occurs
      */
-    protected String getTagValueLine(String xmlElement, XmlPdoObservationTag tag) {
-        String tagInit = "<"+ tag.toString();
-        String tagEnd = "</"+tag.toString()+">";
+    protected String getTagValueLine(String xmlElement, String tag) {
+        return getTagValueLine(xmlElement, tag, tag);
+    }
+
+    protected String getTagValueLine(String xmlElement, String tag, String tail) {
+        String tagInit = "<"+ tag;
+        String tagEnd = "</"+tail+">";
         int init = xmlElement.indexOf(tagInit);
         if (init<0) return "";
         int end = xmlElement.indexOf(tagEnd, init);
@@ -189,18 +213,6 @@ public abstract class Mapper {
         this.orderXmlTags.add(XmlPdoTag.TAG_OBSERVATIONS);
 
         this.tagRepositoryValue="";
-        this.xmlTemplate=null;
-    }
-	/**
-	 * Perform the map
-	 * @param jsonInput			The RXConnect JSON-formatted string
-	 * @return					The entire XML PDO as String
-	 * @throws IOException		If there is a problem reading the xml template
-	 * @throws JSONException	If there is a problem parsing the json
-     * @throws I2ME2Exception   If XML PDO template is malformed
-	 */
-    protected String doMap(String jsonInput) throws IOException, JSONException, I2ME2Exception {
-        return doMap(jsonInput, null, null);
     }
 
     private Map<String, String> buildDataMap(JSONObject jsonRoot, List<String> keys) throws JSONException {
@@ -209,7 +221,9 @@ public abstract class Mapper {
             try {
                 String value = getValueFromJSONObject(jsonRoot, key);
                 dataMap.put(key,value);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                // It's ok
+            }
         }
         return dataMap;
     }
@@ -277,20 +291,6 @@ public abstract class Mapper {
         return value;
     }
 
-	/**
-	 * Returns the xml elements for the given tag set
-	 * @param tag The tag
-	 * @return the XML string
-	 * @throws Exception
-	 */
-    public String getXMLElements(XmlPdoTag tag) throws Exception {
-		String output = this.mapResult.get(tag);
-		if (output == null) {
-			throw new Exception("Fatal Error: No mapping for the given tag");
-		}
-		return output;
-	}
-	
 	private String buildXMLOutput() {
 		StringBuilder out = new StringBuilder();
         // We append the header
@@ -303,15 +303,17 @@ public abstract class Mapper {
             out.append(mapResult.get(keyTag)).append('\n');
             out.append(TAB).append(tagEnd).append('\n');
 		}
-        out.append("</" + XmlPdoTag.TAG_REPOSITORY.toString() + ">");
+        out.append("</").append(XmlPdoTag.TAG_REPOSITORY.toString()).append(">");
 		return out.toString();
 	}
 
-    private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+    private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray,
+                                   XmlPdoTag tag) {
         performElementMap(jsonDataMap, jsonDataMapInArray, tag, false);
     }
 
-    private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag, boolean doFilter) {
+    private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray,
+                                   XmlPdoTag tag, boolean doFilter) {
         String out = mapTemplate.get(tag);
         Set<String> keys = jsonDataMap.keySet();
         for(String key: keys) {
@@ -413,11 +415,13 @@ public abstract class Mapper {
      * @param tag                   The XmlPdoTag
      * @return                      Return a transformation of the new element
      */
-    protected String filterExtra(String xmlElem, Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
+    protected String filterExtra(String xmlElem, Map<String, String> jsonDataMap,
+                                 Map<String, String> jsonDataMapInArray, XmlPdoTag tag) {
         return xmlElem;
     }
     // Filter elements
-    private String filter(String out, Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray, XmlPdoTag tag, boolean doFilter) {
+    private String filter(String out, Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray,
+                          XmlPdoTag tag, boolean doFilter) {
         String newOut = "";
         String tagValueIn = tag.getTagValueIn();
 
@@ -428,17 +432,29 @@ public abstract class Mapper {
         while (start > 0 && end > 0) {
             String elem = TAB+TAB+out.substring(start, end+tagEnd.length());
             // we eliminate observations that have not been updated
-            String tval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_TVAL);
-            String nval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_NVAL);
+            String tval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_TVAL.toString());
+            String nval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_NVAL.toString());
             String newElem=elem;
+            // We eliminate any observation that has not been updated
             if (isNotSet(tval) || isNotSet(nval)) {
-                // We eliminate anything that has not been updated
                 newElem = "";
             } else if(doFilter){
                 newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
             }
+
+            // We eliminate any apram from patient tag that has not been updated because they are optional
+            String sexcd = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_SEX_CD.toString(),
+                    XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue());
+            String dob = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_DOB.toString(),
+                    XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue() );
+            if (isNotSet(sexcd)) {
+                newElem = elem.replaceAll(sexcd, "");
+            }
+            if (isNotSet(dob)) {
+                newElem = newElem.replaceAll(dob, "");
+            }
             // If the element already exists, we do not add it.
-            if (newOut.indexOf(newElem.trim())<0) {
+            if (!newOut.contains(newElem.trim())) {
                 newOut = newOut + newElem;
                 if (!newElem.trim().equals("")) {
                     newOut = newOut + "\n";
@@ -458,20 +474,11 @@ public abstract class Mapper {
      * of them.
      */
     private boolean isNotSet(String value) {
-        if (value==null) return false;
-        return (value.indexOf(this.getDelPre())>0 && value.indexOf(this.getDepPost())>0);
+        return value!=null && (value.indexOf(this.getDelPre())>0 && value.indexOf(this.getDepPost())>0);
     }
 
     public void setXmlMapFileTemplate(String xmlMapFileTemplate) {
         this.xmlMapFileTemplate = xmlMapFileTemplate;
-    }
-    public String getXmlMapFileTemplate() {
-        return this.xmlMapFileTemplate;
-    }
-
-    public void setDelPrePost(String delPre, String delPost) {
-        this.delPre = delPre;
-        this.delPost = delPost;
     }
 
     public String getDelPre(){

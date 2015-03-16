@@ -40,7 +40,6 @@ public class MapperRxToPDO extends Mapper{
     private static final String PATIENTSEGMENTS_DOB = "patientDOB";
     private static final String PATIENTSEGMENTS_GENDER = "patientGender";
     private static final String PATIENTSEGMENTS_SUBJECTID = "patientId";
-    private static final String PATIENTSEGMENTS_ZIP = "patientPostalCode";
     private static final String PATIENTSEGMENTS_SOURCESYSTEM = "patientIdSourceSystemName";
 
     private static final String RXD_DATETIME_KEY = "rxd.dateTime";
@@ -64,18 +63,17 @@ public class MapperRxToPDO extends Mapper{
      * IME-28 Description
      * @param rxJson    The rx_json paramater
      * @param subjectId The subject id
-     * @param zip       The ZIP code
      * @param dob       The DOB
      * @param gender    The gender
      * @return          The XML PDO
      * @throws I2ME2Exception See IME-28
      */
-    public String getPDOXML(String rxJson, String subjectId, String zip, String dob, String gender, String source) throws I2ME2Exception {
+    public String getPDOXML(String rxJson, String subjectId, String dob, String gender, String source) throws I2ME2Exception {
         String result;
-        validate(subjectId, zip, dob, gender);
+        validate(subjectId, dob, gender, source);
         try {
             loadModifiers();
-            String jsonExtra = generatePatientInfo(subjectId, zip, dob, gender, source);
+            String jsonExtra = generatePatientInfo(subjectId, dob, gender, source);
             result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
             //e.printStackTrace();
@@ -87,12 +85,15 @@ public class MapperRxToPDO extends Mapper{
         return result;
     }
 
-    private String generatePatientInfo(String subjectId, String zip, String dob, String gender, String source) {
+    private String generatePatientInfo(String subjectId, String dob, String gender, String source) {
         String outJson = "{";
         outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_SUBJECTID, subjectId,false) + ",";
-        outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_ZIP, zip, false)+ ",";
-        outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_DOB, dob, false)+ ",";
-        outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_GENDER, gender,true) + ",";
+        if (dob!=null) {
+            outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_DOB, dob, false) + ",";
+        }
+        if (gender!=null) {
+            outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_GENDER, gender, true) + ",";
+        }
         outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS_SOURCESYSTEM, source,true);
         return outJson + "}";
     }
@@ -105,7 +106,7 @@ public class MapperRxToPDO extends Mapper{
         }
     }
 
-    private void validate(String subjectId, String zip, String dob, String gender) throws I2ME2Exception {
+    private void validate(String subjectId, String dob, String gender, String source) throws I2ME2Exception {
         if (subjectId==null) throw new I2ME2Exception("SubjectId cannot be null");
         if (subjectId.trim().equals("")) throw new I2ME2Exception("SubjectId cannot be empty");
         try {
@@ -113,44 +114,42 @@ public class MapperRxToPDO extends Mapper{
         } catch (NumberFormatException e) {
             throw new I2ME2Exception("SubjectId must be numeric", e);
         }
-        if (zip==null) throw new I2ME2Exception("zip cannot be null");
-        if (zip.trim().length()<5) throw new I2ME2Exception("Bad zip code");
-        try {
-            Long.parseLong(zip.trim());
-        } catch (NumberFormatException e) {
-            throw new I2ME2Exception("Zip code must be numeric", e);
-        }
-        if (dob==null) throw new I2ME2Exception("DOB cannot be null");
-        String inputDataFormat = "yyyyMMdd";
-        String inputDataFormat2 = "yyyy-MM-dd";
-        SimpleDateFormat dateFormatInput = new SimpleDateFormat(inputDataFormat);
-        SimpleDateFormat dateFormatInput2 = new SimpleDateFormat(inputDataFormat2);
 
-        Date date;
-        try {
-            date = dateFormatInput2.parse(dob);
-            if (!dateFormatInput2.format(date).equals(dob)) {
-                throw new I2ME2Exception("Invalid date:" + dob);
-            }
-        } catch (ParseException ee) {
+        if (dob!=null) {
+            String inputDataFormat = "yyyyMMdd";
+            String inputDataFormat2 = "yyyy-MM-dd";
+            SimpleDateFormat dateFormatInput = new SimpleDateFormat(inputDataFormat);
+            SimpleDateFormat dateFormatInput2 = new SimpleDateFormat(inputDataFormat2);
+            Date date;
             try {
-                date = dateFormatInput.parse(dob);
-                if (!dateFormatInput.format(date).equals(dob)) {
+                date = dateFormatInput2.parse(dob);
+                if (!dateFormatInput2.format(date).equals(dob)) {
                     throw new I2ME2Exception("Invalid date:" + dob);
                 }
-            } catch (ParseException e) {
-                throw new I2ME2Exception("Bad DOB format. Must be yyyyMMdd or yyyy-MM-dd", ee);
+            } catch (ParseException ee) {
+                try {
+                    date = dateFormatInput.parse(dob);
+                    if (!dateFormatInput.format(date).equals(dob)) {
+                        throw new I2ME2Exception("Invalid date:" + dob);
+                    }
+                } catch (ParseException e) {
+                    throw new I2ME2Exception("Bad DOB format. Must be yyyyMMdd or yyyy-MM-dd", ee);
+                }
             }
         }
 
-        if (gender==null) throw new I2ME2Exception("Gender cannot be null");
-        String aux = gender.trim();
-        if (aux.length()>1) throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
-        if (aux.length()==1) {
-            if (!(aux.equals("F") || aux.equals("M"))) {
-                throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+        if (gender!=null) {
+            String aux = gender.trim();
+            if (aux.length() > 1) throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+            if (aux.length() == 1) {
+                if (!(aux.equals("F") || aux.equals("M"))) {
+                    throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+                }
             }
         }
+
+        if (source==null) throw new I2ME2Exception("Source cannot be null");
+        if (source.trim().equals("")) throw new I2ME2Exception("Source cannot be empty");
     }
 
     @Override
@@ -169,11 +168,7 @@ public class MapperRxToPDO extends Mapper{
         boolean isFill=true;
         if (jsonDataMapInArray.containsKey(ORD_ENTERING_ORGANIZATION_ALTERNATIVE_ID_KEY)) {
             String val = jsonDataMapInArray.get(ORD_ENTERING_ORGANIZATION_ALTERNATIVE_ID_KEY);
-            if (val == null) {
-                isFill=true;
-            } else {
-                isFill = !(val.trim().equals(CLAIM_VALUE));
-            }
+            isFill = val == null || !(val.trim().equals(CLAIM_VALUE));
         }
 
         // At this point we now whether it is a claim or a fill.
@@ -188,7 +183,7 @@ public class MapperRxToPDO extends Mapper{
     }
 
     private String getModifierCode(String xmlElem) {
-        String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD);
+        String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD.toString());
         String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
         modifier_cd = modifier_cd.replace("</"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
         return modifier_cd;
@@ -231,8 +226,7 @@ public class MapperRxToPDO extends Mapper{
 
         try {
             Date date = dateFormatInput.parse(value);
-            String newValue = dateFormatOutput.format(date);
-            return newValue;
+            return dateFormatOutput.format(date);
         } catch (ParseException e) {
             return value;
         } catch (Exception ee) {
@@ -246,13 +240,16 @@ public class MapperRxToPDO extends Mapper{
      * @return      Postcondition: YYYY-MM-DD
      */
     private String formatDOB(String value) {
-        if (value.length()!=8) {
-            return value;
+        if (value!=null) {
+            if (value.length() != 8) {
+                return value;
+            }
+            String newValue = value.substring(0, 4) + "-";
+            newValue = newValue + value.substring(4, 6) + "-";
+            newValue = newValue + value.substring(6, 8);
+            return newValue;
         }
-        String newValue = value.substring(0,4) + "-";
-        newValue = newValue + value.substring(4,6) + "-";
-        newValue = newValue + value.substring(6,8);
-        return newValue;
+        return null;
     }
 
     private void loadModifiers() throws Exception {
@@ -262,8 +259,7 @@ public class MapperRxToPDO extends Mapper{
 
         String [] fills = fillModifiers.split(",");
         this.fillsModifiers = new ArrayList<>();
-        for (int i=0;i<fills.length;i++) {
-            String name = fills[i];
+        for (String name : fills) {
             if (!name.trim().equals("")) {
                 this.fillsModifiers.add(name);
             }
@@ -271,8 +267,7 @@ public class MapperRxToPDO extends Mapper{
 
         String [] claims = claimModifiers.split(",");
         this.claimModifiers = new ArrayList<>();
-        for (int i=0;i<claims.length;i++) {
-            String name = claims[i];
+        for (String name : claims) {
             if (!name.trim().equals("")) {
                 this.claimModifiers.add(name);
             }
