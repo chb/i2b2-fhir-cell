@@ -342,16 +342,18 @@ public class MapperRxToPDOTest {
 
         MapperRxToPDO mapper = new MapperRxToPDO();
         mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
-
         String xmlResult = mapper.getPDOXML(jsonInput,subjectId, dob, gender, source);
-        //if (jsonFile.equals("rxJSON0.json")) System.out.println(xmlResult);
+
+        // We place replace internal modifier_cd with the real ones
+        xmlExpected = mapper.placeRealModifiersCodes(xmlExpected);
+        //if (jsonFile.equals("rxJSON6.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
         //diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        //if (jsonFile.equals("rxJSON0.json")) System.out.println(diff.toString());
+        //if (jsonFile.equals("rxJSON6.json")) System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 

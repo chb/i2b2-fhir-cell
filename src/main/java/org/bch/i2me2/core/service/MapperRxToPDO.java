@@ -11,10 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * IME-28
@@ -23,9 +20,16 @@ import java.util.Map;
  */
 public class MapperRxToPDO extends Mapper{
 
-    // Name files where claim and fill modifier_cd are listed
+    // File names where claim and fill modifier_cd are listed
     private static final String CLAIM_MODIFIERS_FILE = "claimModifiers.i2me2";
     private static final String FILL_MODIFIERS_FILE = "fillModifiers.i2me2";
+
+    // File name containing the list of real modifier codes
+    private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
+
+    // The map between internal Modifier_CDs and real ones. Found in modifierCodes.i2me2 file
+    // Each line: Internal_Modifier_CD,Real_Modifier_CD
+    private HashMap<String, String> realModifiersCD;
 
     private List<String> fillsModifiers;
     private List<String> claimModifiers;
@@ -73,6 +77,7 @@ public class MapperRxToPDO extends Mapper{
         validate(subjectId, dob, gender, source);
         try {
             loadModifiers();
+            loadRealModifiers();
             String jsonExtra = generatePatientInfo(subjectId, dob, gender, source);
             result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
@@ -250,6 +255,38 @@ public class MapperRxToPDO extends Mapper{
             return newValue;
         }
         return null;
+    }
+
+    @Override
+    public String placeRealModifiersCodes(String text) {
+        if (this.realModifiersCD==null) {
+            return text;
+        }
+        String out = text;
+        Set<String> keys = this.realModifiersCD.keySet();
+        for(String key: keys) {
+            String value = this.realModifiersCD.get(key);
+            String currentFullLine = buildModifierLine(key);
+            String realFullLine = buildModifierLine(value);
+            out = out.replaceAll(currentFullLine, realFullLine);
+        }
+        return out;
+    }
+
+    private String buildModifierLine(String modifierCD) {
+        String out = "<" + XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">";
+        out = out + modifierCD + "</" + XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">";
+        return out;
+    }
+
+    private void loadRealModifiers() throws Exception {
+        String realModifiers = readTextFile(REAL_MODIFIERS_FILE, ",");
+        String [] modifiers = realModifiers.split(",");
+        this.realModifiersCD = new HashMap<>();
+        for (String modifier: modifiers){
+            String [] codes = modifier.split(":");
+            this.realModifiersCD.put(codes[0].trim(), codes[1].trim());
+        }
     }
 
     private void loadModifiers() throws Exception {

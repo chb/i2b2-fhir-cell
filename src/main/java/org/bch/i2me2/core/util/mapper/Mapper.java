@@ -277,6 +277,14 @@ public abstract class Mapper {
     protected abstract JSONArray getJSONArray(JSONObject root) throws JSONException;
 
     /**
+     * Replace internal modifiers codes with the real ones. It is called only once after the mapping is done
+     * @param text The entire xml pdo with the final results containing the internal modifier codes
+     * @return The final mapping with the real modifier codes.
+     */
+    public String placeRealModifiersCodes(String text) {
+        return text;
+    }
+    /**
      * Provides a way to format the actual value that will be place in the final XML
      * It will be called every time a value from a key included in keysToFormat list is found.
      * It must be override if special formatting is needed for some keys.
@@ -304,7 +312,7 @@ public abstract class Mapper {
             out.append(TAB).append(tagEnd).append('\n');
 		}
         out.append("</").append(XmlPdoTag.TAG_REPOSITORY.toString()).append(">");
-		return out.toString();
+		return placeRealModifiersCodes(out.toString());
 	}
 
     private void performElementMap(Map<String, String> jsonDataMap, Map<String, String> jsonDataMapInArray,
