@@ -1,4 +1,12 @@
 {
+  "PatientSegments":
+  {
+    "patientId":1234,
+    "patientIdSourceSystemName": "BCH",
+    "eventIdSourceSystemName":"SCR",
+    "patientGender":"F",
+    "patientDOB":"19451001"
+  },
   "RxHistorySegments":
   {
     "messageType": "RDS",
@@ -11,7 +19,9 @@
       {
         "orc": {
           "duration": 30,
-          "enteringOrganizationAlternativeId": "Claim"
+          "enteringOrganizationAlternativeId": "Claim",
+          "enteringOrganizationIdentifier": "T00000000020286",
+          "providerId": "BM0441232"
         },
         "rxd": {
           "dateTime":"Feb 20, 2015 10:11:12 AM",
@@ -29,7 +39,9 @@
           "actualStrengthUnitAltText":"STRENGTH_UNIT_ALT_TEXT",
           "actualDispenseAmount":12,
           "actualDispenseUnitsIdentifier":11,
-          "fillNumber":10
+          "fillNumber":10,
+          "dispenseProviderFamilyName": "CVS Pharmacy # 2070 ",
+          "prescriptionNumber": "588751"
         }
       }
     ]

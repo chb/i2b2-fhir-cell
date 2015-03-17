@@ -33,7 +33,7 @@
             <patient_id source="BCH">1234</patient_id>
             <start_date>2015-02-12T12:00:00.00</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>@</concept_cd>
+            <concept_cd>PBM_transaction</concept_cd>
             <tval_char>SOME</tval_char>
             <modifier_cd>rxRecsReturned</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -44,7 +44,7 @@
             <patient_id source="BCH">1234</patient_id>
             <start_date>2015-02-12T12:00:00.00</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>@</concept_cd>
+            <concept_cd>PBM_transaction</concept_cd>
             <tval_char>ONLY SOME</tval_char>
             <modifier_cd>statusMsg</modifier_cd>
             <valuetype_cd>T</valuetype_cd>

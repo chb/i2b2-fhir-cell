@@ -5,121 +5,103 @@
     xsi:schemaLocation="http://i2b2.mgh.harvard.edu/repository_cell/patient_data.xsd">
     <pid_set>
         <pid>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
         </pid>
     </pid_set>
     <eid_set>
         <eid>
-            <event_id patient_id="F_FpatientIdF_F" patient_id_source="F_FpatientIdSourceSystemNameF_F" source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
+            <event_id patient_id="F__PatientSegments.patientId__F" patient_id_source="F__PatientSegments.patientIdSourceSystemName__F" source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
         </eid>
     </eid_set>
     <event_set>
         <event>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
         </event>
     </event_set>
     <patient_set>
         <patient>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <param column="zip_cd">F_FpatientPostalCodeF_F</param>
-            <param column="sex_cd">F_FpatientGenderF_F</param>
-            <param column="birth_date">F_FpatientDOBF_F</param>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <param column="zip_cd">F__PatientSegments.patientPostalCode__F</param>
+            <param column="sex_cd">F__PatientSegments.patientGender__F</param>
+            <param column="birth_date">F__PatientSegments.patientDOB__F</param>
         </patient>
     </patient_set>
     <observation_set>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <nval_num>F_FactualDispenseAmountF_F</nval_num>
-            <units_cd>F_FactualDispenseUnitsIdentifierF_F</units_cd>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <nval_num>F__rxd.actualDispenseAmount__F</nval_num>
+            <units_cd>F__rxd.actualDispenseUnitsIdentifier__F</units_cd>
             <modifier_cd>PAY:MEDQUANTITY</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseProviderFamilyNameF_F</tval_char>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseProviderFamilyName__F</tval_char>
             <modifier_cd>PAY:DISPENSEPERFORG</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FenteringOrganizationIdentifierF_F</tval_char>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__orc.enteringOrganizationIdentifier__F</tval_char>
             <modifier_cd>PAY:ORDERAUTHORG</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseCodeAlternativeTextF_F</tval_char>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseCodeAlternativeText__F</tval_char>
             <modifier_cd>PAY:GENERICNAME</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <modifier_cd>@</modifier_cd>
-            <instance_num>1</instance_num>
-        </observation>
-        <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseProviderIdentifierTypeCodeF_F</tval_char>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseProviderIdentifierTypeCode__F</tval_char>
             <modifier_cd>PAY:DISPENSETYPE</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <tval_char>F_FdispenseProviderIdentifierTypeCodeF_F</tval_char>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <tval_char>F__rxd.dispenseProviderIdentifierTypeCode__F</tval_char>
             <modifier_cd>PAY:DISPENSETYPE</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <modifier_cd>@</modifier_cd>
-            <instance_num>1</instance_num>
-        </observation>
-        <observation>
-            <event_id source="F_FpatientIdSourceSystemNameF_F">F_FprescriptionNumberF_F</event_id>
-            <patient_id source="F_FpatientIdSourceSystemNameF_F">F_FpatientIdF_F</patient_id>
-            <start_date>F_FdateTimeF_F</start_date>
-            <observer_cd>F_FproviderIdF_F</observer_cd>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
-            <nval_char>F_FdurationF_F</nval_char>
+            <event_id source="F__PatientSegments.patientIdSourceSystemName__F">F__rxd.prescriptionNumber__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__rxd.dateTime__F</start_date>
+            <observer_cd>F__orc.providerId__F</observer_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
+            <nval_char>F__orc.duration__F</nval_char>
             <modifier_cd>PAY:DURATION</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
@@ -127,7 +109,7 @@
     </observation_set>
     <concept_set>
         <concept>
-            <concept_cd>NDC:F_FdispenseCodeIdentifierF_F</concept_cd>
+            <concept_cd>NDC:F__rxd.dispenseCodeIdentifier__F</concept_cd>
         </concept>
     </concept_set>
     <modifier_set>

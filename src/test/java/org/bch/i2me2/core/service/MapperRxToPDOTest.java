@@ -1,13 +1,11 @@
 package org.bch.i2me2.core.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.ParseException;
 
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.json.JSONException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.Diff;
@@ -332,6 +330,27 @@ public class MapperRxToPDOTest {
         String expectedXMLFileName = "rxXMLPDO8.xml";
         doTest(jsonFileName, expectedXMLFileName);
     }
+
+    // test 9: testing NDC code is not present
+    @Test
+    public void getPDOXMLDetail_9Test() throws Exception {
+        String jsonFileName = "rxJSON9.json";
+        String expectedXMLFileName = "rxXMLPDO9.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+
+    // Just to generate a xmlpdo from old mapping
+    @Ignore
+    public void currentMapping() throws Exception {
+        String jsonInput = readTextFile("rxJSON7.json");
+        MapperRxToPDO mapper = new MapperRxToPDO();
+        mapper.setXmlMapFileTemplate("xmlpdoTemplate_CurrentMapping.xml");
+        String xmlResult = mapper.getPDOXML(jsonInput,subjectId, dob, gender, source, source);
+        BufferedWriter bw = new BufferedWriter( new FileWriter( "output.xml"));
+        bw.write(xmlResult);
+        bw.close();
+    }
+
 
     private void doTest(String jsonFile, String expectedXMLFile) throws Exception {
         doTest(jsonFile, expectedXMLFile, subjectId, dob, gender, source, sourceEvent);

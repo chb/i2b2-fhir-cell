@@ -36,6 +36,9 @@ public abstract class Mapper {
     // The order in which the xml tags will appear in the xml pdo
     private final List <XmlPdoTag> orderXmlTags = new ArrayList<>();
 
+    // The concept_cd code when no NDC code is found
+    private final String NO_CONCEPT_CD = "NO_NDC_CODE";
+
 	// Tab: 4 blank spaces
 	private static final String TAB = "    ";
 	/**
@@ -71,7 +74,8 @@ public abstract class Mapper {
         TAG_TVAL ("tval_char"),
         TAG_NVAL ("nval_num"),
         TAG_CONCEPT_CD ("concept_cd"),
-        TAG_MODIFIER_CD ("modifier_cd");
+        TAG_MODIFIER_CD ("modifier_cd"),
+        TAG_START_DATE ("start_date");
 
         private final String tagValue;
         XmlPdoObservationTag(String tagValue) {
@@ -85,7 +89,8 @@ public abstract class Mapper {
 
     public static enum XmlPdoPatientTag {
         TAG_PARAM_SEX_CD ("param", "sex_cd"),
-        TAG_PARAM_DOB ("param", "birth_date");
+        TAG_PARAM_DOB ("param", "birth_date"),
+        TAG_PARAM_ZIP ("param", "zip_cd");
 
         private final String tagValue;
         private final String column;
@@ -439,27 +444,44 @@ public abstract class Mapper {
         int end = out.indexOf(tagEnd);
         while (start > 0 && end > 0) {
             String elem = TAB+TAB+out.substring(start, end+tagEnd.length());
+            String newElem = elem;
             // we eliminate observations that have not been updated
-            String tval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_TVAL.toString());
-            String nval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_NVAL.toString());
-            String newElem=elem;
-            // We eliminate any observation that has not been updated
-            if (isNotSet(tval) || isNotSet(nval)) {
-                newElem = "";
-            } else if(doFilter){
-                newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
-            }
+            if (tag.toString().equals(XmlPdoTag.TAG_OBSERVATIONS.toString())) {
+                String tval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_TVAL.toString());
+                String nval = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_NVAL.toString());
+                String startDate = this.getTagValueLine(elem, XmlPdoObservationTag.TAG_START_DATE.toString());
 
-            // We eliminate any apram from patient tag that has not been updated because they are optional
-            String sexcd = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_SEX_CD.toString(),
-                    XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue());
-            String dob = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_DOB.toString(),
-                    XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue() );
-            if (isNotSet(sexcd)) {
-                newElem = elem.replaceAll(sexcd, "");
-            }
-            if (isNotSet(dob)) {
-                newElem = newElem.replaceAll(dob, "");
+                // We eliminate any observation that has not been updated
+                if (isNotSet(tval) || isNotSet(nval) || isNotSet(startDate)) {
+                    newElem = "";
+                } else if (doFilter) {
+                    newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
+                }
+                String conceptCD = this.getTagValueLine(newElem, XmlPdoObservationTag.TAG_CONCEPT_CD.toString());
+                if (isNotSet(conceptCD)) {
+                    String newConceptCD = "<" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
+                    newConceptCD = newConceptCD + NO_CONCEPT_CD;
+                    newConceptCD = newConceptCD + "</" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
+                    newElem = newElem.replaceAll(conceptCD, newConceptCD);
+                }
+            } else if (tag.toString().equals(XmlPdoTag.TAG_PATIENTS.toString())) {
+
+                // We eliminate any param from patient tag that has not been updated because they are optional
+                String sexcd = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_SEX_CD.toString(),
+                        XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue());
+                String dob = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_DOB.toString(),
+                        XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue());
+                String zip = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_ZIP.toString(),
+                        XmlPdoPatientTag.TAG_PARAM_ZIP.getTagValue());
+                if (isNotSet(sexcd)) {
+                    newElem = elem.replaceAll(sexcd, "");
+                }
+                if (isNotSet(dob)) {
+                    newElem = newElem.replaceAll(dob, "");
+                }
+                if (isNotSet(zip)) {
+                    newElem = newElem.replaceAll(zip, "");
+                }
             }
             // If the element already exists, we do not add it.
             if (!newOut.contains(newElem.trim())) {

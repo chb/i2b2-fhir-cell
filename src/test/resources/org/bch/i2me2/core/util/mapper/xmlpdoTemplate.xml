@@ -33,7 +33,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__RxHistorySegments.msgDateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>@</concept_cd>
+            <concept_cd>PBM_transaction</concept_cd>
             <tval_char>F__RxHistorySegments.rxRecsReturned__F</tval_char>
             <modifier_cd>rxRecsReturned</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -44,7 +44,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__RxHistorySegments.msgDateTime__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>@</concept_cd>
+            <concept_cd>PBM_transaction</concept_cd>
             <tval_char>F__RxHistorySegments.statusMsg__F</tval_char>
             <modifier_cd>statusMsg</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
