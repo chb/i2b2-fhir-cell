@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository:patient_data
+        xmlns:repository="http://i2b2.mgh.harvard.edu/repository_cell"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://i2b2.mgh.harvard.edu/repository_cell/patient_data.xsd">
+    <pid_set>
+        <pid>
+            <patient_id source="BCH">1234</patient_id>
+        </pid>
+    </pid_set>
+    <eid_set>
+        <eid>
+            <event_id patient_id="1234" patient_id_source="BCH" source="SCR">050045624</event_id>
+        </eid>
+    </eid_set>
+    <event_set>
+        <event>
+            <event_id source="SCR">050045624</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-12T12:00:00.00</start_date>
+        </event>
+    </event_set>
+    <patient_set>
+        <patient>
+            <patient_id source="BCH">1234</patient_id>
+            <param column="sex_cd">F</param>
+            <param column="birth_date">1945-10-01</param>
+        </patient>
+    </patient_set>
+    <observation_set>
+        <observation>
+            <event_id source="SCR">050045624</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-12T12:00:00.00</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>PBM_transaction</concept_cd>
+            <tval_char>SOME</tval_char>
+            <modifier_cd>rxRecsReturned</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="SCR">050045624</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-20T10:11:12.00</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>NDC:66667777</concept_cd>
+            <nval_num>30</nval_num>
+            <units_cd>days</units_cd>
+            <modifier_cd>expectedSupplyDuration</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="SCR">050045624</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-28T11:00:00.00</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>NDC:88889999</concept_cd>
+            <nval_num>10</nval_num>
+            <units_cd>days</units_cd>
+            <modifier_cd>expectedSupplyDuration</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+    </observation_set>
+</repository:patient_data>

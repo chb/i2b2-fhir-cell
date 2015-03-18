@@ -21,7 +21,7 @@
     </event_set>
     <patient_set>
         <patient>
-            <patient_id source="F__F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <param column="zip_cd">F__PatientSegments.patientPostalCode__F</param>
             <param column="sex_cd">F__PatientSegments.patientGender__F</param>
             <param column="birth_date">F__PatientSegments.patientDOB__F</param>

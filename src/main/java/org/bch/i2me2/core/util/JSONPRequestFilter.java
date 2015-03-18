@@ -49,9 +49,9 @@ public class JSONPRequestFilter implements Filter {
     private static final String CALLBACK_METHOD = "jsonpcallback";
     
     //This is a simple safe pattern check for the callback method
-    public static final Pattern SAFE_PRN = Pattern.compile("[a-zA-Z0-9_\\.]+");
+    private static final Pattern SAFE_PRN = Pattern.compile("[a-zA-Z0-9_\\.]+");
     
-    public static final String CONTENT_TYPE= "application/javascript";
+    private static final String CONTENT_TYPE= "application/javascript";
     
     @Override
     public void init(FilterConfig config) throws ServletException {

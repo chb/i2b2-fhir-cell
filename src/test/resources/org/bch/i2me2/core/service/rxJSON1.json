@@ -1,0 +1,11 @@
+{
+  "RxHistorySegments":
+  {
+    "messageType": "RDS",
+    "msgCtrlID": "050045624",
+    "msgDateTime": "Feb 12, 2015 12:00:00 AM",
+    "sendingSystem": "RXHUB",
+    "rxRecsReturned": "ALL",
+    "statusMsg": ""
+  }
+}
