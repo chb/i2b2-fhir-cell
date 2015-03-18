@@ -36,9 +36,6 @@ public abstract class Mapper {
     // The order in which the xml tags will appear in the xml pdo
     private final List <XmlPdoTag> orderXmlTags = new ArrayList<>();
 
-    // The concept_cd code when no NDC code is found
-    private final String NO_CONCEPT_CD = "NO_NDC_CODE";
-
 	// Tab: 4 blank spaces
 	private static final String TAB = "    ";
 	/**
@@ -457,13 +454,6 @@ public abstract class Mapper {
                 } else if (doFilter) {
                     newElem = filterExtra(elem, jsonDataMap, jsonDataMapInArray, tag);
                 }
-                String conceptCD = this.getTagValueLine(newElem, XmlPdoObservationTag.TAG_CONCEPT_CD.toString());
-                if (isNotSet(conceptCD)) {
-                    String newConceptCD = "<" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
-                    newConceptCD = newConceptCD + NO_CONCEPT_CD;
-                    newConceptCD = newConceptCD + "</" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
-                    newElem = newElem.replaceAll(conceptCD, newConceptCD);
-                }
             } else if (tag.toString().equals(XmlPdoTag.TAG_PATIENTS.toString())) {
 
                 // We eliminate any param from patient tag that has not been updated because they are optional
@@ -503,7 +493,7 @@ public abstract class Mapper {
      * @return True if the value has not been set. i.e, if F__ and __F are the delimiters, returns true is found both
      * of them.
      */
-    private boolean isNotSet(String value) {
+    protected boolean isNotSet(String value) {
         return value!=null && (value.indexOf(this.getDelPre())>0 && value.indexOf(this.getDepPost())>0);
     }
 

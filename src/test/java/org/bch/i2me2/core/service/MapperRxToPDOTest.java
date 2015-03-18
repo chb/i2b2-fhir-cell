@@ -338,7 +338,15 @@ public class MapperRxToPDOTest {
         String expectedXMLFileName = "rxXMLPDO9.xml";
         doTest(jsonFileName, expectedXMLFileName);
     }
-
+    
+    // test 10: testing NDC code is present but is empty
+    @Test
+    public void getPDOXMLDetail_10Test() throws Exception {
+        String jsonFileName = "rxJSON10.json";
+        String expectedXMLFileName = "rxXMLPDO10.xml";
+        doTest(jsonFileName, expectedXMLFileName);
+    }
+    
     // Just to generate a xmlpdo from old mapping
     @Ignore
     public void currentMapping() throws Exception {
@@ -367,14 +375,14 @@ public class MapperRxToPDOTest {
 
         // We place replace internal modifier_cd with the real ones
         xmlExpected = mapper.placeRealModifiersCodes(xmlExpected);
-        //if (jsonFile.equals("rxJSON0.json")) System.out.println(xmlResult);
+        //if (jsonFile.equals("rxJSON10.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
         //diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        //if (jsonFile.equals("rxJSON0.json")) System.out.println(diff.toString());
+        //if (jsonFile.equals("rxJSON10.json")) System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 

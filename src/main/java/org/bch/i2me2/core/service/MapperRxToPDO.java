@@ -2,9 +2,12 @@ package org.bch.i2me2.core.service;
 
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.util.mapper.Mapper;
+import org.bch.i2me2.core.util.mapper.Mapper.XmlPdoObservationTag;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.sun.xml.txw2.annotation.XmlElement;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -48,6 +51,7 @@ public class MapperRxToPDO extends Mapper{
     private static final String PATIENTSEGMENTS_SOURCESYSTEM_EVENT = "eventIdSourceSystemName";
 
     private static final String RXD_DATETIME_KEY = "rxd.dateTime";
+    private static final String RXD_DISPENSE_CODE_ID_KEY = "rxd.dispenseCodeIdentifier";
     private static final String PATIENTSEGMENTS_DOB_KEY = PATIENTSEGMENTS + "."+ PATIENTSEGMENTS_DOB;
     private static final String RX_HISTORYSEGMENT_MSGDATETIME_KEY = "RxHistorySegments.msgDateTime";
 
@@ -56,6 +60,9 @@ public class MapperRxToPDO extends Mapper{
 
     // The above key value will store CLAIM_VALUE if it is a Claim
     private static final String CLAIM_VALUE = "Claim";
+    
+    // The concept_cd code when no NDC code is found
+    private final String NO_CONCEPT_CD = "NO_NDC_CODE";
 
     MapperRxToPDO() {
         super();
@@ -86,7 +93,7 @@ public class MapperRxToPDO extends Mapper{
             //e.printStackTrace();
             throw e;
         } catch (Exception e) {
-            //e.printStackTrace();
+        	//e.printStackTrace();
             throw new I2ME2Exception(e.getMessage(), e);
         }
         return result;
@@ -190,9 +197,31 @@ public class MapperRxToPDO extends Mapper{
         if (isInClaim && isFill) return "";
         if (isInFill && !isFill) return "";
 
+        // We place empty concept is NDC code is not found
+        if (!jsonDataMapInArray.containsKey(RXD_DISPENSE_CODE_ID_KEY)) {
+        	// If concept_cd is not set or it is empty!
+            xmlElem = placeEmptyConceptCD(xmlElem);
+        } else {
+        	String val=jsonDataMapInArray.get(RXD_DISPENSE_CODE_ID_KEY);
+        	if (val == null) {
+        		xmlElem = placeEmptyConceptCD(xmlElem);
+        	} else if (val.trim().equals("")) {
+        		xmlElem = placeEmptyConceptCD(xmlElem);
+        	}
+        }
         return xmlElem;
     }
 
+    private String placeEmptyConceptCD(String elem) {
+    	String newElem = elem;
+    	String conceptCD = this.getTagValueLine(newElem, XmlPdoObservationTag.TAG_CONCEPT_CD.toString());
+    	String newConceptCD = "<" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
+        newConceptCD = newConceptCD + NO_CONCEPT_CD;
+        newConceptCD = newConceptCD + "</" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
+        newElem = newElem.replaceAll(conceptCD, newConceptCD);
+        return newElem;
+    }
+    
     private String getModifierCode(String xmlElem) {
         String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD.toString());
         String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");
