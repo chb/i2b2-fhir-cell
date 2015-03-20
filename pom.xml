@@ -182,10 +182,10 @@
             <version>${jboss.spec.javax.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>  
+        <dependency>
         	<groupId>org.jboss.shrinkwrap.resolver</groupId>  
-        	<artifactId>shrinkwrap-resolver-impl-maven</artifactId>  
-        	<scope>test</scope>  
+        	<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+        	<scope>test</scope>
     	</dependency>  
     </dependencies>
 

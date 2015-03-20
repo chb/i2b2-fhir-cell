@@ -17,6 +17,10 @@ public class AppConfig {
     public static String URL_IDM = "app.url.idm";
     public static String URL_I2B2_CRC = "app.url.i2b2.crc";
 
+    // Other constants
+    public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
+    public static String CONFIG_PROPERTIES_FILE= "config.properties";
+
     private static Properties prop = new Properties();
 
     /**
@@ -26,8 +30,7 @@ public class AppConfig {
         InputStream input = null;
 
         try {
-
-            String filename = "config.properties";
+            String filename = CONFIG_PROPERTIES_FILE;
             input = AppConfig.class.getResourceAsStream(filename);
             if (input == null) {
                 throw new I2ME2Exception("No " + filename + " has found!");
