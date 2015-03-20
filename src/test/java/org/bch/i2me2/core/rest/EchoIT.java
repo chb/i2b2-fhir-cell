@@ -52,7 +52,7 @@ public class EchoIT {
 		BufferedReader in;
 		HttpURLConnection con;
 		String response = "";
-		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");	
+		URL url = new URL("http://127.0.0.1:8080/i2me2/rest/echo/getEcho/hola");
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 		String authentication = "MedRec2:MedRecApp1_";
@@ -78,26 +78,26 @@ public class EchoIT {
 	@Test
 	public void getEchoNoPermIT() throws Exception {
 		HttpURLConnection con;
-		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");
+		URL url = new URL("http://127.0.0.1:8080/i2me2/rest/echo/getEcho/hola");
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 		String authentication = "MedRec:MedRe";
 		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
 		con.setRequestProperty("Authorization", "Basic " + encoding);
-		assertEquals(con.getResponseCode(), HttpURLConnection.HTTP_UNAUTHORIZED);
+		assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, con.getResponseCode());
 		con.disconnect();
 	}
 	
 	@Test
 	public void getEchoNoPerm2IT() throws Exception {
 		HttpURLConnection con;
-		URL url = new URL("http://localhost:8080/i2me2/rest/echo/getEcho/hola");
+		URL url = new URL("http://127.0.0.1:8080/i2me2/rest/echo/getEcho/hola");
 		con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 		String authentication = "MedRe:MedRecApp1_";
 		String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
 		con.setRequestProperty("Authorization", "Basic " + encoding);
-		assertEquals(con.getResponseCode(), HttpURLConnection.HTTP_UNAUTHORIZED);
+		assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, con.getResponseCode());
 		con.disconnect();
 	}
 }
