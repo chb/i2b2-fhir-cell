@@ -224,13 +224,73 @@
     
     <profiles>
         <profile>
-            <!-- The default profile skips all tests, though you can tune it to run just unit tests based on a custom pattern -->
-            <!-- Seperate profiles are provided for running all tests, including Arquillian tests that execute in the specified container -->
+            <!--
+            Default profile, for DEV
+            -->
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/dev</directory>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.4.3</version>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+            Profile for PROD
+            -->
+            <id>production</id>
+            <activation>
+                <property>
+                    <name>prod</name>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/prod</directory>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.4.3</version>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!--
+            Profile for QA
+            -->
+            <id>qa</id>
+            <activation>
+                <property>
+                    <name>qa</name>
+                </property>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/qa</directory>
+                    </resource>
+                </resources>
                 <plugins>
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>

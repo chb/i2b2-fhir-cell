@@ -11,7 +11,7 @@ sudo apt-get install unzip
 sudo apt-get install maven
 
 # To be changed in the near future.
-# We should move this info to the pom.xml of the project
+# We should move this to the pom.xml of the project
 cp /vagrant/settings.xml /home/vagrant/.m2
 
 # Install jboss as7

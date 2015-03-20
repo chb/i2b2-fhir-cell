@@ -1,0 +1,14 @@
+medicationName
+medicationNameAlter
+quantityCode
+quantitySystem
+medicationProductFormCodingCode
+medicationProductFormText
+medicationProductFormCodingSystem
+dosageAdditionalInstructions
+medicationProductIngredientAmount
+medicationProductIngredientAmountQualifier
+medicationProductIngredientAmountText
+quantityValue
+quantityUnits
+fillNumber

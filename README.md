@@ -7,6 +7,11 @@ Clone the project in a local directory, access it and:
 
     mvn clean package
 
+By default the war is configured for development environment. For QA and production environment respectively:
+
+    mvn clean package -Dqa
+    mvn clean package -Dprod
+
 It will execute automatically all unit tests. To execute unit tests without compiling:
 
     mvn test
@@ -43,11 +48,11 @@ It requires an administration user of JBoss, which can be added in the JBoss ser
 
 If deployed in a local workbench with default configuration parameters the following URL should response a welcome message:
 
-    http://localhost:8080/i2me2
+    http://127.0.0.1:8080/i2me2
     
 There is also a getEcho Rest method that can be tested in the browser as follows:
 
-    http://localhost:8080/i2me2/rest/echo/getEcho/testing_the_echo
+    http://127.0.0.1:8080/i2me2/rest/echo/getEcho/testing_the_echo
     
 It should produce the following JSON String
 
@@ -57,6 +62,33 @@ It should produce the following JSON String
 
 The easiest way is to create a JBoss Admin user in i2b2 server and use the Admin web application at port 9990 to upload the generated war file.    
 
+# Setting Development Environment with VAGRANT (using VirtualBox and ubuntu precise 32)
+
+Grap the box precise32:
+
+    vagrant box add precise32 file://{path to precise32.box}
+
+or
+
+    vagrant box add hashicorp/precise32
+
+Once source code is cloned, in the root of the project:
+
+    vagrant up
+
+It it's the first execution, it will provision automatically by executing the file 'bootstrap.sh' in the VM.
+
+To connect to the VM
+
+    vagrant ssh
+
+In the VM, the directory /vagrant is synchronized with the root host source folder.
+The ports mapping redirects guess port 8080 to 8888. It can be changed in the vagrant configuration file.
+So, from the host it is possible to access the VM as
+
+    http://127.0.0.1:8888
 
 
- 
+
+
+
