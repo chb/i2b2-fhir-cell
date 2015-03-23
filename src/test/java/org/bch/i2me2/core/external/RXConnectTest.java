@@ -14,7 +14,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doThrow;
+
 /**
  *
  * Created by CH176656 on 3/23/2015.

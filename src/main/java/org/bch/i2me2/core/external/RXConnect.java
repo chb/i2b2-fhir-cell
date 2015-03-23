@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by CH176656 on 3/23/2015.
  */
-public class RXConnect {
+public class RXConnect extends WrapperAPI {
     public static String PARAM_FIRST_NAME="firstName";
     public static String PARAM_LAST_NAME="lastName";
     public static String PARAM_BIRTH_DATE="birthDate";
@@ -28,7 +28,6 @@ public class RXConnect {
     private String gender;
     private String zipCode;
 
-    @Inject HttpRequest http;
     /**
      * Return the json-formatted String of medications provided by RXConnect
      * @return The json-formatted string
@@ -122,10 +121,4 @@ public class RXConnect {
         this.zipCode = zipCode;
     }
 
-    //**************************
-    // For testing purposes only
-    //**************************
-    public void setHttp(HttpRequest http) {
-        this.http = http;
-    }
 }
