@@ -16,7 +16,8 @@ public class AppConfig {
 
     // The keys of the configuration parameters
     public static String URL_RXCONNECT = "app.url.rxconnect";
-    public static String URL_IDM = "app.url.idm";
+    public static String URL_IDM_RESOURCE = "app.url.idm.resource";
+    public static String URL_IDM_ID = "app.url.idm.id";
     public static String URL_I2B2_CRC = "app.url.i2b2.crc";
 
     public static String RXCONNECT_CREDENTIALS_FILE = "app.authfile.rxconnect";

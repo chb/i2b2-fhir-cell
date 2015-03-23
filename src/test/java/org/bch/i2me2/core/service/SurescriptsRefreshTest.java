@@ -13,7 +13,8 @@ public class SurescriptsRefreshTest {
     @Test
     public void test1() throws Exception {
         System.out.println(AppConfig.getProp(AppConfig.URL_RXCONNECT));
-        System.out.println(AppConfig.getProp(AppConfig.URL_IDM));
+        System.out.println(AppConfig.getProp(AppConfig.URL_IDM_RESOURCE));
+        System.out.println(AppConfig.getProp(AppConfig.URL_IDM_ID));
         System.out.println(AppConfig.getProp(AppConfig.URL_I2B2_CRC));
     }
 }

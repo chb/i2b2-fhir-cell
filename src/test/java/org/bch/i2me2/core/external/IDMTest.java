@@ -39,20 +39,23 @@ public class IDMTest {
         idm.setHttp(http);
     }
 
+    // *************************
+    // TESTING getPersonalInfoId
+    // *************************
     // Test token
     @Test
-    public void getPersonalInormationTokenTest() throws Exception {
+    public void getPersonalSubjectIdTokenTest() throws Exception {
 
         // null
         try {
-            idm.getPersonalInormation(null);
+            idm.getPersonalSubjectId(null);
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(IDM.PARAM_TOKEN));
         }
 
         // empty
         try {
-            idm.getPersonalInormation("");
+            idm.getPersonalInfo("");
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(IDM.PARAM_TOKEN));
         }
@@ -60,11 +63,11 @@ public class IDMTest {
 
     // Return 400 code error
     @Test
-    public void getPersonalInormationExceptionPathIDMTest() throws Exception {
+    public void getPersonalSubjectIdExceptionPathIDMTest() throws Exception {
         when(resp.getResponseCode()).thenReturn(400);
         when(http.doPostGeneric(anyString(), anyString(), anyString(), anyString())).thenReturn(resp);
         try {
-            this.idm.getPersonalInormation(token);
+            this.idm.getPersonalSubjectId(token);
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains("Error code: 400"));
@@ -73,11 +76,60 @@ public class IDMTest {
 
     // Happy path. We check all returned params are fine
     @Test
-    public void getPersonalInormationHappyPathIDMTest() throws Exception {
+    public void getPersonalSubjectIdHappyPathIDMTest() throws Exception {
+        when(resp.getResponseCode()).thenReturn(200);
+        when(resp.getContent()).thenReturn(generateJSONSubjectId());
+        when(http.doPostGeneric(anyString(), anyString(), anyString(), anyString())).thenReturn(resp);
+        IDM.PersonalInfo pi = this.idm.getPersonalSubjectId(token);
+        assertNull(pi.getFirstName());
+        assertNull(pi.getLastName());
+        assertNull(pi.getBirthDate());
+        assertNull(pi.getGender());
+        assertNull(pi.getZipCode());
+        assertEquals(subjectId, pi.getSubjectId());
+    }
+
+    //**************************
+    // TEST getPersonalInfo
+    //**************************
+    // Test token
+    @Test
+    public void getPersonalInfoTokenTest() throws Exception {
+
+        // null
+        try {
+            idm.getPersonalInfo(null);
+        } catch (I2ME2Exception e) {
+            assertTrue(e.getMessage().contains(IDM.PARAM_TOKEN));
+        }
+
+        // empty
+        try {
+            idm.getPersonalInfo("");
+        } catch (I2ME2Exception e) {
+            assertTrue(e.getMessage().contains(IDM.PARAM_TOKEN));
+        }
+    }
+
+    // Return 400 code error
+    @Test
+    public void getPersonalInfoExceptionPathIDMTest() throws Exception {
+        when(resp.getResponseCode()).thenReturn(400);
+        when(http.doPostGeneric(anyString(), anyString(), anyString(), anyString())).thenReturn(resp);
+        try {
+            this.idm.getPersonalInfo(token);
+            fail();
+        } catch (I2ME2Exception e) {
+            assertTrue(e.getMessage().contains("Error code: 400"));
+        }
+    }
+    // Happy path. We check all returned params are fine
+    @Test
+    public void getPersonalInfoHappyPathIDMTest() throws Exception {
         when(resp.getResponseCode()).thenReturn(200);
         when(resp.getContent()).thenReturn(generateJSON());
         when(http.doPostGeneric(anyString(), anyString(), anyString(), anyString())).thenReturn(resp);
-        IDM.PersonalInfo pi = this.idm.getPersonalInormation(token);
+        IDM.PersonalInfo pi = this.idm.getPersonalInfo(token);
         assertEquals(firstName, pi.getFirstName());
         assertEquals(lastName, pi.getLastName());
         assertEquals(birthDate,pi.getBirthDate());
@@ -93,7 +145,14 @@ public class IDMTest {
         out += keyValue(IDM.BIRTH_DATE_KEY,birthDate ) + ",";
         out += keyValue(IDM.GENDER_KEY, gender) + ",";
         out += keyValue(IDM.ZIP_CODE_KEY, zip) + ",";
-        out += keyValue(IDM.SUBJECT_ID_KEY, subjectId) + ",";
+        out += keyValue(IDM.SUBJECT_ID_KEY, subjectId);
+        out += "}";
+        return out;
+    }
+
+    private String generateJSONSubjectId() {
+        String out = "{";
+        out += keyValue(IDM.SUBJECT_ID_KEY, subjectId);
         out += "}";
         return out;
     }

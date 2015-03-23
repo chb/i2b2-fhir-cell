@@ -36,10 +36,25 @@ public class IDM extends WrapperAPI {
      * @throws I2ME2Exception   If validation fails or if IDM returns 400 or higher
      * @throws IOException      If connection error
      */
-    public PersonalInfo getPersonalInormation(String token) throws I2ME2Exception, IOException {
+    public PersonalInfo getPersonalInfo(String token) throws I2ME2Exception, IOException {
+        return getInfo(token, AppConfig.URL_IDM_RESOURCE);
+    }
+
+    /**
+     * Makes an http request to IDM to obtain subject id
+     * @param token             The JWS token
+     * @return                  A PersonalInfo structure with only subjectId informed
+     * @throws I2ME2Exception   If validation fails or if IDM returns 400 or higher
+     * @throws IOException      If connection error
+     */
+    public PersonalInfo getPersonalSubjectId(String token) throws I2ME2Exception, IOException {
+        return getInfo(token, AppConfig.URL_IDM_ID);
+    }
+
+    private PersonalInfo getInfo(String token, String operation) throws I2ME2Exception, IOException {
         this.token = token;
         validate();
-        String url = generateURL();
+        String url = generateURL(operation);
         String content = generateContent();
         String auth = null;
         try {
@@ -51,10 +66,10 @@ public class IDM extends WrapperAPI {
         if (resp.getResponseCode()>= 400) throw new I2ME2Exception("IRM error. Error code: " +
                 resp.getResponseCode());
 
-        return getPersonalInfo(resp.getContent());
+        return parsePersonalInfo(resp.getContent());
     }
 
-    private PersonalInfo getPersonalInfo(String jsonInput) throws I2ME2Exception{
+    private PersonalInfo parsePersonalInfo(String jsonInput) throws I2ME2Exception{
         PersonalInfo pi = new PersonalInfo();
         try {
             JSONObject jsonRoot = new JSONObject(jsonInput);
@@ -90,9 +105,9 @@ public class IDM extends WrapperAPI {
         Validator.NotNullEmptyStr(this.token, PARAM_TOKEN);
     }
 
-    private String generateURL() {
+    private String generateURL(String operation) {
         StringBuffer sb = new StringBuffer();
-        sb.append(AppConfig.URL_RXCONNECT);
+        sb.append(operation);
         return sb.toString();
     }
 
