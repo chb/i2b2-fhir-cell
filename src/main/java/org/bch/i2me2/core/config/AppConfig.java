@@ -1,7 +1,9 @@
 package org.bch.i2me2.core.config;
 
+import org.apache.commons.io.IOUtils;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 
+import java.io.FileInputStream;
 import java.util.Properties;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +18,10 @@ public class AppConfig {
     public static String URL_RXCONNECT = "app.url.rxconnect";
     public static String URL_IDM = "app.url.idm";
     public static String URL_I2B2_CRC = "app.url.i2b2.crc";
+
+    public static String RXCONNECT_CREDENTIALS_FILE = "app.authfile.rxconnect";
+    public static String IDM_CREDENTIALS_FILE = "app.authfile.idm";
+
 
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
@@ -55,5 +61,28 @@ public class AppConfig {
             uploadConfiguration();
         }
         return prop.getProperty(key);
+    }
+
+    public static String getAuthCredentials(String key) throws IOException, I2ME2Exception {
+        String path = getProp(key);
+        String finalPath = path;
+        int i = path.indexOf("[");
+        int j = path.indexOf("]");
+        if (i<0 && j>=0) throw new I2ME2Exception("Missing [ in " + key);
+        if (i>=0) {
+            if (j<0) throw new I2ME2Exception("Missing ] in " + key);
+            String var = path.substring(i+1,j);
+            String aux = System.getenv(var);
+            if (aux == null) aux = "";
+            finalPath = path.replaceAll("\\[" + var + "\\]", aux);
+        }
+        FileInputStream inputStream = new FileInputStream(finalPath);
+        String out=null;
+        try {
+            out = IOUtils.toString(inputStream);
+        } finally {
+            inputStream.close();
+        }
+        return out;
     }
 }

@@ -8,7 +8,6 @@ package org.bch.i2me2.core.util;
 import org.bch.i2me2.core.config.AppConfig;
 
 import java.io.*;
-import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -18,23 +17,9 @@ import java.net.URL;
  */
 public class HttpRequest {
 
-    /**
-     * Performs a basic Post Request
-     * @param url The end point url containing all the sent parameters
-     * @param headerAuth The header string for the Authentication part. If is null, no Authorization header is placed
-     * @return the HttpResponse
-     * @throws IOException If problems with the http connection
-     */
-  /*  public Response doPostSimple(String url, String headerAuth) throws IOException {
-        HttpClient client = new DefaultHttpClient();
-        HttpPost request = new HttpPost(url);
-        if (headerAuth!=null) {
-            request.addHeader("Authorization", headerAuth);
-        }
-        HttpResponse httpResponse;
-        httpResponse = client.execute(request);
-        return new ResponseApache(httpResponse);
-    }*/
+    public Response doPostGeneric(String urlStr,  String headerAuth) throws IOException {
+        return doPostGeneric(urlStr, null, headerAuth, null);
+    }
 
     public Response doPostGeneric(String urlStr, String content, String headerAuth,
                                   String headerContentType) throws IOException {
@@ -66,6 +51,10 @@ public class HttpRequest {
         Response resp = new ResponseJava(con);
         con.disconnect();
         return resp;
+    }
+
+    public static String urlParam(String key, String value) {
+        return key + "=" + value;
     }
 
     public static class ResponseJava implements Response {
