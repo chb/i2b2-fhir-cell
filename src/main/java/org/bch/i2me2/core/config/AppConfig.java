@@ -15,15 +15,37 @@ import java.io.InputStream;
 public class AppConfig {
 
     // The keys of the configuration parameters
-    public static String URL_RXCONNECT = "app.url.rxconnect";
-    public static String URL_IDM_RESOURCE = "app.url.idm.resource";
-    public static String URL_IDM_ID = "app.url.idm.id";
-    public static String URL_I2B2_CRC = "app.url.i2b2.crc";
+    public static String EP_RXCONNECT =             "app.endpoint.rxconnect";
+    public static String EP_IDM_RESOURCE =          "app.endpoint.idm.resource";
+    public static String EP_IDM_ID =                "app.endpoint.idm.id";
+    public static String EP_I2B2_FR_SEND =          "app.endpoint.i2b2.fr.send";
+    public static String EP_I2B2_FR_UPLOAD =        "app.endpoint.i2b2.fr.upload";
 
-    public static String RXCONNECT_CREDENTIALS_FILE = "app.authfile.rxconnect";
-    public static String IDM_CREDENTIALS_FILE = "app.authfile.idm";
+    public static String HOST_RXCONNECT =           "app.host.rxconnect";
+    public static String HOST_I2B2_FR =             "app.host.i2b2.fr";
+    public static String HOST_IDM =                 "app.host.idm";
+
+    public static String PORT_RXCONNECT =           "app.port.rxconnect";
+    public static String PORT_IDM =                 "app.port.idm";
+    public static String PORT_I2B2_FR =             "app.port.i2b2.fr";
+
+    public static String NET_PROTOCOL_RXCONNECT =   "app.network.protocol.rxconnect";
+    public static String NET_PROTOCOL_IDM =         "app.network.protocol.idm";
+    public static String NET_PROTOCOL_I2B2_FR =     "app.network.protocol.i2b2.fr";
 
 
+    public static String CREDENTIALS_FILE_RXCONNECT =   "app.authfile.rxconnect";
+    public static String CREDENTIALS_FILE_IDM =         "app.authfile.idm";
+    public static String CREDENTIALS_FILE_I2B2 =        "app.authfile.i2b2.fr";
+
+    public static String FIELNAME_SOAP_TEMP_I2B2_FR_SEND =  "app.filename.soap.template.i2b2.fr.send";
+    public static String FIELNAME_SOAP_TEMP_I2B2_FR_UPLOAD ="app.filename.soap.template.i2b2.fr.upload";
+
+    public static String SOAP_ACTION_I2B2_FR_SEND =         "app.soap.action.i2b2.fr.send";
+    public static String FORMAT_DATE_I2B2 =                 "app.i2b2.format.date";
+    public static String I2B2_PROJECT_ID =                  "app.ib2b.projectid";
+    public static String I2B2_DOMAIN =                      "app.ib2b.domain";
+    public static String I2B2_FR_FILE_LOCATION =            "app.i2b2.fr.file.location";
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
     public static String CONFIG_PROPERTIES_FILE= "config.properties";

@@ -1,5 +1,6 @@
 package org.bch.i2me2.core.service;
 
+import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.util.mapper.Mapper;
 import org.bch.i2me2.core.util.mapper.Mapper.XmlPdoObservationTag;
@@ -259,12 +260,10 @@ public class MapperRxToPDO extends Mapper{
      */
     private String formatDateTime(String value) {
         String inputDataFormat = "MMM d, yyyy H:m:s a";
-        String outputDataFormat = "yyyy-MM-dd'T'HH:mm:ss.SS";
-
-        SimpleDateFormat dateFormatInput = new SimpleDateFormat(inputDataFormat);
-        SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
-
         try {
+            String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
+            SimpleDateFormat dateFormatInput = new SimpleDateFormat(inputDataFormat);
+            SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
             Date date = dateFormatInput.parse(value);
             return dateFormatOutput.format(date);
         } catch (ParseException e) {

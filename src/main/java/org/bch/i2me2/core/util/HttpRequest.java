@@ -1,10 +1,5 @@
 package org.bch.i2me2.core.util;
 
-//import org.apache.commons.io.IOUtils;
-//import org.apache.http.HttpResponse;
-//import org.apache.http.client.HttpClient;
-//import org.apache.http.client.methods.HttpPost;
-//import org.apache.http.impl.client.DefaultHttpClient;
 import org.bch.i2me2.core.config.AppConfig;
 
 import java.io.*;
@@ -95,6 +90,7 @@ public class HttpRequest {
             return this.content;
         }
     }
+
 /*
     public static class ResponseApache implements Response {
         private HttpResponse httpResponse;
@@ -123,10 +119,6 @@ public class HttpRequest {
 
     }
 */
-    public static interface Response {
-        public int getResponseCode();
-        public String getContent();
-    }
 
 }
 

@@ -33,7 +33,7 @@ public class HttpRequestIT {
 
         WebArchive ret = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(Echo.class, JaxRsActivator.class, JSONPRequestFilter.class, HttpRequest.class,
-                        AppConfig.class, I2ME2Exception.class)
+                        AppConfig.class, I2ME2Exception.class, Response.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
         return ret;
@@ -45,7 +45,7 @@ public class HttpRequestIT {
         String url = "http://127.0.0.1:8080/i2me2/rest/echo/echo?var=hola";
 
         HttpRequest req = new HttpRequest();
-        HttpRequest.Response resp = req.doPostGeneric(url, "aaa", null, null);
+        Response resp = req.doPostGeneric(url, "aaa", null, null);
         assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, resp.getResponseCode());
         String authentication = "MedRec2:MedRecApp1_";
         String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));

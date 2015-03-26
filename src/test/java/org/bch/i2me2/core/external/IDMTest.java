@@ -2,6 +2,7 @@ package org.bch.i2me2.core.external;
 
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.util.HttpRequest;
+import org.bch.i2me2.core.util.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,7 +22,7 @@ public class IDMTest {
     private HttpRequest http;
 
     @Mock
-    private HttpRequest.Response resp;
+    private Response resp;
 
     private static String token = "THISISATOKEN";
 

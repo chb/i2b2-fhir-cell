@@ -3,6 +3,8 @@ package org.bch.i2me2.core.external;
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.util.HttpRequest;
+import org.bch.i2me2.core.util.Response;
+import org.bch.i2me2.core.util.Utils;
 import org.bch.i2me2.core.util.Validator;
 
 import javax.inject.Inject;
@@ -40,20 +42,25 @@ public class RXConnect extends WrapperAPI {
         String url = generateURL();
         String auth = null;
         try {
-            auth = "BASIC " + AppConfig.getAuthCredentials(AppConfig.RXCONNECT_CREDENTIALS_FILE);
+            auth = "BASIC " + AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_RXCONNECT);
         } catch (IOException e) {
             // Nothing happens. We try without authentication
         }
 
-        HttpRequest.Response resp = http.doPostGeneric(url, auth);
+        Response resp = http.doPostGeneric(url, auth);
         if (resp.getResponseCode()>= 400) throw new I2ME2Exception("RXConnect error. Error code: " +
                 resp.getResponseCode());
         return resp.getContent();
     }
 
-    private String generateURL() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(AppConfig.URL_RXCONNECT);
+    private String generateURL() throws I2ME2Exception {
+        String baseUrl = Utils.generateURL(
+                AppConfig.getProp(AppConfig.NET_PROTOCOL_RXCONNECT),
+                AppConfig.getProp(AppConfig.HOST_RXCONNECT),
+                AppConfig.getProp(AppConfig.PORT_RXCONNECT),
+                AppConfig.getProp(AppConfig.EP_RXCONNECT));
+
+        StringBuffer sb = new StringBuffer(baseUrl);
         sb.append("?");
         sb.append(HttpRequest.urlParam(PARAM_FIRST_NAME, this.firstName));
         sb.append("&");
