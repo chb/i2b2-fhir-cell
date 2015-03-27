@@ -15,6 +15,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 //import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+import javax.inject.Inject;
+
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -25,6 +27,8 @@ import java.net.HttpURLConnection;
  */
 @RunWith(Arquillian.class)
 public class HttpRequestIT {
+    @Inject
+    HttpRequest httpRequest;
 
     @Deployment
     public static Archive<?> createTestArchive() {
@@ -41,17 +45,29 @@ public class HttpRequestIT {
 
     // Requires credentials in JBoss for MedRec2:MedRecApp1_ in the role RestClient
     @Test
-    public void doPostSimpleBasic() throws Exception {
+    public void doPostSimpleBasicIT() throws Exception {
         String url = "http://127.0.0.1:8080/i2me2/rest/echo/echo?var=hola";
 
-        HttpRequest req = new HttpRequest();
-        Response resp = req.doPostGeneric(url, "aaa", null, null);
+        Response resp = httpRequest.doPostGeneric(url, "aaa", null, null);
         assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED, resp.getResponseCode());
         String authentication = "MedRec2:MedRecApp1_";
         String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
 
-        resp = req.doPostGeneric(url, null, "BASIC " + encoding, null);
+        resp = httpRequest.doPostGeneric(url, null, "BASIC " + encoding, null);
         assertEquals(HttpURLConnection.HTTP_OK, resp.getResponseCode());
         assertEquals("{\"var\":\"Echo: hola\"}", resp.getContent());
+    }
+
+    @Test
+    public void getEchoPostTestIT() throws Exception {
+        String url = "http://127.0.0.1:8080/i2me2/rest/echo/echoPost";
+        String content = "this is the content to send";
+        String authentication = "MedRec2:MedRecApp1_";
+        String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(authentication.getBytes("UTF-8"));
+        Response resp = httpRequest.doPostGeneric(url, content, "BASIC " + encoding, "text/plain");
+        assertEquals(HttpURLConnection.HTTP_OK, resp.getResponseCode());
+        String contentBack=resp.getContent();
+        assertEquals(content, contentBack);
+
     }
 }

@@ -36,7 +36,7 @@ public class SoapRequest {
      * @return              The response
      * @throws Exception
      */
-    public static SoapResponse sendSoap(String endPointURL, String xmlRequest, String action) throws Exception {
+    public SoapResponse sendSoap(String endPointURL, String xmlRequest, String action) throws Exception {
         return sendSoap(endPointURL, xmlRequest, action, null, null);
     }
 
@@ -50,7 +50,7 @@ public class SoapRequest {
      * @return              The response
      * @throws Exception
      */
-    public static SoapResponse sendSoap(String endpointURL, String xmlRequest, String action, String fileName,
+    public SoapResponse sendSoap(String endpointURL, String xmlRequest, String action, String fileName,
                                   String fileData) throws IOException {
         OMElement getFr = getFrPayLoad(xmlRequest);
         Options options = new Options();

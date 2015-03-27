@@ -46,6 +46,9 @@ public class AppConfig {
     public static String I2B2_PROJECT_ID =                  "app.ib2b.projectid";
     public static String I2B2_DOMAIN =                      "app.ib2b.domain";
     public static String I2B2_FR_FILE_LOCATION =            "app.i2b2.fr.file.location";
+
+    public static String REST_CONTENT_TYPE_I2B2_FR_UPLOAD=  "app.rest.contenttype.i2b2.fr.upload";
+
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
     public static String CONFIG_PROPERTIES_FILE= "config.properties";

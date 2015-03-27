@@ -45,6 +45,14 @@ public class Echo {
         }
     }
 
+    @POST
+    @Path("/echoPost")
+    @Produces("text/plain")
+    @Consumes("text/plain")
+    public Response postEchoExtended(String content, @Context SecurityContext sc) {
+        return Response.status(Response.Status.OK).entity(content).build();
+    }
+
     static public class ReturnDTO {
         private String var;
 

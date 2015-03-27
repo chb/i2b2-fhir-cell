@@ -40,7 +40,7 @@ public class RXConnectTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         rxconnect = new RXConnect();
-        rxconnect.setHttp(http);
+        rxconnect.setHttpRequest(http);
     }
 
     // First Name test

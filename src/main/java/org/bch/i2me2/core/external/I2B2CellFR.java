@@ -3,6 +3,7 @@ package org.bch.i2me2.core.external;
 import org.apache.commons.codec.binary.Hex;
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.i2me2.core.util.HttpRequest;
 import org.bch.i2me2.core.util.Response;
 import org.bch.i2me2.core.util.SoapRequest;
 import org.bch.i2me2.core.util.Utils;
@@ -18,7 +19,7 @@ import java.util.UUID;
 /**
  * Created by CH176656 on 3/25/2015.
  */
-public class I2B2CellFR {
+public class I2B2CellFR extends WrapperAPI {
 
     private static StringBuffer sendTemplate = new StringBuffer();
     private static StringBuffer uploadTemplate = new StringBuffer();
@@ -36,7 +37,10 @@ public class I2B2CellFR {
     }
 
     private String sendFile(String pdoxml) throws I2ME2Exception, IOException {
+        // Generate the file name
         String fileName = generateFileName();
+
+        // Get the credentials to access i2b2
         String credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
         String i2b2user="";
         String i2b2pwd="";
@@ -47,9 +51,11 @@ public class I2B2CellFR {
                 i2b2pwd = usrpwd[1];
             }
         }
-
+        // Prepare date
         SimpleDateFormat dateFormatOutput = new SimpleDateFormat(AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2));
         String dateTime = dateFormatOutput.format(new Date());
+
+        // Generate body soap request
         String i2b2Message = generateFileSendRequest(
                 dateTime,
                 AppConfig.getProp(AppConfig.I2B2_DOMAIN),
@@ -60,14 +66,18 @@ public class I2B2CellFR {
                 fileName,
                 calcFileHash(pdoxml));
 
+        // Generate the url
         String url = generateURLSend();
-        Response response = SoapRequest.sendSoap(
+
+        // Send the SOAP message
+        Response response = soapRequest.sendSoap(
                 url,
                 i2b2Message,
                 AppConfig.getProp(AppConfig.SOAP_ACTION_I2B2_FR_SEND),
                 fileName,
                 pdoxml);
-        if (response.getResponseCode()>400) {
+
+        if (response.getResponseCode()>=400) {
             throw new I2ME2Exception("I2B2 FR Send File Error");
         }
         return fileName;
@@ -81,12 +91,21 @@ public class I2B2CellFR {
                 AppConfig.getProp(AppConfig.EP_I2B2_FR_SEND));
     }
 
+    public String generateURLUpload() throws I2ME2Exception {
+        return Utils.generateURL(
+                AppConfig.getProp(AppConfig.NET_PROTOCOL_I2B2_FR),
+                AppConfig.getProp(AppConfig.HOST_I2B2_FR),
+                AppConfig.getProp(AppConfig.PORT_I2B2_FR),
+                AppConfig.getProp(AppConfig.EP_I2B2_FR_UPLOAD));
+    }
+
     private String generateFileName() {
         String filename= UUID.randomUUID().toString();
         return filename+".xml";
     }
 
     private void uploadFile(String fileName) throws I2ME2Exception, IOException {
+        // Get credentials
         String credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
         String i2b2user="";
         String i2b2pwd="";
@@ -97,10 +116,19 @@ public class I2B2CellFR {
                 i2b2pwd = usrpwd[1];
             }
         }
+
+        // Prepare date
         SimpleDateFormat dateFormatOutput = new SimpleDateFormat(AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2));
         String dateTime = dateFormatOutput.format(new Date());
+
+        // Prepare fullPath parameter
         String i2b2FileLocation = AppConfig.getProp(AppConfig.I2B2_FR_FILE_LOCATION);
         String fullPath = i2b2FileLocation + AppConfig.getProp(AppConfig.I2B2_PROJECT_ID) + "/" + fileName;
+
+        // Generate the url
+        String url = generateURLUpload();
+
+        // Generate the body message
         String i2b2Message = generateFileUploadRequest(
                 dateTime,
                 AppConfig.getProp(AppConfig.I2B2_DOMAIN),
@@ -110,7 +138,15 @@ public class I2B2CellFR {
                 fullPath,
                 fileName);
 
-        // TODO: MAKE A POST REST
+        // Get content type for http request
+        String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_FR_UPLOAD);
+
+        // Do POST REST call
+        Response response = httpRequest.doPostGeneric(url, i2b2Message, null, contentType);
+
+        if (response.getResponseCode()>=400) {
+            throw new I2ME2Exception("I2B2 FR Send File Error");
+        }
     }
 
     public static String generateFileSendRequest(String date, String i2b2Domain, String i2b2User,

@@ -37,7 +37,7 @@ public class IDMTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         idm = new IDM();
-        idm.setHttp(http);
+        idm.setHttpRequest(http);
     }
 
     // *************************

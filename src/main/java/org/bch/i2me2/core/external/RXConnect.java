@@ -47,7 +47,7 @@ public class RXConnect extends WrapperAPI {
             // Nothing happens. We try without authentication
         }
 
-        Response resp = http.doPostGeneric(url, auth);
+        Response resp = httpRequest.doPostGeneric(url, auth);
         if (resp.getResponseCode()>= 400) throw new I2ME2Exception("RXConnect error. Error code: " +
                 resp.getResponseCode());
         return resp.getContent();

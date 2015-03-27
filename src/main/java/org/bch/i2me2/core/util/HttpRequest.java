@@ -32,7 +32,7 @@ public class HttpRequest {
             con.setRequestProperty("Content-length", String.valueOf(content.length()));
         }
         if (headerContentType != null) {
-            con.setRequestProperty("Content-type: ", headerContentType);
+            con.setRequestProperty("Content-type", headerContentType);
         }
         if (headerAuth!=null) {
             con.setRequestProperty("Authorization", headerAuth);
@@ -58,7 +58,6 @@ public class HttpRequest {
         private int status;
 
         ResponseJava(HttpURLConnection con) throws IOException {
-            OutputStream out;
             BufferedReader in;
             String response = "";
             this.con = con;
