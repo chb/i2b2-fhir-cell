@@ -105,7 +105,7 @@ public class AppConfig {
         FileInputStream inputStream = new FileInputStream(finalPath);
         String out=null;
         try {
-            out = IOUtils.toString(inputStream);
+            out = IOUtils.toString(inputStream).trim();
         } finally {
             inputStream.close();
         }

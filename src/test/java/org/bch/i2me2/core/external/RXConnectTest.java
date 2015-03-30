@@ -45,13 +45,13 @@ public class RXConnectTest {
 
     // First Name test
     @Test
-    public void getMedicationListsFirstNameTest() throws Exception {
+    public void getMedicationsListFirstNameTest() throws Exception {
         fillAll();
 
         // Null
         this.rxconnect.setFirstName(null);
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_FIRST_NAME));
@@ -60,7 +60,7 @@ public class RXConnectTest {
         // Empty
         this.rxconnect.setFirstName("");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_FIRST_NAME));
@@ -69,13 +69,13 @@ public class RXConnectTest {
 
     // Last Name test
     @Test
-    public void getMedicationListsLastNameTest() throws Exception {
+    public void getMedicationsListLastNameTest() throws Exception {
         fillAll();
 
         // Null
         this.rxconnect.setLastName(null);
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_LAST_NAME));
@@ -84,7 +84,7 @@ public class RXConnectTest {
         // Empty
         this.rxconnect.setLastName("");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_LAST_NAME));
@@ -93,13 +93,13 @@ public class RXConnectTest {
 
     // birth Date test
     @Test
-    public void getMedicationListsBirthDateTest() throws Exception {
+    public void getMedicationsListBirthDateTest() throws Exception {
         fillAll();
 
         // Null
         this.rxconnect.setBirthDate(null);
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_BIRTH_DATE));
@@ -108,7 +108,7 @@ public class RXConnectTest {
         // Empty
         this.rxconnect.setBirthDate("");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_BIRTH_DATE));
@@ -117,7 +117,7 @@ public class RXConnectTest {
         // Wrong format
         this.rxconnect.setBirthDate("1957-05-01");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_BIRTH_DATE));
@@ -126,7 +126,7 @@ public class RXConnectTest {
         // Invalid date
         this.rxconnect.setBirthDate("19450230");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_BIRTH_DATE));
@@ -135,13 +135,13 @@ public class RXConnectTest {
 
     // Gender test
     @Test
-    public void getMedicationListsGenderTest() throws Exception {
+    public void getMedicationsListGenderTest() throws Exception {
         fillAll();
 
         // Null
         this.rxconnect.setGender(null);
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_GENDER));
@@ -150,7 +150,7 @@ public class RXConnectTest {
         // Empty
         this.rxconnect.setGender("");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_GENDER));
@@ -159,7 +159,7 @@ public class RXConnectTest {
         // Different than F and M
         this.rxconnect.setGender("R");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_GENDER));
@@ -168,13 +168,13 @@ public class RXConnectTest {
 
     // zip test
     @Test
-    public void getMedicationListsZipTest() throws Exception {
+    public void getMedicationsListZipTest() throws Exception {
         fillAll();
 
         // Null
         this.rxconnect.setZipCode(null);
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_ZIP_CODE));
@@ -183,7 +183,7 @@ public class RXConnectTest {
         // Empty
         this.rxconnect.setZipCode("");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_ZIP_CODE));
@@ -192,7 +192,7 @@ public class RXConnectTest {
         // Invalid format
         this.rxconnect.setZipCode("1234");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_ZIP_CODE));
@@ -201,7 +201,7 @@ public class RXConnectTest {
         // Invalid format
         this.rxconnect.setZipCode("1234-4565456");
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_ZIP_CODE));
@@ -211,7 +211,7 @@ public class RXConnectTest {
 
     // Happy path test
     @Test
-    public void getMedicationListsHappyPathTest() throws Exception {
+    public void getMedicationsListHappyPathTest() throws Exception {
         fillAll();
         String json = "JSONSTRING";
         when(resp.getResponseCode()).thenReturn(200);
@@ -220,37 +220,37 @@ public class RXConnectTest {
 
         // Make sure that with both "F" and "M" the call works
         this.rxconnect.setGender("F");
-        String out = this.rxconnect.getMedicationLists();
+        String out = this.rxconnect.getMedicationsList();
         verify(http, times(1)).doPostGeneric(anyString(), anyString());
         assertEquals(json, out);
 
         this.rxconnect.setGender("M");
-        out = this.rxconnect.getMedicationLists();
+        out = this.rxconnect.getMedicationsList();
         verify(http, times(2)).doPostGeneric(anyString(), anyString());
         assertEquals(json, out);
 
         // Make sure that with an extended zip code it still works
         this.rxconnect.setZipCode("12345-1234");
-        out = this.rxconnect.getMedicationLists();
+        out = this.rxconnect.getMedicationsList();
         verify(http, times(3)).doPostGeneric(anyString(), anyString());
         assertEquals(json, out);
 
         // Make sure that with an extended zip code it still works2
         this.rxconnect.setZipCode("12345 1234");
-        out = this.rxconnect.getMedicationLists();
+        out = this.rxconnect.getMedicationsList();
         verify(http, times(4)).doPostGeneric(anyString(), anyString());
         assertEquals(json, out);
     }
 
     // Exception path in case rxconnect returns >=400
     @Test
-    public void getMedicationListsExceptionPathRXTest() throws Exception {
+    public void getMedicationsListExceptionPathRXTest() throws Exception {
         fillAll();
         when(resp.getResponseCode()).thenReturn(400);
         when(http.doPostGeneric(anyString(), anyString())).thenReturn(resp);
 
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (I2ME2Exception e) {
             assertTrue(e.getMessage().contains("Error code: 400"));
@@ -259,12 +259,12 @@ public class RXConnectTest {
 
     // Exception path in case rxconnect throws IOException
     @Test
-    public void getMedicationListsExceptionIORXTest() throws Exception {
+    public void getMedicationsListExceptionIORXTest() throws Exception {
         fillAll();
         when(http.doPostGeneric(anyString(), anyString())).thenThrow(new IOException());
 
         try {
-            this.rxconnect.getMedicationLists();
+            this.rxconnect.getMedicationsList();
             fail();
         } catch (IOException e) {
             // totally fine

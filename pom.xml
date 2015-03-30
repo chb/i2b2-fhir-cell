@@ -322,6 +322,13 @@
             <!-- This profile will start a new JBoss AS instance, and execute the test, shutting it down when done -->
             <!-- Run with: mvn clean test -Parq-jbossas-managed -->
             <id>arq-jbossas-managed</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/dev</directory>
+                    </resource>
+                </resources>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>
@@ -335,6 +342,13 @@
             <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
             <!-- Run with: mvn clean test -Parq-jbossas-remote -->
             <id>arq-jbossas-remote</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/dev</directory>
+                    </resource>
+                </resources>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>

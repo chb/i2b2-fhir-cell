@@ -36,21 +36,34 @@ public class RXConnect extends WrapperAPI {
      * @throws I2ME2Exception If param validation fails or http response code is higher than 400
      * @throws IOException If connection errors are produced
      */
-    public String getMedicationLists() throws I2ME2Exception, IOException {
-
+    public String getMedicationsList() throws I2ME2Exception, IOException {
         validate();
         String url = generateURL();
         String auth = null;
         try {
-            auth = "BASIC " + AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_RXCONNECT);
+            String cred = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_RXCONNECT);
+            System.out.println("Credentials: " + cred);
+            javax.xml.bind.DatatypeConverter.printBase64Binary(cred.getBytes());
+            auth = "Basic " + new String(javax.xml.bind.DatatypeConverter.printBase64Binary(cred.getBytes()));
         } catch (IOException e) {
             // Nothing happens. We try without authentication
         }
-
-        Response resp = httpRequest.doPostGeneric(url, auth);
+        Response resp = getHttpRequest().doPostGeneric(url, auth);
         if (resp.getResponseCode()>= 400) throw new I2ME2Exception("RXConnect error. Error code: " +
                 resp.getResponseCode());
         return resp.getContent();
+    }
+
+
+    public String getMedicationsList(String firstName, String lastName,
+                                     String zipCode, String birthDate,
+                                     String gender) throws I2ME2Exception, IOException {
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setBirthDate(birthDate);
+        this.setZipCode(zipCode);
+        this.setGender(gender);
+        return this.getMedicationsList();
     }
 
     private String generateURL() throws I2ME2Exception {

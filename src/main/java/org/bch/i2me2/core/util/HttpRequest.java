@@ -25,6 +25,7 @@ public class HttpRequest {
         URL url = new URL(urlStr);
         con = (HttpURLConnection) url.openConnection();
 
+        con.setAllowUserInteraction(false);
         con.setDoOutput(true);
         con.setDoInput(true);
         con.setRequestMethod("POST");
@@ -35,14 +36,17 @@ public class HttpRequest {
             con.setRequestProperty("Content-type", headerContentType);
         }
         if (headerAuth!=null) {
+            System.out.println("Authorization:" + headerAuth);
             con.setRequestProperty("Authorization", headerAuth);
         }
+        System.out.println(con.getRequestProperties());
         if (content!=null) {
             out = con.getOutputStream();
             out.write(content.getBytes());
             out.flush();
             out.close();
         }
+
         Response resp = new ResponseJava(con);
         con.disconnect();
         return resp;
@@ -62,7 +66,8 @@ public class HttpRequest {
             String response = "";
             this.con = con;
             this.status = con.getResponseCode();
-            if (this.status > 203) {
+            System.out.println("RETURN CODE:" + this.status);
+            if (this.status >= 400) {
                 this.content=null;
                 return;
             }

@@ -11,11 +11,24 @@ import javax.inject.Inject;
 public class WrapperAPI {
 
     @Inject
-    protected HttpRequest httpRequest;
+    private HttpRequest httpRequest;
 
     @Inject
-    protected SoapRequest soapRequest;
+    private SoapRequest soapRequest;
 
+    public HttpRequest getHttpRequest() {
+        if (this.httpRequest==null) {
+            this.httpRequest=new HttpRequest();
+        }
+        return this.httpRequest;
+    }
+
+    public SoapRequest getSoapRequest() {
+        if (this.soapRequest==null) {
+            this.soapRequest = new SoapRequest();
+        }
+        return this.soapRequest;
+    }
     //**************************
     // For testing purposes only
     //**************************

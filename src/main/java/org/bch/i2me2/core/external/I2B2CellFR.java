@@ -70,7 +70,7 @@ public class I2B2CellFR extends WrapperAPI {
         String url = generateURLSend();
 
         // Send the SOAP message
-        Response response = soapRequest.sendSoap(
+        Response response = getSoapRequest().sendSoap(
                 url,
                 i2b2Message,
                 AppConfig.getProp(AppConfig.SOAP_ACTION_I2B2_FR_SEND),
@@ -142,7 +142,7 @@ public class I2B2CellFR extends WrapperAPI {
         String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_FR_UPLOAD);
 
         // Do POST REST call
-        Response response = httpRequest.doPostGeneric(url, i2b2Message, null, contentType);
+        Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, contentType);
 
         if (response.getResponseCode()>=400) {
             throw new I2ME2Exception("I2B2 FR Send File Error");

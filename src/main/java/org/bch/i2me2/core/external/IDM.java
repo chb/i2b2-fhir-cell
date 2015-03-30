@@ -64,7 +64,7 @@ public class IDM extends WrapperAPI {
         } catch (IOException e) {
             // Nothing happens. We try without authentication
         }
-        Response resp = httpRequest.doPostGeneric(url, content, auth, HTTP_TYPE_CONSUMES);
+        Response resp = getHttpRequest().doPostGeneric(url, content, auth, HTTP_TYPE_CONSUMES);
         if (resp.getResponseCode()>= 400) throw new I2ME2Exception("IRM error. Error code: " +
                 resp.getResponseCode());
 
