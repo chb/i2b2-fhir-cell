@@ -41,7 +41,12 @@ public class I2B2CellFR extends WrapperAPI {
         String fileName = generateFileName();
 
         // Get the credentials to access i2b2
-        String credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
+        String credentials=null;
+        try {
+            credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
+        } catch (IOException e) {
+            // It means the file does not exists
+        }
         String i2b2user="";
         String i2b2pwd="";
         if (credentials!=null) {
@@ -138,6 +143,8 @@ public class I2B2CellFR extends WrapperAPI {
                 fullPath,
                 fileName);
 
+        System.out.println(i2b2Message);
+        System.out.println(url);
         // Get content type for http request
         String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_FR_UPLOAD);
 
