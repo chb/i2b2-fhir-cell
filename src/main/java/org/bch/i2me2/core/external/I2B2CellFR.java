@@ -32,8 +32,9 @@ public class I2B2CellFR extends WrapperAPI {
      */
     public void pushPDOXML(String pdoxml) throws I2ME2Exception, IOException {
         loadTemplates();
-        String fileName = sendFile(pdoxml);
-        uploadFile(fileName);
+        //String fileName = sendFile(pdoxml);
+        uploadFile("test.xml");
+        //uploadFile(fileName);
     }
 
     private String sendFile(String pdoxml) throws I2ME2Exception, IOException {
@@ -73,7 +74,8 @@ public class I2B2CellFR extends WrapperAPI {
 
         // Generate the url
         String url = generateURLSend();
-
+        System.out.println(url);
+        System.out.println(i2b2Message);
         // Send the SOAP message
         Response response = getSoapRequest().sendSoap(
                 url,
@@ -82,9 +84,11 @@ public class I2B2CellFR extends WrapperAPI {
                 fileName,
                 pdoxml);
 
+        System.out.println("STATUS CODE SEND FILE:" + response.getResponseCode());
         if (response.getResponseCode()>=400) {
             throw new I2ME2Exception("I2B2 FR Send File Error");
         }
+
         return fileName;
     }
 
@@ -105,7 +109,8 @@ public class I2B2CellFR extends WrapperAPI {
     }
 
     private String generateFileName() {
-        String filename= UUID.randomUUID().toString();
+        //String filename= UUID.randomUUID().toString();
+        String filename= "test";
         return filename+".xml";
     }
 
@@ -149,11 +154,24 @@ public class I2B2CellFR extends WrapperAPI {
         String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_FR_UPLOAD);
 
         // Do POST REST call
-        Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, contentType);
-
-        if (response.getResponseCode()>=400) {
-            throw new I2ME2Exception("I2B2 FR Send File Error");
+        //Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, contentType);
+        try {
+            String out = getHttpRequest().sendRequest(i2b2Message, url);
+            System.out.println(out);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        /*
+        Response response=null;
+        try {
+            response = getSoapRequest().sendSoap(url, i2b2Message, null);
+        } catch (Exception e) {
+            // nothing
+        }
+*/
+//        if (response.getResponseCode()>=400) {
+ //           throw new I2ME2Exception("I2B2 FR Send File Error");
+  //      }
     }
 
     public static String generateFileSendRequest(String date, String i2b2Domain, String i2b2User,
@@ -162,6 +180,7 @@ public class I2B2CellFR extends WrapperAPI {
         return String.format(sendTemplate.toString(),
                 date, i2b2Domain, i2b2User, i2b2Pass, projectId, fileSize, fileName, fileHash, date);
     }
+
 
     private static String generateFileUploadRequest(String i2b2date, String i2b2Domain, String i2b2User,
                                                 String i2b2Pass, String projectId, String fullFilePath,

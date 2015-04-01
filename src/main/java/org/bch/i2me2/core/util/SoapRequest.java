@@ -61,7 +61,9 @@ public class SoapRequest {
 
         options.setTo(new EndpointReference(serviceURL));
 
-        options.setAction(action);
+        if (action!=null) {
+            options.setAction(action);
+        }
         options.setSoapVersionURI(SOAP11Constants.SOAP_ENVELOPE_NAMESPACE_URI);
 
         // Increase the time out to receive large attachments

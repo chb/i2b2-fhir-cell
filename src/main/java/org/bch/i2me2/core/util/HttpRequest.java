@@ -5,6 +5,9 @@ import org.bch.i2me2.core.config.AppConfig;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
+import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
  * Abstract functionality for REST calls
@@ -39,10 +42,9 @@ public class HttpRequest {
             System.out.println("Authorization:" + headerAuth);
             con.setRequestProperty("Authorization", headerAuth);
         }
-        System.out.println(con.getRequestProperties());
         if (content!=null) {
             out = con.getOutputStream();
-            out.write(content.getBytes());
+            out.write(content.getBytes("UTF-8"));
             out.flush();
             out.close();
         }
@@ -95,6 +97,22 @@ public class HttpRequest {
         }
     }
 
+    public String sendRequest(String requestXml, String url) throws Exception {
+        HttpClient client = new HttpClient();
+        PostMethod postMethod = new PostMethod(url);
+
+        postMethod.setRequestEntity(new InputStreamRequestEntity(
+                new ByteArrayInputStream(requestXml.getBytes("UTF-8"))));
+
+        postMethod.setRequestHeader("Content-type", "text/xml; charset=ISO-8859-1");
+        String responseXml = null;
+
+        int statusCode = client.executeMethod(postMethod);
+        responseXml = postMethod.getResponseBodyAsString();
+
+        postMethod.releaseConnection();
+        return responseXml;
+    }
 /*
     public static class ResponseApache implements Response {
         private HttpResponse httpResponse;
