@@ -9,12 +9,23 @@ import org.bch.i2me2.core.util.SoapRequest;
 import org.bch.i2me2.core.util.Utils;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.bch.i2me2.core.util.mapper.Mapper;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 /**
  * Created by CH176656 on 3/25/2015.
@@ -27,14 +38,15 @@ public class I2B2CellFR extends WrapperAPI {
     /**
      * Send a pdoxml file to i2b2 and uploads its content to the CRC cell
      * @param pdoxml            The pdo xml
+     * @return                  The response of the i2b2
      * @throws I2ME2Exception
      * @throws IOException
      */
-    public void pushPDOXML(String pdoxml) throws I2ME2Exception, IOException {
+    public UploadI2B2Response pushPDOXML(String pdoxml) throws I2ME2Exception, IOException {
         loadTemplates();
-        //String fileName = sendFile(pdoxml);
-        uploadFile("test.xml");
-        //uploadFile(fileName);
+        String fileName = sendFile(pdoxml);
+        //uploadFile("test.xml");
+        return uploadFile(fileName);
     }
 
     private String sendFile(String pdoxml) throws I2ME2Exception, IOException {
@@ -109,17 +121,17 @@ public class I2B2CellFR extends WrapperAPI {
     }
 
     private String generateFileName() {
-        //String filename= UUID.randomUUID().toString();
-        String filename= "test";
+        String filename= UUID.randomUUID().toString();
+        //String filename= "test";
         return filename+".xml";
     }
 
-    private void uploadFile(String fileName) throws I2ME2Exception, IOException {
+    private UploadI2B2Response uploadFile(String fileName) throws I2ME2Exception, IOException {
         // Get credentials
         String credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
-        String i2b2user="";
-        String i2b2pwd="";
-        if (credentials!=null) {
+        String i2b2user = "";
+        String i2b2pwd = "";
+        if (credentials != null) {
             String[] usrpwd = credentials.split(":");
             i2b2user = usrpwd[0];
             if (usrpwd.length > 1) {
@@ -147,31 +159,25 @@ public class I2B2CellFR extends WrapperAPI {
                 AppConfig.getProp(AppConfig.I2B2_PROJECT_ID),
                 fullPath,
                 fileName);
-
-        System.out.println(i2b2Message);
-        System.out.println(url);
         // Get content type for http request
         String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_FR_UPLOAD);
 
         // Do POST REST call
-        //Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, contentType);
+        Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, contentType);
+        //Response response = getHttpRequest().doPostGeneric(url, i2b2Message, contentType);
+
+        if (response.getResponseCode() >= 400) {
+            throw new I2ME2Exception("Error uploading I2B2 File: " + fileName);
+        }
+        UploadI2B2Response out=null;
         try {
-            String out = getHttpRequest().sendRequest(i2b2Message, url);
-            System.out.println(out);
+            out = new UploadI2B2Response(response.getContent());
         } catch (Exception e) {
             e.printStackTrace();
+            throw new I2ME2Exception("Error parsing xml file from I2B2.", e);
+
         }
-        /*
-        Response response=null;
-        try {
-            response = getSoapRequest().sendSoap(url, i2b2Message, null);
-        } catch (Exception e) {
-            // nothing
-        }
-*/
-//        if (response.getResponseCode()>=400) {
- //           throw new I2ME2Exception("I2B2 FR Send File Error");
-  //      }
+        return out;
     }
 
     public static String generateFileSendRequest(String date, String i2b2Domain, String i2b2User,
@@ -202,6 +208,51 @@ public class I2B2CellFR extends WrapperAPI {
                     AppConfig.getProp(AppConfig.FIELNAME_SOAP_TEMP_I2B2_FR_UPLOAD),
                     uploadTemplate, "\n");
         }
+    }
+
+    public static class UploadI2B2Response {
+        private static String TOTAL_RECORDS = "total_record";
+        private static String IGNORED_RECORDS = "ignored_record";
+        private static String INSERTED_RECORDS = "inserted_record";
+        private Document doc;
+
+        private String xmlResponse;
+        UploadI2B2Response(String xmlResponse) throws Exception {
+            this.xmlResponse=xmlResponse;
+            System.out.println(this.xmlResponse);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            InputSource is = new InputSource(new StringReader(xmlResponse));
+            this.doc = dBuilder.parse(is);
+        }
+
+        public int getTotalRecords(Mapper.XmlPdoTag xmlTag) {
+            return getValueFromNode(xmlTag, TOTAL_RECORDS);
+        }
+
+        public int getIgnoredRecords(Mapper.XmlPdoTag xmlTag) {
+            return getValueFromNode(xmlTag, IGNORED_RECORDS);
+        }
+
+        public int getInsertedRecords(Mapper.XmlPdoTag xmlTag) {
+            return getValueFromNode(xmlTag, INSERTED_RECORDS);
+        }
+
+        private int getValueFromNode(Mapper.XmlPdoTag xmlTag, String att) {
+            Element element = getElement(xmlTag);
+            if (element==null) return -1;
+            String totalStr = element.getAttribute(att);
+            return Integer.parseInt(totalStr);
+        }
+
+        private Element getElement(Mapper.XmlPdoTag xmlTag) {
+            NodeList nodeList = this.doc.getElementsByTagName(xmlTag.toStringAlter());
+            if (nodeList == null) return null;
+            if (nodeList.getLength() > 1) return null;
+            Node node = nodeList.item(0);
+            return (Element) node;
+        }
+
     }
 
     public static String calcFileHash(String fileData) {

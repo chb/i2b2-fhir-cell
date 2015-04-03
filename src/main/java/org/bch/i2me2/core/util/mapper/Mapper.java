@@ -44,24 +44,27 @@ public abstract class Mapper {
 	 *
 	 */
 	public static enum XmlPdoTag {
-		TAG_OBSERVATIONS ("observation_set", "observation"),
-		TAG_EVENTS ("event_set", "event"),
-		TAG_CONCEPTS ("concept_set", "concept"),
-		TAG_EIDS ("eid_set", "eid"),
-		TAG_PIDS ("pid_set", "pid"),
-		TAG_MODIFIERS ("modifier_set", "modifier"),
-		TAG_PATIENTS ("patient_set", "patient"),
-        TAG_REPOSITORY ("repository:patient_data", "");
+		TAG_OBSERVATIONS ("observation_set", "observation_set", "observation"),
+		TAG_EVENTS ("event_set", "event_set" , "event"),
+		TAG_CONCEPTS ("concept_set", "concept_set", "concept"),
+		TAG_EIDS ("eid_set","eventid_set", "eid"),
+		TAG_PIDS ("pid_set","pid_set", "pid"),
+		TAG_MODIFIERS ("modifier_set","modifier_set", "modifier"),
+		TAG_PATIENTS ("patient_set","patient_set", "patient"),
+        TAG_REPOSITORY ("repository:patient_data","repository:patient_data", "");
 		
 		private final String tagValue;
         private final String tagValueIn;
-		XmlPdoTag(String tagValue, String tagValueIn) {
+        private final String tagAlter;
+		XmlPdoTag(String tagValue, String tagAlter, String tagValueIn) {
             this.tagValueIn = tagValueIn;
             this.tagValue = tagValue;
+            this.tagAlter = tagAlter;
 		}
 		public String toString() {
             return this.tagValue;
 		}
+        public String toStringAlter() { return this.tagAlter; }
         public String getTagValueIn() {
             return this.tagValueIn;
         }

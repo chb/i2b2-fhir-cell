@@ -5,9 +5,6 @@ import org.bch.i2me2.core.config.AppConfig;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
-import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
  * Abstract functionality for REST calls
@@ -39,7 +36,6 @@ public class HttpRequest {
             con.setRequestProperty("Content-type", headerContentType);
         }
         if (headerAuth!=null) {
-            System.out.println("Authorization:" + headerAuth);
             con.setRequestProperty("Authorization", headerAuth);
         }
         if (content!=null) {
@@ -97,6 +93,47 @@ public class HttpRequest {
         }
     }
 
+/*
+ public Response doPostGeneric(String urlStr, String content, String contentType) throws IOException{
+        HttpClient client = new HttpClient();
+        PostMethod postMethod = new PostMethod(urlStr);
+
+        postMethod.setRequestEntity(new InputStreamRequestEntity(
+                new ByteArrayInputStream(content.getBytes("UTF-8"))));
+
+        System.out.println(urlStr);
+        System.out.println(content);
+
+        postMethod.setRequestHeader("Content-type", contentType);
+        //postMethod.setRequestHeader("Content-type", "text/xml; charset=ISO-8859-1");
+
+        return new ResponseApache(client, postMethod);
+    }
+
+    public static class ResponseApache implements Response {
+        private String content;
+        private int status;
+
+        ResponseApache(HttpClient httpClient, PostMethod postMethod) throws IOException {
+            this.status = httpClient.executeMethod(postMethod);
+            this.content = null;
+            if (this.status < 400) {
+                this.content = postMethod.getResponseBodyAsString();
+            }
+            System.out.println("Returned code:" + this.status);
+            System.out.println(this.content);
+            postMethod.releaseConnection();
+        }
+
+        @Override public int getResponseCode() {
+            return this.status;
+        }
+        @Override public String getContent() {
+            return this.content;
+        }
+    }
+
+
     public String sendRequest(String requestXml, String url) throws Exception {
         HttpClient client = new HttpClient();
         PostMethod postMethod = new PostMethod(url);
@@ -113,7 +150,7 @@ public class HttpRequest {
         postMethod.releaseConnection();
         return responseXml;
     }
-/*
+
     public static class ResponseApache implements Response {
         private HttpResponse httpResponse;
         String content;
