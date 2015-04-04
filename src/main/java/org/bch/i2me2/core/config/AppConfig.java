@@ -49,6 +49,9 @@ public class AppConfig {
 
     public static String REST_CONTENT_TYPE_I2B2_FR_UPLOAD=  "app.rest.contenttype.i2b2.fr.upload";
 
+    public static String I2B2_PDO_SOURCE_SURESCRIPT =       "app.i2b2.pdo.source.surescript";
+    public static String I2B2_PDO_SOURCE_BCH =              "app.i2b2.pdo.source.bch";
+
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
     public static String CONFIG_PROPERTIES_FILE= "config.properties";
