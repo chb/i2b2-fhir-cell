@@ -16,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,6 +36,11 @@ public class I2B2CellFR extends WrapperAPI {
     private static StringBuffer sendTemplate = new StringBuffer();
     private static StringBuffer uploadTemplate = new StringBuffer();
 
+    private static String MODULE = "[I2B2CELLFR]";
+    private static String OP_SEND_FILE = "[SEND_FILE]";
+    private static String OP_UP_FILE = "[UPLOAD_FILE]";
+    private static String OP_PUSH_PDO = "[PUSH_PDOXML]";
+
     /**
      * Send a pdoxml file to i2b2 and uploads its content to the CRC cell
      * @param pdoxml            The pdo xml
@@ -43,10 +49,18 @@ public class I2B2CellFR extends WrapperAPI {
      * @throws IOException
      */
     public UploadI2B2Response pushPDOXML(String pdoxml) throws I2ME2Exception, IOException {
-        loadTemplates();
+        this.log(Level.INFO, MODULE+OP_PUSH_PDO+"IN");
+        try {
+            loadTemplates();
+        } catch (IOException e) {
+            this.log(Level.SEVERE, MODULE+OP_PUSH_PDO+"Error loading templates");
+            throw e;
+        }
         String fileName = sendFile(pdoxml);
-        //uploadFile("test.xml");
-        return uploadFile(fileName);
+        this.log(Level.INFO, MODULE+OP_PUSH_PDO+"File:"+fileName+ " sent to i2b2");
+        UploadI2B2Response response = uploadFile(fileName);
+        this.log(Level.INFO, MODULE+OP_PUSH_PDO+"File:"+fileName+ " uploaded to i2b2");
+        return response;
     }
 
     private String sendFile(String pdoxml) throws I2ME2Exception, IOException {
@@ -98,6 +112,7 @@ public class I2B2CellFR extends WrapperAPI {
 
         System.out.println("STATUS CODE SEND FILE:" + response.getResponseCode());
         if (response.getResponseCode()>=400) {
+            this.log(Level.SEVERE, MODULE+OP_SEND_FILE+"I2B2 FR Send File Error.");
             throw new I2ME2Exception("I2B2 FR Send File Error");
         }
 
@@ -127,6 +142,7 @@ public class I2B2CellFR extends WrapperAPI {
     }
 
     private UploadI2B2Response uploadFile(String fileName) throws I2ME2Exception, IOException {
+        this.log(Level.INFO, MODULE+OP_UP_FILE + "IN");
         // Get credentials
         String credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
         String i2b2user = "";
@@ -167,13 +183,14 @@ public class I2B2CellFR extends WrapperAPI {
         //Response response = getHttpRequest().doPostGeneric(url, i2b2Message, contentType);
 
         if (response.getResponseCode() >= 400) {
+            this.log(Level.SEVERE, MODULE+OP_UP_FILE+ "Error uploading I2B2 File: " + fileName);
             throw new I2ME2Exception("Error uploading I2B2 File: " + fileName);
         }
         UploadI2B2Response out=null;
         try {
             out = new UploadI2B2Response(response.getContent());
         } catch (Exception e) {
-            e.printStackTrace();
+            this.log(Level.SEVERE, MODULE+OP_UP_FILE+ "Error parsing xml file from I2B2 response. File: " + fileName);
             throw new I2ME2Exception("Error parsing xml file from I2B2.", e);
 
         }
@@ -262,7 +279,7 @@ public class I2B2CellFR extends WrapperAPI {
             md = MessageDigest.getInstance("MD5");
             hash = new String(Hex.encodeHex(md.digest(fileData.getBytes())));
         } catch (NoSuchAlgorithmException e) {
-            // we will will never be here because MD5 exists...
+            // we will never be here because MD5 exists...
         }
 
         return hash;

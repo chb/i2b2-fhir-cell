@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.logging.Level;
 
 /**
  * Created by CH176656 on 3/23/2015.
@@ -28,6 +29,12 @@ public class IDM extends WrapperAPI {
     public static String GENDER_KEY = "sex";
     public static String ZIP_CODE_KEY = "zipCode";
     public static String SUBJECT_ID_KEY = "subjectId";
+
+    private static String MODULE = "[IDM]";
+    private static String OP_GET_INFO = "[GET_INFO";
+    private static String OP_VALIDATE = "[VALIDATE]";
+    private static String OP_PARSE_PER_INFO = "[PARSE_PERSONAL_INFO]";
+
 
     private String token;
 
@@ -54,6 +61,7 @@ public class IDM extends WrapperAPI {
     }
 
     private PersonalInfo getInfo(String token, String operation) throws I2ME2Exception, IOException {
+        this.log(Level.INFO, MODULE+OP_GET_INFO+operation + ": IN");
         this.token = token;
         validate();
         String url = generateURL(operation);
@@ -62,11 +70,15 @@ public class IDM extends WrapperAPI {
         try {
             auth = HTTP_AUTH_METHOD + " " + AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_IDM);
         } catch (IOException e) {
-            // Nothing happens. We try without authentication
+            this.log(Level.WARNING, MODULE+OP_GET_INFO+ operation + ": " +
+                    "No authentication credentials found for IDM. Trying without authentication");
         }
         Response resp = getHttpRequest().doPostGeneric(url, content, auth, HTTP_TYPE_CONSUMES);
-        if (resp.getResponseCode()>= 400) throw new I2ME2Exception("IRM error. Error code: " +
-                resp.getResponseCode());
+        if (resp.getResponseCode()>= 400) {
+            this.log(Level.SEVERE, MODULE+OP_GET_INFO + operation + ":" +
+                    "IDM error. Error code: " + resp.getResponseCode());
+            throw new I2ME2Exception("IDM error. Error code: " + resp.getResponseCode());
+        }
 
         return parsePersonalInfo(resp.getContent());
     }
@@ -83,6 +95,7 @@ public class IDM extends WrapperAPI {
             pi.setSubjectId(getJSONValue(jsonRoot, SUBJECT_ID_KEY));
 
         } catch (JSONException e){
+            this.log(Level.SEVERE, MODULE+OP_PARSE_PER_INFO+ "Error parsing returned json");
             throw new I2ME2Exception("json bad format", e);
         }
         return pi;
@@ -104,7 +117,12 @@ public class IDM extends WrapperAPI {
     }
 
     private void validate() throws I2ME2Exception {
-        Validator.NotNullEmptyStr(this.token, PARAM_TOKEN);
+        try {
+            Validator.NotNullEmptyStr(this.token, PARAM_TOKEN);
+        } catch (I2ME2Exception e) {
+            this.log(Level.SEVERE, MODULE+OP_VALIDATE+e.getMessage());
+            throw e;
+        }
     }
 
     private String generateURL(String operation) throws I2ME2Exception {

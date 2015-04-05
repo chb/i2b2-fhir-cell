@@ -1,11 +1,11 @@
 package org.bch.i2me2.core.service;
 
-import com.sun.xml.internal.ws.server.DefaultResourceInjector;
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.external.IDM;
 import org.bch.i2me2.core.external.RXConnect;
 import org.bch.i2me2.core.external.I2B2CellFR;
+import javax.inject.Inject;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
  * Refresh to 12b2 cell
  * Created by CH176656 on 3/19/2015.
  */
-public class SurescriptsRefresh {
+public class SurescriptsRefresh extends WrapperService{
 
     private String token;
 
@@ -27,6 +27,8 @@ public class SurescriptsRefresh {
     @Inject
     private I2B2CellFR i2b2;
 
+    @Inject
+    private MapperRxToPDO mapper;
 
     /**
      * Refresh medication list by making a new call to surescripts and storing the results to i2b2
@@ -51,8 +53,7 @@ public class SurescriptsRefresh {
                 phiOther.getGender());
 
         // Transform it to xml pdo
-        MapperRxToPDO mapper = new MapperRxToPDO();
-        String xmlPdo = mapper.getPDOXML(
+        String xmlPdo = this.getMapper().getPDOXML(
                 json,
                 phiId.getSubjectId(),
                 phiOther.getBirthDate(),
@@ -61,7 +62,7 @@ public class SurescriptsRefresh {
                 AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_SURESCRIPT));
 
         // Push it into i2b2 instance
-        this.getI2B2().pushPDOXML(xmlPdo);
+        I2B2CellFR.UploadI2B2Response response = this.getI2B2().pushPDOXML(xmlPdo);
 
     }
 
@@ -90,6 +91,12 @@ public class SurescriptsRefresh {
         return this.i2b2;
     }
 
+    private MapperRxToPDO getMapper() {
+        if (this.mapper==null) {
+            this.mapper = new MapperRxToPDO();
+        }
+        return this.mapper;
+    }
     // Only for testing purposes
 
     public void setIdm(IDM idm) {
@@ -102,5 +109,9 @@ public class SurescriptsRefresh {
 
     public void setI2B2(I2B2CellFR i2b2) {
         this.i2b2 = i2b2;
+    }
+
+    public void setMapper(MapperRxToPDO mapper) {
+        this.mapper=mapper;
     }
 }

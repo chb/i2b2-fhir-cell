@@ -16,13 +16,14 @@ import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * IME-28
  * Mapping between a given RxJSON string to PDO XML
  * Created by CH176656 on 3/10/2015.
  */
-public class MapperRxToPDO extends Mapper{
+public class MapperRxToPDO extends Mapper {
 
     // File names where claim and fill modifier_cd are listed
     private static final String CLAIM_MODIFIERS_FILE = "claimModifiers.i2me2";
@@ -65,6 +66,13 @@ public class MapperRxToPDO extends Mapper{
     // The concept_cd code when no NDC code is found
     private final String NO_CONCEPT_CD = "NO_NDC_CODE";
 
+    private static String MODULE = "[RX_TO_PDO]";
+    private static String OP_VALIDATE = "[VALIDATE]";
+    private static String OP_LOAD_MODIFIERS = "[LOAD_MODIFIERS]";
+    private static String OP_GET_PDOXML = "[GET_PDOXML]";
+    private static String OP_FORMAT_DATETIME = "[FORMAT_DATETIME]";
+
+
     MapperRxToPDO() {
         super();
         this.addKeyToFormat(RXD_DATETIME_KEY);
@@ -83,6 +91,7 @@ public class MapperRxToPDO extends Mapper{
      */
     public String getPDOXML(String rxJson, String subjectId, String dob, String gender, String source,
                             String sourceEvent) throws I2ME2Exception {
+        this.log(Level.INFO, MODULE+OP_GET_PDOXML+"IN");
         String result;
         validate(subjectId, dob, gender, source, sourceEvent);
         try {
@@ -91,10 +100,11 @@ public class MapperRxToPDO extends Mapper{
             String jsonExtra = generatePatientInfo(subjectId, dob, gender, source, sourceEvent);
             result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
-            //e.printStackTrace();
+            this.log(Level.SEVERE, MODULE+OP_GET_PDOXML+e.getMessage());
             throw e;
         } catch (Exception e) {
         	//e.printStackTrace();
+            this.log(Level.SEVERE, MODULE+OP_GET_PDOXML+e.getMessage());
             throw new I2ME2Exception(e.getMessage(), e);
         }
         return result;
@@ -124,51 +134,56 @@ public class MapperRxToPDO extends Mapper{
 
     private void validate(String subjectId, String dob, String gender, String source,
                           String sourceEvent) throws I2ME2Exception {
-        if (subjectId==null) throw new I2ME2Exception("SubjectId cannot be null");
-        if (subjectId.trim().equals("")) throw new I2ME2Exception("SubjectId cannot be empty");
         try {
-            Long.parseLong(subjectId.trim());
-        } catch (NumberFormatException e) {
-            throw new I2ME2Exception("SubjectId must be numeric", e);
-        }
-
-        if (dob!=null) {
-            String inputDataFormat = "yyyyMMdd";
-            String inputDataFormat2 = "yyyy-MM-dd";
-            SimpleDateFormat dateFormatInput = new SimpleDateFormat(inputDataFormat);
-            SimpleDateFormat dateFormatInput2 = new SimpleDateFormat(inputDataFormat2);
-            Date date;
+            if (subjectId==null) throw new I2ME2Exception("SubjectId cannot be null");
+            if (subjectId.trim().equals("")) throw new I2ME2Exception("SubjectId cannot be empty");
             try {
-                date = dateFormatInput2.parse(dob);
-                if (!dateFormatInput2.format(date).equals(dob)) {
-                    throw new I2ME2Exception("Invalid date:" + dob);
-                }
-            } catch (ParseException ee) {
+                Long.parseLong(subjectId.trim());
+            } catch (NumberFormatException e) {
+                throw new I2ME2Exception("SubjectId must be numeric", e);
+            }
+
+            if (dob!=null) {
+                String inputDataFormat = "yyyyMMdd";
+                String inputDataFormat2 = "yyyy-MM-dd";
+                SimpleDateFormat dateFormatInput = new SimpleDateFormat(inputDataFormat);
+                SimpleDateFormat dateFormatInput2 = new SimpleDateFormat(inputDataFormat2);
+                Date date;
                 try {
-                    date = dateFormatInput.parse(dob);
-                    if (!dateFormatInput.format(date).equals(dob)) {
+                    date = dateFormatInput2.parse(dob);
+                    if (!dateFormatInput2.format(date).equals(dob)) {
                         throw new I2ME2Exception("Invalid date:" + dob);
                     }
-                } catch (ParseException e) {
-                    throw new I2ME2Exception("Bad DOB format. Must be yyyyMMdd or yyyy-MM-dd", ee);
+                } catch (ParseException ee) {
+                    try {
+                        date = dateFormatInput.parse(dob);
+                        if (!dateFormatInput.format(date).equals(dob)) {
+                            throw new I2ME2Exception("Invalid date:" + dob);
+                        }
+                    } catch (ParseException e) {
+                        throw new I2ME2Exception("Bad DOB format. Must be yyyyMMdd or yyyy-MM-dd", ee);
+                    }
                 }
             }
-        }
 
-        if (gender!=null) {
-            String aux = gender.trim();
-            if (aux.length() > 1) throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
-            if (aux.length() == 1) {
-                if (!(aux.equals("F") || aux.equals("M"))) {
-                    throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+            if (gender!=null) {
+                String aux = gender.trim();
+                if (aux.length() > 1) throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+                if (aux.length() == 1) {
+                    if (!(aux.equals("F") || aux.equals("M"))) {
+                        throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+                    }
                 }
             }
-        }
 
-        if (source==null) throw new I2ME2Exception("Source cannot be null");
-        if (source.trim().equals("")) throw new I2ME2Exception("Source cannot be empty");
-        if (sourceEvent==null) throw new I2ME2Exception("Source event cannot be null");
-        if (sourceEvent.trim().equals("")) throw new I2ME2Exception("Source event cannot be empty");
+            if (source==null) throw new I2ME2Exception("Source cannot be null");
+            if (source.trim().equals("")) throw new I2ME2Exception("Source cannot be empty");
+            if (sourceEvent==null) throw new I2ME2Exception("Source event cannot be null");
+            if (sourceEvent.trim().equals("")) throw new I2ME2Exception("Source event cannot be empty");
+        } catch (I2ME2Exception e) {
+            this.log(Level.SEVERE, MODULE+OP_VALIDATE+e.getMessage());
+            throw e;
+        }
     }
 
     @Override
@@ -267,8 +282,12 @@ public class MapperRxToPDO extends Mapper{
             Date date = dateFormatInput.parse(value);
             return dateFormatOutput.format(date);
         } catch (ParseException e) {
+            this.log(Level.WARNING, MODULE+OP_FORMAT_DATETIME+"Parse datetime exception when formatting value:" +
+                    value +".Not formating");
             return value;
         } catch (Exception ee) {
+            this.log(Level.WARNING, MODULE+OP_FORMAT_DATETIME+"Unknown exception datetime formatting value:" +
+                    value + ". Returning empty string");
             return "";
         }
     }
@@ -314,34 +333,44 @@ public class MapperRxToPDO extends Mapper{
     }
 
     private void loadRealModifiers() throws Exception {
-        String realModifiers = readTextFile(REAL_MODIFIERS_FILE, ",");
-        String [] modifiers = realModifiers.split(",");
-        this.realModifiersCD = new HashMap<>();
-        for (String modifier: modifiers){
-            String [] codes = modifier.split(":");
-            this.realModifiersCD.put(codes[0].trim(), codes[1].trim());
+        try {
+            String realModifiers = readTextFile(REAL_MODIFIERS_FILE, ",");
+            String [] modifiers = realModifiers.split(",");
+            this.realModifiersCD = new HashMap<>();
+            for (String modifier: modifiers){
+                String [] codes = modifier.split(":");
+                this.realModifiersCD.put(codes[0].trim(), codes[1].trim());
+            }
+        } catch (Exception e) {
+            this.log(Level.SEVERE, MODULE+OP_LOAD_MODIFIERS+"Error loading real modifiers. Error message:"
+                    + e.getMessage());
+            throw e;
         }
     }
 
     private void loadModifiers() throws Exception {
+        try {
+            String fillModifiers = readTextFile(FILL_MODIFIERS_FILE, ",");
+            String claimModifiers = readTextFile(CLAIM_MODIFIERS_FILE, ",");
 
-        String fillModifiers = readTextFile(FILL_MODIFIERS_FILE, ",");
-        String claimModifiers = readTextFile(CLAIM_MODIFIERS_FILE, ",");
-
-        String [] fills = fillModifiers.split(",");
-        this.fillsModifiers = new ArrayList<>();
-        for (String name : fills) {
-            if (!name.trim().equals("")) {
-                this.fillsModifiers.add(name);
+            String [] fills = fillModifiers.split(",");
+            this.fillsModifiers = new ArrayList<>();
+            for (String name : fills) {
+                if (!name.trim().equals("")) {
+                    this.fillsModifiers.add(name);
+                }
             }
-        }
 
-        String [] claims = claimModifiers.split(",");
-        this.claimModifiers = new ArrayList<>();
-        for (String name : claims) {
-            if (!name.trim().equals("")) {
-                this.claimModifiers.add(name);
+            String [] claims = claimModifiers.split(",");
+            this.claimModifiers = new ArrayList<>();
+            for (String name : claims) {
+                if (!name.trim().equals("")) {
+                    this.claimModifiers.add(name);
+                }
             }
+        } catch (Exception e) {
+            this.log(Level.SEVERE, MODULE+OP_LOAD_MODIFIERS+"Error loading modifiers. Error message:" + e.getMessage());
+            throw e;
         }
     }
 
@@ -356,6 +385,7 @@ public class MapperRxToPDO extends Mapper{
             }
         } catch(Exception e) {
             e.printStackTrace();
+            throw e;
 
         } finally {
             in.close();
