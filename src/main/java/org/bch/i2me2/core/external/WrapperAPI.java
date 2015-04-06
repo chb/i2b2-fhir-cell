@@ -18,9 +18,7 @@ public class WrapperAPI {
     @Inject
     private SoapRequest soapRequest;
 
-    @Inject
-    private java.util.logging.Logger LOG;
-
+    private Logger LOG;
 
     protected void log(Level level, String message) {
         if (this.LOG == null) {
