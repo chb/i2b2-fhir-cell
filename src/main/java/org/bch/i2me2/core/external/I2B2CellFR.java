@@ -100,8 +100,7 @@ public class I2B2CellFR extends WrapperAPI {
 
         // Generate the url
         String url = generateURLSend();
-        System.out.println(url);
-        System.out.println(i2b2Message);
+
         // Send the SOAP message
         Response response = getSoapRequest().sendSoap(
                 url,
@@ -234,7 +233,8 @@ public class I2B2CellFR extends WrapperAPI {
         private Document doc;
 
         private String xmlResponse;
-        UploadI2B2Response(String xmlResponse) throws Exception {
+
+        public UploadI2B2Response(String xmlResponse) throws Exception {
             this.xmlResponse=xmlResponse;
             System.out.println(this.xmlResponse);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

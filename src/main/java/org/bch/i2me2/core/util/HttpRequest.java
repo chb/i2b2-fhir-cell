@@ -12,11 +12,6 @@ import java.net.URL;
  */
 public class HttpRequest {
 
-    public HttpRequest() {
-        System.setProperty("javax.net.ssl.keyStore","/etc/ssl/certs/cacerts");
-        System.setProperty("javax.net.ssl.keyStorePassword","changeit");
-    }
-
     public Response doPostGeneric(String urlStr,  String headerAuth) throws IOException {
         return doPostGeneric(urlStr, null, headerAuth, null);
     }

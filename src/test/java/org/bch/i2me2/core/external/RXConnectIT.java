@@ -16,6 +16,7 @@ import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ import static org.junit.Assert.*;
  * Created by CH176656 on 3/30/2015.
  */
 @RunWith(Arquillian.class)
-public class RXConnectIT {
+public class RXConnectIT extends AbstractIT {
 
     // Test case with data - Return ok. 6 claims and 53 fills
     private static String firstName="Bert";
@@ -52,34 +53,25 @@ public class RXConnectIT {
     private static String gender3="M";
     private static String zip3="55427";
 
-    // We simulate the injection
-    private RXConnect rxconnect = new RXConnect();
+    @Inject
+    private RXConnect rxconnect;
 
-    @Deployment
-    public static Archive<?> createTestArchive() {
-        MavenDependencyResolver resolver = DependencyResolvers.use(MavenDependencyResolver.class)
-                 .loadMetadataFromPom("pom.xml");
-        return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addAsLibraries(resolver.artifact("org.apache.axis2:axis2-transport-http:1.6.2").resolveAsFiles())
-                .addAsLibraries(resolver.artifact("org.apache.axis2:axis2-transport-local:1.6.2").resolveAsFiles())
-                .addAsLibraries(resolver.artifact("org.apache.axis2:axis2:1.6.2").resolveAsFiles())
-                .addAsLibraries(resolver.artifact("commons-io:commons-io:2.0.1").resolveAsFiles())
-                .addClasses(RXConnect.class, HttpRequest.class, RXConnectIT.class, JaxRsActivator.class,
-                        AppConfig.class, I2ME2Exception.class, Response.class, JSONPRequestFilter.class,
-                        WrapperAPI.class, SoapRequest.class, Validator.class, Utils.class)
-                        .addAsResource("org/bch/i2me2/core/config/config.properties",
-                                "org/bch/i2me2/core/config/config.properties")
-                                //.addAsWebInfResource("arquillian-ds.xml")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+    // We simulate the injection
+
+    @Before
+    public void setUp() {
+        /*
+        System.setProperty("javax.net.ssl.trustStore","/etc/ssl/certs/java/cacerts");
+        System.setProperty("javax.net.ssl.keyStore","/etc/ssl/certs/java/cacerts");
+        System.setProperty("javax.net.ssl.trustStorePassword","changeit");
+        System.setProperty("javax.net.ssl.keyStorePassword","changeit");
+        */
+        //rxconnect = new RXConnect();
     }
 
     // TODO: TO FIX
     @Test
     public void getMedicationsListCase_1_IT() throws Exception {
-        System.setProperty("javax.net.ssl.keyStore","/etc/ssl/certs/cacerts");
-        System.setProperty("javax.net.ssl.keyStorePassword","changeit");
-        Double version = Double.parseDouble(System.getProperty("java.specification.version"));
-        System.out.println("JAA VERSION:" + version);
         String resp = rxconnect.getMedicationsList(firstName, lastName,zip, birthDate, gender);
         JSONObject json = new JSONObject(resp);
         JSONObject rxhistory = json; //json.getJSONObject("RxHistorySegments");
@@ -107,8 +99,6 @@ public class RXConnectIT {
     // TODO: TO FIX
     @Test
     public void getMedicationsListCase_3_IT() throws Exception {
-        System.setProperty("javax.net.ssl.keyStore","/etc/ssl/certs/cacerts");
-        System.setProperty("javax.net.ssl.keyStorePassword","changeit");
         String resp = rxconnect.getMedicationsList(firstName3, lastName3, zip3, birthDate3, gender3);
         JSONObject json = new JSONObject(resp);
         JSONObject rxhistory = json;//json.getJSONObject("RxHistorySegments");

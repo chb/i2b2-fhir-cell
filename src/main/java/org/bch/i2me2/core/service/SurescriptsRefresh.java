@@ -57,7 +57,7 @@ public class SurescriptsRefresh extends WrapperService{
                 json,
                 phiId.getSubjectId(),
                 phiOther.getBirthDate(),
-                phiOther.getBirthDate(),
+                phiOther.getGender(),
                 AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH),
                 AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_SURESCRIPT));
 
