@@ -131,7 +131,7 @@ public class I2B2CellFR extends WrapperAPI {
                 AppConfig.getProp(AppConfig.NET_PROTOCOL_I2B2_FR),
                 AppConfig.getProp(AppConfig.HOST_I2B2_FR),
                 AppConfig.getProp(AppConfig.PORT_I2B2_FR),
-                AppConfig.getProp(AppConfig.EP_I2B2_FR_UPLOAD));
+                AppConfig.getProp(AppConfig.EP_I2B2_CRC_UPLOAD));
     }
 
     private String generateFileName() {

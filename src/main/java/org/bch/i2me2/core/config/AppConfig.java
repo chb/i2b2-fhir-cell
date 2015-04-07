@@ -19,7 +19,8 @@ public class AppConfig {
     public static String EP_IDM_RESOURCE =          "app.endpoint.idm.resource";
     public static String EP_IDM_ID =                "app.endpoint.idm.id";
     public static String EP_I2B2_FR_SEND =          "app.endpoint.i2b2.fr.send";
-    public static String EP_I2B2_FR_UPLOAD =        "app.endpoint.i2b2.fr.upload";
+    public static String EP_I2B2_CRC_UPLOAD =        "app.endpoint.i2b2.crc.upload";
+    public static String EP_I2B2_CRC_PDOREQUEST =   "app.endpoint.i2b2.crc.pdorequest";
 
     public static String HOST_RXCONNECT =           "app.host.rxconnect";
     public static String HOST_I2B2_FR =             "app.host.i2b2.fr";
