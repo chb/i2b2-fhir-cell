@@ -182,11 +182,26 @@
             <version>${jboss.spec.javax.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>  
+        <dependency>
         	<groupId>org.jboss.shrinkwrap.resolver</groupId>  
-        	<artifactId>shrinkwrap-resolver-impl-maven</artifactId>  
-        	<scope>test</scope>  
-    	</dependency>  
+        	<artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+        	<scope>test</scope>
+    	</dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-local</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-transport-http</artifactId>
+            <version>1.6.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -307,10 +322,18 @@
             <!-- This profile will start a new JBoss AS instance, and execute the test, shutting it down when done -->
             <!-- Run with: mvn clean test -Parq-jbossas-managed -->
             <id>arq-jbossas-managed</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/dev</directory>
+                    </resource>
+                </resources>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>
                     <artifactId>jboss-as-arquillian-container-managed</artifactId>
+                    <version>7.1.1.Final</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
@@ -320,6 +343,13 @@
             <!-- An optional Arquillian testing profile that executes tests in a remote JBoss AS instance -->
             <!-- Run with: mvn clean test -Parq-jbossas-remote -->
             <id>arq-jbossas-remote</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources/dev</directory>
+                    </resource>
+                </resources>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.as</groupId>

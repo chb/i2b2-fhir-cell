@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.i2me2.core.service.WrapperService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +21,7 @@ import org.json.JSONObject;
  * @author CH176656
  *
  */
-public abstract class Mapper {
+public abstract class Mapper extends WrapperService {
 	
 	// Name of the xml file that acts as template
 	//public static String XML_MAP_FILE_NAME="xmlpdoTemplate.xml";
@@ -44,24 +46,27 @@ public abstract class Mapper {
 	 *
 	 */
 	public static enum XmlPdoTag {
-		TAG_OBSERVATIONS ("observation_set", "observation"),
-		TAG_EVENTS ("event_set", "event"),
-		TAG_CONCEPTS ("concept_set", "concept"),
-		TAG_EIDS ("eid_set", "eid"),
-		TAG_PIDS ("pid_set", "pid"),
-		TAG_MODIFIERS ("modifier_set", "modifier"),
-		TAG_PATIENTS ("patient_set", "patient"),
-        TAG_REPOSITORY ("repository:patient_data", "");
+		TAG_OBSERVATIONS ("observation_set", "observation_set", "observation"),
+		TAG_EVENTS ("event_set", "event_set" , "event"),
+		TAG_CONCEPTS ("concept_set", "concept_set", "concept"),
+		TAG_EIDS ("eid_set","eventid_set", "eid"),
+		TAG_PIDS ("pid_set","pid_set", "pid"),
+		TAG_MODIFIERS ("modifier_set","modifier_set", "modifier"),
+		TAG_PATIENTS ("patient_set","patient_set", "patient"),
+        TAG_REPOSITORY ("repository:patient_data","repository:patient_data", "");
 		
 		private final String tagValue;
         private final String tagValueIn;
-		XmlPdoTag(String tagValue, String tagValueIn) {
+        private final String tagAlter;
+		XmlPdoTag(String tagValue, String tagAlter, String tagValueIn) {
             this.tagValueIn = tagValueIn;
             this.tagValue = tagValue;
+            this.tagAlter = tagAlter;
 		}
 		public String toString() {
             return this.tagValue;
 		}
+        public String toStringAlter() { return this.tagAlter; }
         public String getTagValueIn() {
             return this.tagValueIn;
         }
@@ -118,6 +123,9 @@ public abstract class Mapper {
     // Will contains the key for which the abstract method 'format' will be called
     private List<String> keysToFormat = new ArrayList<>();
 
+    private static String MODULE = "[MAPPER]";
+    private static String OP_DO_MAP = "[DO_MAP]";
+
 	protected Mapper() {
 		initialize();
 	}
@@ -142,7 +150,7 @@ public abstract class Mapper {
         String xmlTemplate = loadXMLTemplate();
 
         if (jsonInput==null) {
-            throw new JSONException("Input cannot be null");
+            throw new JSONException(MODULE+OP_DO_MAP+"Input cannot be null");
         }
         JSONObject jsonRoot = new JSONObject(jsonInput);
         if (extraJsonKey!=null && extraJsonInput!=null) {
@@ -157,6 +165,7 @@ public abstract class Mapper {
             jsonArray = getJSONArray(jsonRoot);
         } catch (JSONException e) {
             // it's ok. It means orders are not present
+            this.log(Level.WARNING, MODULE+OP_DO_MAP+"No orders found");
         }
 
         Map<String,String> emptyMap = new HashMap<>();
