@@ -1,0 +1,71 @@
+<ns7:request xmlns:ns7="http://www.i2b2.org/xsd/hive/msg/1.1/"
+              xmlns:ns2="http://www.i2b2.org/xsd/hive/pdo/1.1/"
+              xmlns:ns4="http://www.i2b2.org/xsd/cell/crc/psm/1.1/"
+              xmlns:ns3="http://www.i2b2.org/xsd/cell/crc/pdo/1.1/"
+              xmlns:ns9="http://www.i2b2.org/xsd/cell/pm/1.1/"
+              xmlns:ns5="http://www.i2b2.org/xsd/cell/crc/loader/1.1/"
+              xmlns:ns6="http://www.i2b2.org/xsd/cell/fr/1.0/"
+              xmlns:ns10="http://www.i2b2.org/xsd/cell/crc/psm/querydefinition/1.1/"
+              xmlns:ns8="http://www.i2b2.org/xsd/hive/msg/result/1.1/"
+              xmlns:ns11="http://www.i2b2.org/xsd/cell/crc/psm/analysisdefinition/1.1/">
+    <message_header>
+        <i2b2_version_compatible>1.1</i2b2_version_compatible>
+        <hl7_version_compatible>2.4</hl7_version_compatible>
+        <sending_application>
+                <application_name>Manual</application_name>
+                <application_version>1.700</application_version>
+            </sending_application>
+        <sending_facility>
+                <facility_name>i2b2 Hive</facility_name>
+            </sending_facility>
+        <receiving_application>
+            <application_name>i2b2_DataRepositoryCell</application_name>
+            <application_version>1.700</application_version>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name>i2b2 Hive</facility_name>
+            </receiving_facility>
+        <datetime_of_message>%s</datetime_of_message>"
+        <security>
+            <domain>%s</domain>
+            <username>%s</username>
+            <password>%s</password>
+        </security>
+        <message_control_id>
+            <instance_num>0</instance_num>
+        </message_control_id>
+        <processing_id>
+            <processing_id>P</processing_id>
+            <processing_mode>I</processing_mode>
+        </processing_id>
+        <accept_acknowledgement_type>AL</accept_acknowledgement_type>
+        <application_acknowledgement_type>AL</application_acknowledgement_type>
+        <country_code>US</country_code>
+        <project_id>%s</project_id>
+    </message_header>
+        <message_body>
+            <ns3:pdoheader>
+                <patient_set_limit></patient_set_limit>
+                <estimated_time></estimated_time>
+                <request_type>getPDO_fromInputList</request_type>
+            </ns3:pdoheader>
+            <ns3:request xsi:type="ns3:GetPDOFromInputList_requestType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                <input_list>
+                    <pid_list min="1" max="1">
+                        <pid index="0" source="%s">%s</pid>
+                    </pid_list>
+                </input_list>
+                <filter_list>
+                    <panel name="panel0">
+                        <panel_number>0</panel_number>
+                        <panel_invert>0</panel_invert>
+                        <panel_date_from time="start_date" inclusive="yes">%s</panel_date_from>
+                    </panel>
+                </filter_list>
+                <output_option>
+                    <observation_set selectionfilter="min_value" blob="false" onlykeys="false" />
+                    <pid_set select="using_input_list" onlykeys="false"/>
+                </output_option>
+           </ns3:request>
+    </message_body>
+</ns7:request>

@@ -3,9 +3,7 @@ package org.bch.i2me2.core.external;
 import org.apache.commons.codec.binary.Hex;
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.util.HttpRequest;
 import org.bch.i2me2.core.util.Response;
-import org.bch.i2me2.core.util.SoapRequest;
 import org.bch.i2me2.core.util.Utils;
 
 import java.io.IOException;
@@ -19,7 +17,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.bch.i2me2.core.util.mapper.Mapper;
 import org.w3c.dom.Document;
@@ -175,7 +172,7 @@ public class I2B2CellFR extends WrapperAPI {
                 fullPath,
                 fileName);
         // Get content type for http request
-        String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_FR_UPLOAD);
+        String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_CRC_UPLOAD);
 
         // Do POST REST call
         Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, contentType);
@@ -236,7 +233,6 @@ public class I2B2CellFR extends WrapperAPI {
 
         public UploadI2B2Response(String xmlResponse) throws Exception {
             this.xmlResponse=xmlResponse;
-            System.out.println(this.xmlResponse);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(xmlResponse));

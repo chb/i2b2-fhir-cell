@@ -18,6 +18,11 @@ public class HttpRequest {
 
     public Response doPostGeneric(String urlStr, String content, String headerAuth,
                                   String headerContentType) throws IOException {
+        return doPostGeneric(urlStr, content, headerAuth, headerContentType, "POST");
+    }
+
+    public Response doPostGeneric(String urlStr, String content, String headerAuth,
+                                  String headerContentType, String operation) throws IOException {
 
         OutputStream out;
         HttpURLConnection con;
@@ -28,7 +33,7 @@ public class HttpRequest {
         con.setAllowUserInteraction(false);
         con.setDoOutput(true);
         con.setDoInput(true);
-        con.setRequestMethod("POST");
+        con.setRequestMethod(operation);
         if (content!=null) {
             con.setRequestProperty("Content-length", String.valueOf(content.length()));
         }
