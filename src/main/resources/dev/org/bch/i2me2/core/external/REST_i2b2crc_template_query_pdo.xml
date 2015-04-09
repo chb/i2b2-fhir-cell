@@ -59,7 +59,13 @@
                     <panel name="panel0">
                         <panel_number>0</panel_number>
                         <panel_invert>0</panel_invert>
-                        <panel_date_from time="start_date" inclusive="yes">%s</panel_date_from>
+                        <item>
+                        	<item_name></item_name>
+                        	<item_key></item_key>
+                        	<constrain_by_date>
+                        		<date_from time="start_date" inclusive="yes">%s</date_from>
+                        	</constrain_by_date>
+                        </item>
                     </panel>
                 </filter_list>
                 <output_option>
