@@ -13,7 +13,7 @@ public class I2B2QueryServiceIT {
 
     @Test
     public void test_HappyPath() throws Exception {
-        String patiendId ="1234";
+        String patiendId ="123456";
         String source = "BCH";
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
         Date date = format.parse("2015-02-20");
