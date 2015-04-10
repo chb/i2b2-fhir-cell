@@ -11,11 +11,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
-
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.traversal.NodeFilter;
 
 /**
  * Created by CH176656 on 4/7/2015.
@@ -77,6 +81,7 @@ public class I2B2QueryService extends WrapperAPI {
         System.out.println("Content-Type: " + contentType);
         System.out.println("URL: " + url);
         System.out.println(i2b2Message);
+        
         // Do POST REST call
         Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, null, "PUT");
         //Response response = getHttpRequest().doPostGeneric(url+"/"+ URLEncoder.encode("i2b2Message", "UTF-8"), null, null, null);
@@ -139,6 +144,55 @@ public class I2B2QueryService extends WrapperAPI {
             InputSource is = new InputSource(new StringReader(xmlResponse));
             this.doc = dBuilder.parse(is);
         }
-
     }
+    
+    private static final class ObservationFilter implements NodeFilter {
+    	private String tagElement=null;
+    	private String value=null;
+    	private Date startDate=null;
+    	// the filter operation with data -1, 0, 1 for less, equal or greater than the date in the xml element 
+    	private int op=0; 
+    	
+    	public ObservationFilter(String tagElement, String value) {
+    		this.tagElement = tagElement;
+    		this.value = value;
+    	}
+    	
+    	public ObservationFilter(String tagElement, String value, Date startDate, int op) {
+    		this.tagElement = tagElement;
+    		this.startDate=startDate;
+    	}
+        public short acceptNode(Node n) {
+        	
+          if (n instanceof Element) {
+        	  Element elem = (Element)n;
+        	  NodeList childs = elem.getElementsByTagName(this.tagElement);
+        	  if (childs.getLength()==0) return NodeFilter.FILTER_REJECT;
+        	  Element e = (Element) childs.item(0);
+        	  if (this.value != null) {
+        		  if (e.getTextContent().trim().equals(value)) return NodeFilter.FILTER_ACCEPT;
+        	  } else if (this.startDate != null) {
+        		  String dateText = e.getTextContent().trim();
+        		  SimpleDateFormat dateFormatOutput;
+        		  try {
+        			  dateFormatOutput = new SimpleDateFormat(AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2));
+        		  } catch (Exception ex) {
+        			  return NodeFilter.FILTER_REJECT;
+        		  }
+        		  Date dateTime;
+				try {
+					dateTime = dateFormatOutput.parse(dateText);
+				} catch (ParseException e1) {
+					return NodeFilter.FILTER_REJECT;
+				}
+        		  int result = dateTime.compareTo(startDate);
+        		  if (result==0 && this.op==0) return NodeFilter.FILTER_ACCEPT;
+        		  if (result <0 && this.op <0) return NodeFilter.FILTER_ACCEPT;
+        		  if (result >0 && this.op >0) return NodeFilter.FILTER_ACCEPT;
+        		  return NodeFilter.FILTER_REJECT;
+        	  }
+          }
+          return NodeFilter.FILTER_REJECT;
+        }
+    }   
 }
