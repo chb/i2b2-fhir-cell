@@ -4,16 +4,26 @@ import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.util.Response;
 import org.bch.i2me2.core.util.Utils;
+import org.bch.i2me2.core.util.mapper.Mapper;
+import org.w3c.dom.traversal.DocumentTraversal;
+import org.w3c.dom.traversal.NodeIterator;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.logging.Level;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -131,68 +141,149 @@ public class I2B2QueryService extends WrapperAPI {
         }
     }
 
+    // the response class
     public static class QueryResponse {
 
+        private static String START_DATE_TAG="start_date";
         private String xmlResponse;
         private Document doc;
 
+        private DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
         public QueryResponse(String xmlResponse) throws Exception {
             this.xmlResponse=xmlResponse;
-            System.out.println(this.xmlResponse);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(xmlResponse));
-            this.doc = dBuilder.parse(is);
+            this.doc = this.dBuilder.parse(is);
+        }
+
+        /**
+         * Returns the xml Document containing the observations whose start_date is behind (not equal) the given date
+         * @param date  The date
+         * @return      The doc xml
+         */
+        public Document getObservationsByStartDate(Date date) {
+            NodeList roots = this.doc.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
+            ObservationIterator iterator = new ObservationIterator(roots, START_DATE_TAG, date,1);
+            return getFilteredDocument(iterator);
+        }
+
+        /**
+         * Return the xml Document containing the observations that contain a 'tagName' element whose inner
+         * test is exactly 'value'
+         * @param tagName       The tag name
+         * @param value         The value
+         * @return              The doc xml
+         */
+        public Document getObservationsByValue(String tagName, String value) {
+            NodeList roots = this.doc.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
+            ObservationIterator iterator = new ObservationIterator(roots, tagName, value);
+            return getFilteredDocument(iterator);
+        }
+
+        private Document getFilteredDocument(ObservationIterator iterator) {
+            Document docOut = this.dBuilder.newDocument();
+            Element mainElement = docOut.createElement(Mapper.XmlPdoTag.TAG_OBSERVATIONS.toString());
+            docOut.appendChild(mainElement);
+            while (iterator.hasNext()) {
+                Node importedNode = docOut.importNode(iterator.next(), true);
+                mainElement.appendChild(importedNode);
+            }
+            return docOut;
+        }
+
+
+        public String documentToString(Document document) throws TransformerException {
+            DOMSource domSource = new DOMSource(document);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.transform(domSource, result);
+            return writer.toString();
         }
     }
-    
-    private static final class ObservationFilter implements NodeFilter {
+
+    // Implementation of an iterator to filter more comfortably
+    private static final class ObservationIterator implements Iterator<Node> {
     	private String tagElement=null;
     	private String value=null;
     	private Date startDate=null;
     	// the filter operation with data -1, 0, 1 for less, equal or greater than the date in the xml element 
-    	private int op=0; 
+    	private int op=0;
+        private int index=-1;
+        private NodeList nodeList;
     	
-    	public ObservationFilter(String tagElement, String value) {
+    	public ObservationIterator(NodeList roots, String tagElement, String value) {
     		this.tagElement = tagElement;
     		this.value = value;
+            this.nodeList = roots;
     	}
     	
-    	public ObservationFilter(String tagElement, String value, Date startDate, int op) {
+    	public ObservationIterator(NodeList roots, String tagElement, Date startDate, int op) {
     		this.tagElement = tagElement;
     		this.startDate=startDate;
+            this.op = op;
+            this.nodeList = roots;
     	}
-        public short acceptNode(Node n) {
-        	
-          if (n instanceof Element) {
-        	  Element elem = (Element)n;
-        	  NodeList childs = elem.getElementsByTagName(this.tagElement);
-        	  if (childs.getLength()==0) return NodeFilter.FILTER_REJECT;
-        	  Element e = (Element) childs.item(0);
-        	  if (this.value != null) {
-        		  if (e.getTextContent().trim().equals(value)) return NodeFilter.FILTER_ACCEPT;
-        	  } else if (this.startDate != null) {
-        		  String dateText = e.getTextContent().trim();
-        		  SimpleDateFormat dateFormatOutput;
-        		  try {
-        			  dateFormatOutput = new SimpleDateFormat(AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2));
-        		  } catch (Exception ex) {
-        			  return NodeFilter.FILTER_REJECT;
-        		  }
-        		  Date dateTime;
-				try {
-					dateTime = dateFormatOutput.parse(dateText);
-				} catch (ParseException e1) {
-					return NodeFilter.FILTER_REJECT;
-				}
-        		  int result = dateTime.compareTo(startDate);
-        		  if (result==0 && this.op==0) return NodeFilter.FILTER_ACCEPT;
-        		  if (result <0 && this.op <0) return NodeFilter.FILTER_ACCEPT;
-        		  if (result >0 && this.op >0) return NodeFilter.FILTER_ACCEPT;
-        		  return NodeFilter.FILTER_REJECT;
-        	  }
-          }
-          return NodeFilter.FILTER_REJECT;
+
+        @Override
+        public boolean hasNext() {
+            if (this.nodeList==null) return false;
+            if (this.nodeList.getLength()>this.index+1) {
+                int i = this.index;
+                boolean done=false;
+                do {
+                    i++;
+                    done = acceptNode(this.nodeList.item(i));
+                } while (!done && i+1 <this.nodeList.getLength());
+                this.index = i-1;
+                return done;
+            }
+            return false;
+        }
+        @Override
+        public void remove() {}
+
+        @Override
+        public Node next() {
+            if (hasNext()) {
+                this.index++;
+                return this.nodeList.item(this.index);
+            }
+            return null;
+        }
+
+        private boolean acceptNode(Node n) {
+            if (n instanceof Element) {
+                Element elem = (Element)n;
+                if (this.tagElement==null) return false;
+                NodeList childs = elem.getElementsByTagName(this.tagElement);
+                if (childs.getLength()==0) return false;
+                Element e = (Element) childs.item(0);
+                if (this.value != null) {
+                    if (e.getTextContent().trim().equals(value)) return true;
+                } else if (this.startDate != null) {
+                    String dateText = e.getTextContent().trim();
+                    SimpleDateFormat dateFormatOutput;
+                    try {
+                        dateFormatOutput = new SimpleDateFormat(AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2));
+                    } catch (Exception ex) {
+                        return false;
+                    }
+                    Date dateTime;
+                    try {
+                        dateTime = dateFormatOutput.parse(dateText);
+                    } catch (ParseException e1) {
+                        return false;
+                    }
+                    int result = dateTime.compareTo(startDate);
+                    if (result==0 && this.op==0) return true;
+                    if (result <0 && this.op <0) return true;
+                    if (result >0 && this.op >0) return true;
+                }
+            }
+            return false;
         }
     }   
 }
