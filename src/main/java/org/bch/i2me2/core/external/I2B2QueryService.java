@@ -163,7 +163,17 @@ public class I2B2QueryService extends WrapperAPI {
          * @return      The doc xml
          */
         public Document getObservationsByStartDate(Date date) {
-            NodeList roots = this.doc.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
+            return getObservationsByStartDate(this.doc, date);
+        }
+
+        /**
+         * The same as above but taking as a base the docBase document
+         * @param docBase   The xml doc base
+         * @param date      The date
+         * @return          The new xml doc
+         */
+        public Document getObservationsByStartDate(Document docBase, Date date) {
+            NodeList roots = docBase.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
             ObservationIterator iterator = new ObservationIterator(roots, START_DATE_TAG, date,1);
             return getFilteredDocument(iterator);
         }
@@ -176,7 +186,18 @@ public class I2B2QueryService extends WrapperAPI {
          * @return              The doc xml
          */
         public Document getObservationsByValue(String tagName, String value) {
-            NodeList roots = this.doc.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
+            return getObservationsByValue(this.doc, tagName, value);
+        }
+
+        /**
+         * Same as above but taking as a base the docBase document
+         * @param docBase       The base xml document
+         * @param tagName       The tag name
+         * @param value         The value
+         * @return              The new xml doc
+         */
+        public Document getObservationsByValue(Document docBase, String tagName, String value) {
+            NodeList roots = docBase.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
             ObservationIterator iterator = new ObservationIterator(roots, tagName, value);
             return getFilteredDocument(iterator);
         }

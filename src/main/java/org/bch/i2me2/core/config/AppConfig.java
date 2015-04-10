@@ -2,8 +2,12 @@ package org.bch.i2me2.core.config;
 
 import org.apache.commons.io.IOUtils;
 import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.i2me2.core.service.MedicationsManagement;
+import org.bch.i2me2.core.util.Utils;
 
 import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,6 +87,11 @@ public class AppConfig {
 
     private static Properties prop = new Properties();
 
+    private static Map<String, String> realModifiers = new HashMap<>();
+
+    // File name containing the list of real modifier codes
+    private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
+
     /**
      * Upload the configuration from config.properties files
      */
@@ -108,6 +117,23 @@ public class AppConfig {
                 }
             }
         }
+    }
+
+    public static Map<String, String> getRealModifiersMap() {
+        if (realModifiers.isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            try {
+                Utils.textFileToStringBuffer(MedicationsManagement.class, REAL_MODIFIERS_FILE, sb, ",");
+            } catch (Exception e) {
+                return realModifiers;
+            }
+            String [] modifiers = sb.toString().split(",");
+            for (String modifier: modifiers){
+                String [] codes = modifier.split(":");
+                realModifiers.put(codes[0].trim(), codes[1].trim());
+            }
+        }
+        return realModifiers;
     }
 
     public static String getProp(String key) throws I2ME2Exception {

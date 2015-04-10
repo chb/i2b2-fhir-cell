@@ -31,7 +31,7 @@ public class IDM extends WrapperAPI {
     public static String SUBJECT_ID_KEY = "subjectId";
 
     private static String MODULE = "[IDM]";
-    private static String OP_GET_INFO = "[GET_INFO";
+    private static String OP_GET_INFO = "[GET_INFO]";
     private static String OP_VALIDATE = "[VALIDATE]";
     private static String OP_PARSE_PER_INFO = "[PARSE_PERSONAL_INFO]";
 

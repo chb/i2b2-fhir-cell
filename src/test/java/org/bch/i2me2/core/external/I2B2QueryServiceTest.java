@@ -75,6 +75,7 @@ public class I2B2QueryServiceTest {
         list = doc.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
         assertEquals(0, list.getLength());
 
+
     }
 
     /**

@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Simple utilities to read files
@@ -48,5 +50,14 @@ public class Utils {
         }
         sb.append(endpoint);
         return sb.toString();
+    }
+
+    public static Date subtractDays(Date date, int days) {
+        Date dateWindow = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, -days);
+        dateWindow.setTime(c.getTime().getTime());
+        return dateWindow;
     }
 }
