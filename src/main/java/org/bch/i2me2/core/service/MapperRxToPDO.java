@@ -283,7 +283,7 @@ public class MapperRxToPDO extends Mapper {
             return dateFormatOutput.format(date);
         } catch (ParseException e) {
             this.log(Level.WARNING, MODULE+OP_FORMAT_DATETIME+"Parse datetime exception when formatting value:" +
-                    value +".Not formating");
+                    value +". No formating");
             return value;
         } catch (Exception ee) {
             this.log(Level.WARNING, MODULE+OP_FORMAT_DATETIME+"Unknown exception datetime formatting value:" +
