@@ -2,8 +2,12 @@ package org.bch.i2me2.core.config;
 
 import org.apache.commons.io.IOUtils;
 import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.i2me2.core.service.MedicationsManagement;
+import org.bch.i2me2.core.util.Utils;
 
 import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,48 +19,78 @@ import java.io.InputStream;
 public class AppConfig {
 
     // The keys of the configuration parameters
+
+    // The end points
     public static String EP_RXCONNECT =             "app.endpoint.rxconnect";
     public static String EP_IDM_RESOURCE =          "app.endpoint.idm.resource";
     public static String EP_IDM_ID =                "app.endpoint.idm.id";
     public static String EP_I2B2_FR_SEND =          "app.endpoint.i2b2.fr.send";
-    public static String EP_I2B2_FR_UPLOAD =        "app.endpoint.i2b2.fr.upload";
+    public static String EP_I2B2_CRC_UPLOAD =       "app.endpoint.i2b2.crc.upload";
+    public static String EP_I2B2_CRC_PDOREQUEST =   "app.endpoint.i2b2.crc.pdorequest";
 
+    // The hosts
     public static String HOST_RXCONNECT =           "app.host.rxconnect";
     public static String HOST_I2B2_FR =             "app.host.i2b2.fr";
+    public static String HOST_I2B2_CRC =             "app.host.i2b2.crc";
     public static String HOST_IDM =                 "app.host.idm";
 
+    // The ports
     public static String PORT_RXCONNECT =           "app.port.rxconnect";
     public static String PORT_IDM =                 "app.port.idm";
     public static String PORT_I2B2_FR =             "app.port.i2b2.fr";
+    public static String PORT_I2B2_CRC =             "app.port.i2b2.crc";
 
+    // The internet protocol (http|https)
     public static String NET_PROTOCOL_RXCONNECT =   "app.network.protocol.rxconnect";
     public static String NET_PROTOCOL_IDM =         "app.network.protocol.idm";
     public static String NET_PROTOCOL_I2B2_FR =     "app.network.protocol.i2b2.fr";
+    public static String NET_PROTOCOL_I2B2_CRC =     "app.network.protocol.i2b2.crc";
 
-
+    // The location file of the credentials
     public static String CREDENTIALS_FILE_RXCONNECT =   "app.authfile.rxconnect";
     public static String CREDENTIALS_FILE_IDM =         "app.authfile.idm";
     public static String CREDENTIALS_FILE_I2B2 =        "app.authfile.i2b2.fr";
 
+    // The message templates for i2b2 messages
     public static String FIELNAME_SOAP_TEMP_I2B2_FR_SEND =  "app.filename.soap.template.i2b2.fr.send";
     public static String FIELNAME_SOAP_TEMP_I2B2_FR_UPLOAD ="app.filename.soap.template.i2b2.fr.upload";
+    public static String FILENAME_REST_TEMP_I2B2_CRC_QUERYPDO ="app.filename.rest.template.i2b2.crc.querypdo";
 
+    // The SOAP action for sending files to I2B2 FR
     public static String SOAP_ACTION_I2B2_FR_SEND =         "app.soap.action.i2b2.fr.send";
+
+    // The I2B2 format string for dates
     public static String FORMAT_DATE_I2B2 =                 "app.i2b2.format.date";
+
+    // The I2B2 project id, domain and file location. These parameters are placed in the i2b2 messages
     public static String I2B2_PROJECT_ID =                  "app.ib2b.projectid";
     public static String I2B2_DOMAIN =                      "app.ib2b.domain";
     public static String I2B2_FR_FILE_LOCATION =            "app.i2b2.fr.file.location";
 
-    public static String REST_CONTENT_TYPE_I2B2_FR_UPLOAD=  "app.rest.contenttype.i2b2.fr.upload";
+    // The content-type of the rest requests
+    public static String REST_CONTENT_TYPE_I2B2_CRC_UPLOAD=  "app.rest.contenttype.i2b2.crc.upload";
+    public static String REST_CONTENT_TYPE_I2B2_CRC_QUERY=  "app.rest.contenttype.i2b2.crc.query";
 
+    // The patient and encounter source when data comming from surescripts and from bch
     public static String I2B2_PDO_SOURCE_SURESCRIPT =       "app.i2b2.pdo.source.surescript";
     public static String I2B2_PDO_SOURCE_BCH =              "app.i2b2.pdo.source.bch";
+
+    // The number of days for triggering surescript refresh
+    public static String DAYS_WINDOW_SURESCRIPT =           "app.i2b2.pdo.windowdays.surescript";
+
+    // The number of days that medication lists are returned
+    public static String DAYS_WINDOW =                      "app.i2b2.pdo.windowdays";
 
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
     public static String CONFIG_PROPERTIES_FILE= "config.properties";
 
     private static Properties prop = new Properties();
+
+    private static Map<String, String> realModifiers = new HashMap<>();
+
+    // File name containing the list of real modifier codes
+    private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
 
     /**
      * Upload the configuration from config.properties files
@@ -83,6 +117,23 @@ public class AppConfig {
                 }
             }
         }
+    }
+
+    public static Map<String, String> getRealModifiersMap() {
+        if (realModifiers.isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            try {
+                Utils.textFileToStringBuffer(MedicationsManagement.class, REAL_MODIFIERS_FILE, sb, ",");
+            } catch (Exception e) {
+                return realModifiers;
+            }
+            String [] modifiers = sb.toString().split(",");
+            for (String modifier: modifiers){
+                String [] codes = modifier.split(":");
+                realModifiers.put(codes[0].trim(), codes[1].trim());
+            }
+        }
+        return realModifiers;
     }
 
     public static String getProp(String key) throws I2ME2Exception {

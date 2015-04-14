@@ -170,7 +170,7 @@ public class MapperRxToPDOTest {
     }
 
     /**
-     * Test Exception paths related to zip code
+     * Test Exception paths related to source
      * @throws Exception
      */
     @Test
@@ -189,6 +189,32 @@ public class MapperRxToPDOTest {
         // Empty source
         try {
             mapper.getPDOXML(validJSON, subjectId, dob, gender, "", sourceEvent);
+            fail();
+        } catch (I2ME2Exception e) {
+            /* OK */
+        }
+    }
+
+    /**
+     * Test Exception paths related to source Event
+     * @throws Exception
+     */
+    @Test
+    public void getPDOXMLExceptionPathSourceEvent() throws Exception {
+        MapperRxToPDO mapper = new MapperRxToPDO();
+        mapper.setXmlMapFileTemplate(XML_TEMPLATE_FILE);
+
+        // Null source
+        try {
+            mapper.getPDOXML(validJSON, subjectId, dob, gender, source, null);
+            fail();
+        } catch (I2ME2Exception e) {
+            /* OK */
+        }
+
+        // Empty source
+        try {
+            mapper.getPDOXML(validJSON, subjectId, dob, gender, source, "");
             fail();
         } catch (I2ME2Exception e) {
             /* OK */

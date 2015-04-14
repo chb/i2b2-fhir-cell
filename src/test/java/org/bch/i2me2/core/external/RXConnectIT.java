@@ -1,19 +1,7 @@
 package org.bch.i2me2.core.external;
 
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.rest.Echo;
-import org.bch.i2me2.core.rest.JaxRsActivator;
-import org.bch.i2me2.core.util.*;
-import org.bch.i2me2.core.service.WrapperService;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
-import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -60,13 +48,7 @@ public class RXConnectIT extends AbstractIT {
 
     @Before
     public void setUp() {
-        /*
-        System.setProperty("javax.net.ssl.trustStore","/etc/ssl/certs/java/cacerts");
-        System.setProperty("javax.net.ssl.keyStore","/etc/ssl/certs/java/cacerts");
-        System.setProperty("javax.net.ssl.trustStorePassword","changeit");
-        System.setProperty("javax.net.ssl.keyStorePassword","changeit");
-        */
-        //rxconnect = new RXConnect();
+
     }
 
     // TODO: TO FIX
