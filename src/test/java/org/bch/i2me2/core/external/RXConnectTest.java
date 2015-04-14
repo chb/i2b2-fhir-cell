@@ -216,29 +216,29 @@ public class RXConnectTest {
         String json = "JSONSTRING";
         when(resp.getResponseCode()).thenReturn(200);
         when(resp.getContent()).thenReturn(json);
-        when(http.doPostGeneric(anyString(), anyString())).thenReturn(resp);
+        when(http.doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString())).thenReturn(resp);
 
         // Make sure that with both "F" and "M" the call works
         this.rxconnect.setGender("F");
         String out = this.rxconnect.getMedicationsList();
-        verify(http, times(1)).doPostGeneric(anyString(), anyString());
+        verify(http, times(1)).doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString());
         assertEquals(json, out);
 
         this.rxconnect.setGender("M");
         out = this.rxconnect.getMedicationsList();
-        verify(http, times(2)).doPostGeneric(anyString(), anyString());
+        verify(http, times(2)).doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString());
         assertEquals(json, out);
 
         // Make sure that with an extended zip code it still works
         this.rxconnect.setZipCode("12345-1234");
         out = this.rxconnect.getMedicationsList();
-        verify(http, times(3)).doPostGeneric(anyString(), anyString());
+        verify(http, times(3)).doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString());
         assertEquals(json, out);
 
         // Make sure that with an extended zip code it still works2
         this.rxconnect.setZipCode("12345 1234");
         out = this.rxconnect.getMedicationsList();
-        verify(http, times(4)).doPostGeneric(anyString(), anyString());
+        verify(http, times(4)).doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString());
         assertEquals(json, out);
     }
 
@@ -247,7 +247,7 @@ public class RXConnectTest {
     public void getMedicationsListExceptionPathRXTest() throws Exception {
         fillAll();
         when(resp.getResponseCode()).thenReturn(400);
-        when(http.doPostGeneric(anyString(), anyString())).thenReturn(resp);
+        when(http.doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString())).thenReturn(resp);
 
         try {
             this.rxconnect.getMedicationsList();
@@ -261,7 +261,7 @@ public class RXConnectTest {
     @Test
     public void getMedicationsListExceptionIORXTest() throws Exception {
         fillAll();
-        when(http.doPostGeneric(anyString(), anyString())).thenThrow(new IOException());
+        when(http.doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString())).thenThrow(new IOException());
 
         try {
             this.rxconnect.getMedicationsList();
