@@ -12,7 +12,7 @@ import javax.inject.Inject;
  * To change this template use File | Settings | File Templates.
  */
 public class WrapperService {
-    @Inject
+    //@Inject
     private Logger LOG;
 
 

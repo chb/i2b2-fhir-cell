@@ -1,5 +1,6 @@
 package org.bch.i2me2.core.rest;
 
+import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.external.IDM;
 import org.bch.i2me2.core.service.MedicationsManagement;
@@ -31,7 +32,9 @@ public class Medications extends WrapperRest {
 
     private static String MODULE = "[REST][MEDICATIONS]";
     private static String OP_GET_MEDICATIONS = "[GET_MEDICATIONS]";
+    private static String OP_GET_MEDICATIONS_BYPASS = "[GET_MEDICATIONS_BYPASS]";
     private static String OP_PUT_MEDICATIONS = "[PUT_MEDICATIONS]";
+
 
     @POST
     @Path("/getMedications/{subject_token}")
@@ -47,6 +50,33 @@ public class Medications extends WrapperRest {
         } catch (I2ME2Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+        return Response.status(Response.Status.OK).entity(pdoxml).build();
+    }
+
+    @POST
+    @Path("/getMedicationsByPass/{subjectId}")
+    @Produces("application/xml")
+    public Response getMedicationsByPass(@PathParam("subjectId") String subjectId, @Context SecurityContext sc) {
+        this.log(Level.INFO, MODULE + OP_GET_MEDICATIONS_BYPASS + "IN. Auth User:" + sc.getUserPrincipal().getName());
+        try {
+            if (AppConfig.getProp(AppConfig.BYPASS_IDM).trim().toLowerCase().equals("no")) {
+                Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+        String pdoxml;
+        try {
+            pdoxml = this.medicationsManagement.getMedications(subjectId, null);
+        } catch (I2ME2Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.OK).entity(pdoxml).build();

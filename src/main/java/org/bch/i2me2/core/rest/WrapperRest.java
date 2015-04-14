@@ -7,8 +7,9 @@ import java.util.logging.Logger;
 /**
  * Created by CH176656 on 4/10/2015.
  */
+
 public class WrapperRest {
-    @Inject
+    //@Inject
     private Logger LOG;
 
 

@@ -78,6 +78,9 @@ public class AppConfig {
     // The number of days for triggering surescript refresh
     public static String DAYS_WINDOW_SURESCRIPT =           "app.i2b2.pdo.windowdays.surescript";
 
+    // Whether to bypass IDM for getMedications. This also bypass refresh.
+    public static String BYPASS_IDM =                       "app.idm.bypass";
+
     // The number of days that medication lists are returned
     public static String DAYS_WINDOW =                      "app.i2b2.pdo.windowdays";
 

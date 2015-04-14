@@ -1,0 +1,62 @@
+package org.bch.i2me2.core.rest;
+
+import org.bch.i2me2.core.config.AppConfig;
+import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.i2me2.core.external.IDM;
+import org.bch.i2me2.core.external.RXConnect;
+import org.bch.i2me2.core.external.RXConnectIT;
+import org.bch.i2me2.core.external.WrapperAPI;
+import org.bch.i2me2.core.service.MapperI2ME2;
+import org.bch.i2me2.core.util.*;
+import org.bch.i2me2.core.util.mapper.Mapper;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
+
+/**
+ * Created by CH176656 on 4/14/2015.
+ */
+public class AbstractRestIT {
+    @Deployment
+    public static Archive<?> createTestArchive() {
+        MavenDependencyResolver resolver = DependencyResolvers.use(MavenDependencyResolver.class)
+                .loadMetadataFromPom("pom.xml");
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+                .addAsLibraries(resolver.artifact("org.apache.axis2:axis2-transport-http:1.6.2").resolveAsFiles())
+                .addAsLibraries(resolver.artifact("org.apache.axis2:axis2-transport-local:1.6.2").resolveAsFiles())
+                .addAsLibraries(resolver.artifact("org.apache.axis2:axis2:1.6.2").resolveAsFiles())
+                .addAsLibraries(resolver.artifact("commons-io:commons-io:2.0.1").resolveAsFiles())
+                .addAsLibraries(resolver.artifact("org.json:json:20090211").resolveAsFiles())
+                .addPackage(AppConfig.class.getPackage())
+                .addPackage(I2ME2Exception.class.getPackage())
+                .addPackage(IDM.class.getPackage())
+                .addPackage(Medications.class.getPackage())
+                .addPackage(MapperI2ME2.class.getPackage())
+                .addPackage(Response.class.getPackage())
+                .addPackage(Mapper.class.getPackage())
+                .addAsResource("org/bch/i2me2/core/external/REST_i2b2crc_template_query_pdo.xml",
+                        "org/bch/i2me2/core/external/REST_i2b2crc_template_query_pdo.xml")
+                .addAsResource("org/bch/i2me2/core/external/SOAP_i2b2fr_template_send.xml",
+                        "org/bch/i2me2/core/external/SOAP_i2b2fr_template_send.xml")
+                .addAsResource("org/bch/i2me2/core/external/SOAP_i2b2fr_template_upload.xml",
+                        "org/bch/i2me2/core/external/SOAP_i2b2fr_template_upload.xml")
+                .addAsResource("org/bch/i2me2/core/service/claimModifiers.i2me2",
+                        "org/bch/i2me2/core/service/claimModifiers.i2me2")
+                .addAsResource("org/bch/i2me2/core/service/fillModifiers.i2me2",
+                        "org/bch/i2me2/core/service/fillModifiers.i2me2")
+                .addAsResource("org/bch/i2me2/core/service/modifierCodes.i2me2",
+                        "org/bch/i2me2/core/service/modifierCodes.i2me2")
+                .addAsResource("org/bch/i2me2/core/config/config.properties",
+                        "org/bch/i2me2/core/config/config.properties")
+                .addAsResource("org/bch/i2me2/core/util/mapper/xmlpdoTemplate.xml",
+                        "org/bch/i2me2/core/util/mapper/xmlpdoTemplate.xml")
+                .addAsResource("org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRec.xml",
+                        "org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRec.xml")
+                         //.addAsWebInfResource("arquillian-ds.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+    }
+}

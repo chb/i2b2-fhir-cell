@@ -61,7 +61,12 @@ public class MedicationsManagement extends WrapperService {
 
         // we refresh surescripts if necessary
         if(sureScriptsNeedsRefresh(resp)) {
-            surescriptsRefresh.refresh(token);
+            try {
+                surescriptsRefresh.refresh(token);
+            } catch (Exception e) {
+                this.log(Level.SEVERE, MODULE+OP_GET_MED+e.getMessage());
+                this.log(Level.WARNING, MODULE+OP_GET_MED+"We continue without refreshing from surescripts");
+            }
         }
 
         // We generate the xml pdo
