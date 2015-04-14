@@ -10,14 +10,14 @@
     </pid_set>
     <eid_set>
         <eid>
-            <event_id patient_id="F__PatientSegments.patientId__F" patient_id_source="F__PatientSegments.patientIdSourceSystemName__F" source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id patient_id="F__PatientSegments.patientId__F" patient_id_source="F__PatientSegments.patientIdSourceSystemName__F" source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
         </eid>
     </eid_set>
     <event_set>
         <event>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
-            <start_date>F__RxHistorySegments.msgDateTime__F</start_date>
+            <start_date>F__msgDateTime__F</start_date>
         </event>
     </event_set>
     <patient_set>
@@ -29,29 +29,29 @@
     </patient_set>
     <observation_set>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
-            <start_date>F__RxHistorySegments.msgDateTime__F</start_date>
+            <start_date>F__msgDateTime__F</start_date>
             <observer_cd>@</observer_cd>
             <concept_cd>PBM_transaction</concept_cd>
-            <tval_char>F__RxHistorySegments.rxRecsReturned__F</tval_char>
+            <tval_char>F__rxRecsReturned__F</tval_char>
             <modifier_cd>rxRecsReturned</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
-            <start_date>F__RxHistorySegments.msgDateTime__F</start_date>
+            <start_date>F__msgDateTime__F</start_date>
             <observer_cd>@</observer_cd>
             <concept_cd>PBM_transaction</concept_cd>
-            <tval_char>F__RxHistorySegments.statusMsg__F</tval_char>
+            <tval_char>F__statusMsg__F</tval_char>
             <modifier_cd>statusMsg</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -64,7 +64,7 @@
         </observation>
 
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -75,7 +75,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -86,7 +86,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -97,7 +97,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -108,7 +108,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -119,7 +119,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -130,7 +130,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -141,7 +141,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -152,7 +152,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -163,7 +163,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -174,7 +174,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -185,7 +185,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -196,7 +196,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -207,7 +207,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -219,7 +219,7 @@
         </observation>
 
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -230,7 +230,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -241,7 +241,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -252,7 +252,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -263,7 +263,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -274,7 +274,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -285,7 +285,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -296,7 +296,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -307,7 +307,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -318,7 +318,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -329,7 +329,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -340,7 +340,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -351,7 +351,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>
@@ -362,7 +362,7 @@
             <instance_num>1</instance_num>
         </observation>
         <observation>
-            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__RxHistorySegments.msgCtrlID__F</event_id>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__msgCtrlID__F</event_id>
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__rxd.dateTime__F</start_date>
             <observer_cd>@</observer_cd>

@@ -40,7 +40,7 @@ public class MapperRxToPDO extends Mapper {
     private List<String> claimModifiers;
 
     // Some RX names
-    private static final String RX_HISTORYSEGMENT = "RxHistorySegments";
+    //private static final String RX_HISTORYSEGMENT = "RxHistorySegments";
     private static final String RX_HISTORYSEGMENT_RX_RECS_RETURNED = "rxRecsReturned";
     private static final String RX_HISTORYSEGMENT_STATUS_MSG = "statusMsg";
     private static final String RX_ORDERS = "orders";
@@ -55,7 +55,7 @@ public class MapperRxToPDO extends Mapper {
     private static final String RXD_DATETIME_KEY = "rxd.dateTime";
     private static final String RXD_DISPENSE_CODE_ID_KEY = "rxd.dispenseCodeIdentifier";
     private static final String PATIENTSEGMENTS_DOB_KEY = PATIENTSEGMENTS + "."+ PATIENTSEGMENTS_DOB;
-    private static final String RX_HISTORYSEGMENT_MSGDATETIME_KEY = "RxHistorySegments.msgDateTime";
+    private static final String RX_HISTORYSEGMENT_MSGDATETIME_KEY = "msgDateTime";
 
     // Used to discriminate between claim and fills
     private static final String ORD_ENTERING_ORGANIZATION_ALTERNATIVE_ID_KEY = "orc.enteringOrganizationAlternativeId";
@@ -264,8 +264,8 @@ public class MapperRxToPDO extends Mapper {
 
     @Override
     protected JSONArray getJSONArray(JSONObject root) throws JSONException {
-        JSONObject rxHistorySegments = root.getJSONObject(RX_HISTORYSEGMENT);
-        return rxHistorySegments.getJSONArray(RX_ORDERS);
+        //JSONObject rxHistorySegments = root.getJSONObject(RX_HISTORYSEGMENT);
+        return root.getJSONArray(RX_ORDERS);
     }
 
     /**
