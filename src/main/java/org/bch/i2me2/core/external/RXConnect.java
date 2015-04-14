@@ -55,7 +55,7 @@ public class RXConnect extends WrapperAPI {
         }
         System.out.println(url);
         System.out.println(auth);
-        Response resp = getHttpRequest().doPostGeneric(url, null, auth, null, "GET");
+        Response resp = getHttpRequest().doPostGeneric(url, null, auth, null, "POST");
         if (resp.getResponseCode()>= 400) {
             this.log(Level.SEVERE, MODULE+OP_GET_MEDS_LIST+"RXConnect error. Error code: " + resp.getResponseCode());
             throw new I2ME2Exception("RXConnect error. Error code: " + resp.getResponseCode());

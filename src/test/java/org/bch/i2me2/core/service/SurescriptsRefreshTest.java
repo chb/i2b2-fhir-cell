@@ -87,7 +87,7 @@ public class SurescriptsRefreshTest {
             "        <patient>\n" +
             "            <patient_id source=\"BCH\">" + id + "</patient_id>\n" +
             "            <param column=\"sex_cd\">" + gender + "</param>\n" +
-            "            <param column=\"birth_date\">"+ dobF +"</param>\n" +
+            "            <birth_date>"+ dobF +"</birth_date>\n" +
             "        </patient>\n" +
             "\n" +
             "    </patient_set>\n" +

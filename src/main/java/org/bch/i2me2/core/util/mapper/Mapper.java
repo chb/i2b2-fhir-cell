@@ -91,7 +91,7 @@ public abstract class Mapper extends WrapperService {
 
     public static enum XmlPdoPatientTag {
         TAG_PARAM_SEX_CD ("param", "sex_cd"),
-        TAG_PARAM_DOB ("param", "birth_date"),
+        TAG_PARAM_DOB ("birth_date", ""),
         TAG_PARAM_ZIP ("param", "zip_cd");
 
         private final String tagValue;
@@ -104,7 +104,11 @@ public abstract class Mapper extends WrapperService {
             return this.tagValue;
         }
         public String toString() {
-            return this.tagValue + " column=\"" + this.column + "\"";
+            if (this.column.isEmpty()) {
+                return this.tagValue;
+            } else {
+                return this.tagValue + " column=\"" + this.column + "\"";
+            }
         }
     }
 
@@ -467,7 +471,7 @@ public abstract class Mapper extends WrapperService {
 
                 // We eliminate any param from patient tag that has not been updated because they are optional
                 String sexcd = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_SEX_CD.toString(),
-                        XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue());
+                        XmlPdoPatientTag.TAG_PARAM_SEX_CD.getTagValue());
                 String dob = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_DOB.toString(),
                         XmlPdoPatientTag.TAG_PARAM_DOB.getTagValue());
                 String zip = this.getTagValueLine(elem, XmlPdoPatientTag.TAG_PARAM_ZIP.toString(),
