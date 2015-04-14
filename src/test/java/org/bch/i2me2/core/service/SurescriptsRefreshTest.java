@@ -49,17 +49,15 @@ public class SurescriptsRefreshTest {
 
     private static String json =
             "{\n" +
-            "  \"RxHistorySegments\":\n" +
-            "  {\n" +
-            "    \"messageType\": \"RDS\",\n" +
-            "    \"msgCtrlID\": \"666\",\n" +
-            "    \"msgDateTime\": \"Feb 12, 2015 12:00:00 AM\",\n" +
-            "    \"sendingSystem\": \"RXHUB\",\n" +
-            "    \"orders\": [],\n" +
-            "    \"rxRecsReturned\": \"ALL\",\n" +
-            "    \"statusMsg\": \"\"\n" +
-            "  }\n" +
+            "  \"messageType\": \"RDS\",\n" +
+            "  \"msgCtrlID\": \"666\",\n" +
+            "  \"msgDateTime\": \"Feb 12, 2015 12:00:00 AM\",\n" +
+            "  \"sendingSystem\": \"RXHUB\",\n" +
+            "  \"orders\": [],\n" +
+            "  \"rxRecsReturned\": \"ALL\",\n" +
+            "  \"statusMsg\": \"\"\n" +
             "}";
+
 
     private static String xmlpdo = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<repository:patient_data\n" +

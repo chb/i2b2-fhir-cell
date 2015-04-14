@@ -57,6 +57,16 @@ public class Medications extends WrapperRest {
     @Consumes("application/json")
     public Response putMedications(String json, @PathParam("subject_token") String token, @Context SecurityContext sc) {
         this.log(Level.INFO, MODULE + OP_PUT_MEDICATIONS + "IN. Auth User:" + sc.getUserPrincipal().getName());
+        IDM.PersonalInfo phi;
+
+        try {
+            phi = idm.getPersonalSubjectId(token);
+            this.medicationsManagement.putMedications(phi.getSubjectId(), json);
+        } catch (I2ME2Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
         return Response.status(Response.Status.OK).build();
     }
 

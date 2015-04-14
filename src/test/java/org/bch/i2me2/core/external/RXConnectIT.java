@@ -1,5 +1,6 @@
 package org.bch.i2me2.core.external;
 
+import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.json.JSONArray;
@@ -51,7 +52,6 @@ public class RXConnectIT extends AbstractIT {
 
     }
 
-    // TODO: TO FIX
     @Test
     public void getMedicationsListCase_1_IT() throws Exception {
         String resp = rxconnect.getMedicationsList(firstName, lastName,zip, birthDate, gender);
@@ -64,21 +64,16 @@ public class RXConnectIT extends AbstractIT {
         assertEquals(59, orders.length());
     }
 
-    // TODO: TO FIX
-    @Ignore
+    // Error
+    @Test
     public void getMedicationsListCase_2_IT() throws Exception {
-        String resp = rxconnect.getMedicationsList(firstName2, lastName2,zip2, birthDate2, gender2);
-        JSONObject json = new JSONObject(resp);
-        JSONObject rxhistory = json; //json.getJSONObject("RxHistorySegments");
-
-        String status = rxhistory.getString("rxRecsReturned");
-        assertEquals("Error", status);
-
-        JSONArray orders = json.getJSONArray("orders");
-        assertEquals(0, orders.length());
+        try {
+            String resp = rxconnect.getMedicationsList(firstName2, lastName2, zip2, birthDate2, gender2);
+        } catch (I2ME2Exception e) {
+            assertTrue(e.getMessage().contains("400"));
+        }
     }
 
-    // TODO: TO FIX
     @Test
     public void getMedicationsListCase_3_IT() throws Exception {
         String resp = rxconnect.getMedicationsList(firstName3, lastName3, zip3, birthDate3, gender3);

@@ -1,24 +1,20 @@
 {
-  "RxHistorySegments":
-  {
-    "messageType": "RDS",
-    "msgCtrlID": "050045624",
-    "msgDateTime": "Feb 12, 2015 12:00:00 AM",
-    "sendingSystem": "RXHUB",
-    "rxRecsReturned": "SOME",
-    "statusMsg": "ONLY SOME",
-    "orders":[
-      {
-        "orc": {
-          "duration": 30,
-          "enteringOrganizationAlternativeId": "Claim"
-        },
-        "rxd": {
-          "dateTime":"Feb 20, 2015 10:11:12 AM",
-          "dispenseNotes": "TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP"
-        }
+  "messageType": "RDS",
+  "msgCtrlID": "050045624",
+  "msgDateTime": "Feb 12, 2015 12:00:00 AM",
+  "sendingSystem": "RXHUB",
+  "rxRecsReturned": "SOME",
+  "statusMsg": "ONLY SOME",
+  "orders":[
+    {
+      "orc": {
+        "duration": 30,
+        "enteringOrganizationAlternativeId": "Claim"
+      },
+      "rxd": {
+        "dateTime":"Feb 20, 2015 10:11:12 AM",
+        "dispenseNotes": "TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP"
       }
-    ]
-
-  }
+    }
+  ]
 }

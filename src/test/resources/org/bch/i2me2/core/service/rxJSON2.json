@@ -1,31 +1,28 @@
 {
-  "RxHistorySegments":
-  {
-    "messageType": "RDS",
-    "msgCtrlID": "050045624",
-    "msgDateTime": "Feb 12, 2015 12:00:00 AM",
-    "sendingSystem": "RXHUB",
-    "rxRecsReturned": "SOME",
-    "orders":[
-      {
-        "orc": {
-          "duration": 30
-        },
-        "rxd": {
-          "dateTime":"Feb 20, 2015 10:11:12 AM",
-          "dispenseCodeIdentifier": 66667777
-        }
+  "messageType": "RDS",
+  "msgCtrlID": "050045624",
+  "msgDateTime": "Feb 12, 2015 12:00:00 AM",
+  "sendingSystem": "RXHUB",
+  "rxRecsReturned": "SOME",
+  "orders":[
+    {
+      "orc": {
+        "duration": 30
       },
-      {
-        "orc": {
-          "duration": 10
-        },
-        "rxd": {
-          "dateTime":"Feb 28, 2015 11:00:00 AM",
-          "dispenseCodeIdentifier": 88889999
-        }
+      "rxd": {
+        "dateTime":"Feb 20, 2015 10:11:12 AM",
+        "dispenseCodeIdentifier": 66667777
       }
-    ]
+    },
+    {
+      "orc": {
+        "duration": 10
+      },
+      "rxd": {
+        "dateTime":"Feb 28, 2015 11:00:00 AM",
+        "dispenseCodeIdentifier": 88889999
+      }
+    }
+  ]
 
-  }
 }
