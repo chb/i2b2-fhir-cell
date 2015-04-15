@@ -9,6 +9,7 @@ import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeIterator;
 import org.xml.sax.InputSource;
 
+import javax.ejb.Stateless;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -34,6 +35,7 @@ import org.w3c.dom.traversal.NodeFilter;
 /**
  * Created by CH176656 on 4/7/2015.
  */
+@Stateless
 public class I2B2QueryService extends WrapperAPI {
 
     private static StringBuffer queryPdoTemplate = new StringBuffer();
@@ -88,9 +90,9 @@ public class I2B2QueryService extends WrapperAPI {
 
         // Get content type for http request
         String contentType = AppConfig.getProp(AppConfig.REST_CONTENT_TYPE_I2B2_CRC_QUERY);
-        System.out.println("Content-Type: " + contentType);
-        System.out.println("URL: " + url);
-        System.out.println(i2b2Message);
+        //System.out.println("Content-Type: " + contentType);
+        //System.out.println("URL: " + url);
+        //System.out.println(i2b2Message);
         
         // Do POST REST call
         Response response = getHttpRequest().doPostGeneric(url, i2b2Message, null, null, "PUT");
@@ -200,6 +202,14 @@ public class I2B2QueryService extends WrapperAPI {
             NodeList roots = docBase.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
             ObservationIterator iterator = new ObservationIterator(roots, tagName, value);
             return getFilteredDocument(iterator);
+        }
+
+        public NodeList getAllObservations(Document docBase) {
+            return docBase.getElementsByTagName(Mapper.XmlPdoTag.TAG_OBSERVATIONS.getTagValueIn());
+        }
+
+        public NodeList getAllObservations() {
+            return getAllObservations(this.doc);
         }
 
         private Document getFilteredDocument(ObservationIterator iterator) {

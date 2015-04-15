@@ -14,6 +14,7 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.MessageContext;
 
+import javax.ejb.Stateless;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
@@ -24,6 +25,7 @@ import java.io.StringReader;
 /**
  * Created by CH176656 on 3/26/2015.
  */
+@Stateless
 public class SoapRequest {
 
     private static ServiceClient sender = null;

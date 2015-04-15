@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.sun.xml.txw2.annotation.XmlElement;
 
+import javax.ejb.Stateless;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,6 +24,7 @@ import java.util.logging.Level;
  * Mapping between a given RxJSON string to PDO XML
  * Created by CH176656 on 3/10/2015.
  */
+@Stateless
 public class MapperRxToPDO extends Mapper {
 
     // File names where claim and fill modifier_cd are listed

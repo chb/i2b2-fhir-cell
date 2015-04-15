@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import java.util.logging.Level;
+import javax.ejb.Stateless;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
@@ -28,6 +29,7 @@ import org.xml.sax.InputSource;
 /**
  * Created by CH176656 on 3/25/2015.
  */
+@Stateless
 public class I2B2CellFR extends WrapperAPI {
 
     private static StringBuffer sendTemplate = new StringBuffer();

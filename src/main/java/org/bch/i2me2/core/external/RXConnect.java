@@ -7,6 +7,7 @@ import org.bch.i2me2.core.util.Response;
 import org.bch.i2me2.core.util.Utils;
 import org.bch.i2me2.core.util.Validator;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.logging.Level;
 /**
  * Created by CH176656 on 3/23/2015.
  */
+@Stateless
 public class RXConnect extends WrapperAPI {
     public static String PARAM_FIRST_NAME="firstName";
     public static String PARAM_LAST_NAME="lastName";

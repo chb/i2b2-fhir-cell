@@ -22,6 +22,7 @@ import java.util.logging.Level;
 
 @Path("/medications")
 @RequestScoped
+@Stateful
 public class Medications extends WrapperRest {
 
     @Inject

@@ -3,6 +3,7 @@ package org.bch.i2me2.core.rest;
 import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,7 +34,9 @@ public class EchoIT {
     		    //.addAsLibraries(resolver.artifact("org.mockito:mockito-all:1.8.3").resolveAsFiles())
                 .addClasses(Echo.class, EchoIT.class, JaxRsActivator.class, JSONPRequestFilter.class)
                //.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
-               //.addAsWebInfResource("arquillian-ds.xml")
+               //.setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
+               .addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))
+               .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
       }
 

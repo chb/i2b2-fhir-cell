@@ -5,6 +5,8 @@ import org.bch.i2me2.core.exception.I2ME2Exception;
 import org.bch.i2me2.core.external.IDM;
 import org.bch.i2me2.core.external.RXConnect;
 import org.bch.i2me2.core.external.I2B2CellFR;
+
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.io.IOException;
  * Refresh to 12b2 cell
  * Created by CH176656 on 3/19/2015.
  */
+@Stateless
 public class SurescriptsRefresh extends WrapperService{
 
     private String token;

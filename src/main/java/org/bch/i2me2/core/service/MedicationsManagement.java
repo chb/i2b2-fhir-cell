@@ -9,6 +9,7 @@ import org.bch.i2me2.core.util.mapper.Mapper;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 /**
  * Created by CH176656 on 4/10/2015.
  */
+@Stateless
 public class MedicationsManagement extends WrapperService {
     /**
      * IME-26: Implemetnts the business logic of IME-26 returning xmlpdo

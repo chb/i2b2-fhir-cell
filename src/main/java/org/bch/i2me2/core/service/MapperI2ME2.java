@@ -2,6 +2,7 @@ package org.bch.i2me2.core.service;
 
 import org.bch.i2me2.core.util.mapper.Mapper;
 
+import javax.ejb.Stateless;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,6 +12,7 @@ import java.util.Set;
 /**
  * Created by CH176656 on 4/13/2015.
  */
+@Stateless
 public abstract class MapperI2ME2 extends Mapper {
 
     // The map between internal Modifier_CDs and real ones. Found in modifierCodes.i2me2 file

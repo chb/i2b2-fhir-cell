@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.ejb.Stateless;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -21,6 +22,7 @@ import java.util.logging.Level;
 /**
  * Created by CH176656 on 4/10/2015.
  */
+@Stateless
 public class MapperFHIRToPDO extends MapperI2ME2 {
     // The json tag containing the array of reconciled medications
     private static String MEDREC_MEDICATIONS = "medications";

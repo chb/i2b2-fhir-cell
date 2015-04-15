@@ -2,6 +2,7 @@ package org.bch.i2me2.core.util;
 
 import org.bch.i2me2.core.config.AppConfig;
 
+import javax.ejb.Stateless;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,6 +11,7 @@ import java.net.URL;
  * Abstract functionality for REST calls
  * Created by CH176656 on 3/20/2015.
  */
+@Stateless
 public class HttpRequest {
 
     public Response doPostGeneric(String urlStr,  String headerAuth) throws IOException {

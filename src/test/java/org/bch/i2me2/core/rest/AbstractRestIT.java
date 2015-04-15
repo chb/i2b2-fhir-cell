@@ -17,6 +17,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 
+import java.io.File;
+
 /**
  * Created by CH176656 on 4/14/2015.
  */
@@ -38,6 +40,8 @@ public class AbstractRestIT {
                 .addPackage(MapperI2ME2.class.getPackage())
                 .addPackage(Response.class.getPackage())
                 .addPackage(Mapper.class.getPackage())
+                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))
+                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                 .addAsResource("org/bch/i2me2/core/external/REST_i2b2crc_template_query_pdo.xml",
                         "org/bch/i2me2/core/external/REST_i2b2crc_template_query_pdo.xml")
                 .addAsResource("org/bch/i2me2/core/external/SOAP_i2b2fr_template_send.xml",
