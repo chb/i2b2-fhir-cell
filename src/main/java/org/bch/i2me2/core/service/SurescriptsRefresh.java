@@ -65,7 +65,7 @@ public class SurescriptsRefresh extends WrapperService{
                 AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_SURESCRIPT));
 
         // Push it into i2b2 instance
-        I2B2CellFR.UploadI2B2Response response = this.getI2B2().pushPDOXML(xmlPdo);
+        this.getI2B2().pushPDOXML(xmlPdo);
 
     }
 

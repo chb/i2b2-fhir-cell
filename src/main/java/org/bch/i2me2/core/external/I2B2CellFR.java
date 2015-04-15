@@ -108,7 +108,7 @@ public class I2B2CellFR extends WrapperAPI {
                 fileName,
                 pdoxml);
 
-        System.out.println("STATUS CODE SEND FILE:" + response.getResponseCode());
+        //System.out.println("STATUS CODE SEND FILE:" + response.getResponseCode());
         if (response.getResponseCode()>=400) {
             this.log(Level.SEVERE, MODULE+OP_SEND_FILE+"I2B2 FR Send File Error.");
             throw new I2ME2Exception("I2B2 FR Send File Error");

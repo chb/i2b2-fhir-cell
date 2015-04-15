@@ -35,6 +35,7 @@ public class Medications extends WrapperRest {
     private static String OP_GET_MEDICATIONS = "[GET_MEDICATIONS]";
     private static String OP_GET_MEDICATIONS_BYPASS = "[GET_MEDICATIONS_BYPASS]";
     private static String OP_PUT_MEDICATIONS = "[PUT_MEDICATIONS]";
+    private static String OP_PUT_MEDICATIONS_BYPASS = "[PUT_MEDICATIONS_BYPASS]";
 
 
     @POST
@@ -82,6 +83,29 @@ public class Medications extends WrapperRest {
         }
         return Response.status(Response.Status.OK).entity(pdoxml).build();
     }
+
+    @POST
+    @Path("/putMedicationsByPass/{subjectId}")
+    @Consumes("application/json")
+    public Response putMedicationsByPass(String json, @PathParam("subjectId") String subjectId, @Context SecurityContext sc) {
+        this.log(Level.INFO, MODULE + OP_PUT_MEDICATIONS_BYPASS + "IN. Auth User:" + sc.getUserPrincipal().getName());
+        try {
+            if (AppConfig.getProp(AppConfig.BYPASS_IDM).trim().toLowerCase().equals("no")) {
+                Response.status(Response.Status.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+        try {
+            this.medicationsManagement.putMedications(subjectId, json);
+        } catch (I2ME2Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (IOException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+        return Response.status(Response.Status.OK).build();
+    }
+
 
     @POST
     @Path("/putMedications/{subject_token}")

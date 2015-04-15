@@ -162,7 +162,7 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
         return root.getJSONArray(MEDREC_MEDICATIONS);
     }
 
-    MapperFHIRToPDO() {
+    public MapperFHIRToPDO() {
         super();
         this.setXmlMapFileTemplate(XML_MAP_TEMPLATE_FILE);
     }

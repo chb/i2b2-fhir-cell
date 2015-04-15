@@ -33,6 +33,7 @@ public class AbstractRestIT {
                 .addAsLibraries(resolver.artifact("org.apache.axis2:axis2:1.6.2").resolveAsFiles())
                 .addAsLibraries(resolver.artifact("commons-io:commons-io:2.0.1").resolveAsFiles())
                 .addAsLibraries(resolver.artifact("org.json:json:20090211").resolveAsFiles())
+                .addAsLibraries(resolver.artifact("com.oracle:ojdbc14:10.2.0.3.0").resolveAsFiles())
                 .addPackage(AppConfig.class.getPackage())
                 .addPackage(I2ME2Exception.class.getPackage())
                 .addPackage(IDM.class.getPackage())
@@ -60,7 +61,9 @@ public class AbstractRestIT {
                         "org/bch/i2me2/core/util/mapper/xmlpdoTemplate.xml")
                 .addAsResource("org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRec.xml",
                         "org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRec.xml")
-                         //.addAsWebInfResource("arquillian-ds.xml")
+                .addAsResource("org/bch/i2me2/core/rest/mrJSON0.json",
+                        "org/bch/i2me2/core/rest/mrJSON0.json")
+                        //.addAsWebInfResource("arquillian-ds.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 }

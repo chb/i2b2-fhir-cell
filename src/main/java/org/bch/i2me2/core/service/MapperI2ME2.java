@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Created by CH176656 on 4/13/2015.
  */
-@Stateless
+
 public abstract class MapperI2ME2 extends Mapper {
 
     // The map between internal Modifier_CDs and real ones. Found in modifierCodes.i2me2 file

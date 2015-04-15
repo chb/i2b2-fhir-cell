@@ -1,0 +1,37 @@
+{
+  "recsReturned": "ALL",
+  "statusMsg": "OK",
+  "medications": [
+    {
+      "medicationStatement":
+      {
+        "medication":
+        {
+          "code":"6666777",
+          "name":"MEDICATION ONE"
+        },
+        "whenGiven":
+        {
+          "start":"2015-02-12T12:00:00.00",
+          "end":"2015-03-05T12:00:00.00"
+        },
+        "dosage":
+        {
+          "quantity":
+          {
+            "value":10,
+            "units":"ml"
+          },
+          "timing":
+          {
+            "repeat":
+            {
+              "duration":20,
+              "units":"days"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
