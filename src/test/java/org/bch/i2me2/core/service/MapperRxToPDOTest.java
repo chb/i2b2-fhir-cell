@@ -401,7 +401,7 @@ public class MapperRxToPDOTest {
 
         // We place replace internal modifier_cd with the real ones
         xmlExpected = mapper.placeRealModifiersCodes(xmlExpected);
-        //if (jsonFile.equals("rxJSON10.json")) System.out.println(xmlResult);
+        if (jsonFile.equals("rxJSON0.json")) System.out.println(xmlResult);
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
 

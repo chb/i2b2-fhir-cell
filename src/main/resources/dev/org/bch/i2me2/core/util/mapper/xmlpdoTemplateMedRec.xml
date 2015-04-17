@@ -98,6 +98,18 @@
             <valuetype_cd>N</valuetype_cd>
             <instance_num>1</instance_num>
         </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__medicationStatement.whenGiven.start__F</start_date>
+            <end_date>F__medicationStatement.whenGiven.end__F</end_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>NDC:F__medicationStatement.medication.code__F</concept_cd>
+            <tval_char>F__medicationStatement.dosage.timing.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
     </observation_set>
 
     <!--
