@@ -62,16 +62,23 @@ public class MedicationsManagement extends WrapperService {
                 patientId, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH), dateWindow);
 
         // we refresh surescripts if necessary
+        boolean refresh=false;
         if(sureScriptsNeedsRefresh(resp)) {
             try {
                 surescriptsRefresh.refresh(token);
+                refresh=true;
             } catch (Exception e) {
                 this.log(Level.SEVERE, MODULE+OP_GET_MED+e.getMessage());
                 this.log(Level.WARNING, MODULE+OP_GET_MED+"We continue without refreshing from surescripts");
             }
         }
 
-        // We generate the xml pdo
+        // If we have refresh from surescripts we need to get the new information
+        // if not, we keep going
+        if (refresh) {
+            resp = i2b2QueryService.getPatientData(
+                    patientId, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH), dateWindow);
+        }
         Document doc = resp.getObservationsByStartDate(dateWindow);
         String out;
         try {

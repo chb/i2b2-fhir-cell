@@ -85,6 +85,7 @@ public class MedicationManagementTest {
 
         this.medicationsManagement.getMedications(patientId, token);
         verify(surescriptsRefresh, times(0)).refresh(token);
+        verify(i2b2QueryService, times(1)).getPatientData(anyString(), anyString(), (Date) anyObject());
     }
 
     // Test that surescript Refresh is not call in the limit. We assume tha DAYS_WINDOW_SURESCRIPTS is higher than 1 day!
@@ -103,6 +104,7 @@ public class MedicationManagementTest {
 
         this.medicationsManagement.getMedications(patientId, token);
         verify(surescriptsRefresh, times(0)).refresh(token);
+        verify(i2b2QueryService, times(1)).getPatientData(anyString(), anyString(), (Date) anyObject());
     }
 
     // Test that surescript Refresh is called in the limit.
@@ -121,6 +123,7 @@ public class MedicationManagementTest {
 
         this.medicationsManagement.getMedications(patientId, token);
         verify(surescriptsRefresh, times(1)).refresh(token);
+        verify(i2b2QueryService, times(2)).getPatientData(anyString(), anyString(), (Date) anyObject());
     }
 
     // Test that surescript Refresh is called.
@@ -139,6 +142,7 @@ public class MedicationManagementTest {
 
         this.medicationsManagement.getMedications(patientId, token);
         verify(surescriptsRefresh, times(1)).refresh(token);
+        verify(i2b2QueryService, times(2)).getPatientData(anyString(), anyString(), (Date) anyObject());
     }
 
     // Test that surescript Refresh is called when different of "ALL", even when dateTime is close
@@ -155,6 +159,7 @@ public class MedicationManagementTest {
 
         this.medicationsManagement.getMedications(patientId, token);
         verify(surescriptsRefresh, times(1)).refresh(token);
+        verify(i2b2QueryService, times(2)).getPatientData(anyString(), anyString(), (Date) anyObject());
     }
 }
 
