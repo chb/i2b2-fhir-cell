@@ -75,7 +75,7 @@ public class MapperRxToPDO extends Mapper {
     private static String OP_FORMAT_DATETIME = "[FORMAT_DATETIME]";
 
 
-    MapperRxToPDO() {
+    public MapperRxToPDO() {
         super();
         this.addKeyToFormat(RXD_DATETIME_KEY);
         this.addKeyToFormat(PATIENTSEGMENTS_DOB_KEY);
@@ -172,8 +172,8 @@ public class MapperRxToPDO extends Mapper {
                 String aux = gender.trim();
                 if (aux.length() > 1) throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
                 if (aux.length() == 1) {
-                    if (!(aux.equals("F") || aux.equals("M"))) {
-                        throw new I2ME2Exception("Bad Gender format. Must be 'M' 'F' or empty string");
+                    if (!(aux.equals("F") || aux.equals("M") || aux.equals("I"))) {
+                        throw new I2ME2Exception("Bad Gender format. Must be 'M', 'F', 'I,  or empty string");
                     }
                 }
             }

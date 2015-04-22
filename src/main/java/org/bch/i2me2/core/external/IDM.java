@@ -22,7 +22,7 @@ public class IDM extends WrapperAPI {
 
     public static String PARAM_TOKEN = "subject_token";
 
-    public static String HTTP_AUTH_METHOD = "BASIC";
+    public static String HTTP_AUTH_METHOD = "Basic";
     public static String HTTP_TYPE_CONSUMES = "application/x-www-form-urlencoded";
 
     public static String FIRST_NAME_KEY = "firstName";
@@ -70,7 +70,9 @@ public class IDM extends WrapperAPI {
         String content = generateContent();
         String auth = null;
         try {
-            auth = HTTP_AUTH_METHOD + " " + AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_IDM);
+            String cred = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_IDM);
+            auth = HTTP_AUTH_METHOD + " " +
+                    new String(javax.xml.bind.DatatypeConverter.printBase64Binary(cred.getBytes()));
         } catch (IOException e) {
             this.log(Level.WARNING, MODULE+OP_GET_INFO+ operation + ": " +
                     "No authentication credentials found for IDM. Trying without authentication");
@@ -141,6 +143,11 @@ public class IDM extends WrapperAPI {
 
 
     public static class PersonalInfo {
+        private static String MALE = "male";
+        private static String FEMALE = "female";
+        private static String INTERSEXED = "intersexed";
+        private static String UNKNOWN = "unknown";
+
         private String subjectId = null;
         private String firstName=null;
         private String lastName = null;
@@ -173,6 +180,8 @@ public class IDM extends WrapperAPI {
         }
 
         public String getBirthDate() {
+            if (this.birthDate==null) return null;
+            if (this.birthDate.length()>=10) return birthDate.substring(0,10);
             return birthDate;
         }
 
@@ -181,7 +190,12 @@ public class IDM extends WrapperAPI {
         }
 
         public String getGender() {
-            return gender;
+            if (this.gender==null) return null;
+            if (this.gender.toLowerCase().equals(MALE.toLowerCase())) return "M";
+            if (this.gender.toLowerCase().equals(FEMALE.toLowerCase())) return "F";
+            if (this.gender.toLowerCase().equals(INTERSEXED.toLowerCase())) return "I";
+            if (this.gender.toLowerCase().equals(UNKNOWN.toLowerCase())) return "";
+            return this.gender;
         }
 
         public void setGender(String gender) {

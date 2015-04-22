@@ -27,7 +27,8 @@
             "repeat":
             {
               "duration":20,
-              "units":"days"
+              "units":"days",
+              "when": "ACD"
             }
           }
         }

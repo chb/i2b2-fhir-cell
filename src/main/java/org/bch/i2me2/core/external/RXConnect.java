@@ -109,6 +109,7 @@ public class RXConnect extends WrapperAPI {
             List<String> opt = new ArrayList<>();
             opt.add("M");
             opt.add("F");
+            opt.add("I");
             Validator.validOptions(this.gender, opt, "RX " + PARAM_GENDER);
             Validator.validRegExp(this.zipCode, PARAM_ZIP_CODE_REGEXP, "RX " + PARAM_ZIP_CODE);
         } catch (I2ME2Exception e) {

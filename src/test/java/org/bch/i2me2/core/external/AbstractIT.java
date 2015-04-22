@@ -28,7 +28,8 @@ public abstract class AbstractIT {
                 .addAsLibraries(resolver.artifact("org.json:json:20090211").resolveAsFiles())
                 .addClasses(RXConnect.class, HttpRequest.class, RXConnectIT.class, JaxRsActivator.class,
                         AppConfig.class, I2ME2Exception.class, Response.class, JSONPRequestFilter.class,
-                        WrapperAPI.class, SoapRequest.class, Validator.class, Utils.class, AbstractIT.class)
+                        WrapperAPI.class, SoapRequest.class, Validator.class, Utils.class, AbstractIT.class,
+                        IDM.class, IDMIT.class)
                 .addAsResource("org/bch/i2me2/core/config/config.properties",
                         "org/bch/i2me2/core/config/config.properties")
                         //.addAsWebInfResource("arquillian-ds.xml")
