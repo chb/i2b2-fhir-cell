@@ -26,4 +26,14 @@ public class IDMIT {
         assertEquals("M", demoInfo.getGender());
         assertEquals("02130", demoInfo.getZipCode());
     }
+
+    @Test
+    public void testSimpleFailIT() throws Exception {
+        String badToken = "no valid token";
+        try {
+            IDM.PersonalInfo subjectIdInfo = idm.getPersonalSubjectId(badToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

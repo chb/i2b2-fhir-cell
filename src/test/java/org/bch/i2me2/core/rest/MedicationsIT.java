@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -31,6 +32,7 @@ import java.sql.Statement;
  */
 @RunWith(Arquillian.class)
 public class MedicationsIT extends AbstractRestIT {
+    public static String HTTP_TYPE_CONSUMES = "application/x-www-form-urlencoded";
 
     @Inject
     private HttpRequest httpRequest;
@@ -66,6 +68,43 @@ public class MedicationsIT extends AbstractRestIT {
         assertEquals(32, list.getLength());
     }
 
+    // It requires the IDM system up with a valid token pointing to a patient whose subject Id is 565656.
+    // It requires an active i2b2 crc cell
+    @Test
+    public void getMedications_simpleIT() throws Exception {
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0Mjk3MTg0Mjc0MDUsInN1YmplY3RJZCI6NjU1MzcsImp0aSI6IjgxZjQyYTNmLTFmMzYtNDNmZS1iMDZjLTQzZDIwMDNlZThiYiIsImlhdCI6MTQyOTcxODEyNzQwNX0.qGQT2Lk30hn3vBNuZ9xvhovwto0FA-GoIbauQE8h75_0abaCJU7_2Wt35_hJUk98OLSQrHbjZJf6Ewe5o2J8zw";
+        String credentials = "MedRec2:MedRecApp1_";
+        String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(credentials.getBytes("UTF-8"));
+        String auth = "Basic " + encoding;
+        String url = "http://127.0.0.1:8080/i2me2/rest/medications/getMedications";
+        String content = "token=" + token;
+        Response resp = httpRequest.doPostGeneric(url, content, auth, HTTP_TYPE_CONSUMES);
+        assertEquals(200,resp.getResponseCode());
+        String xml = resp.getContent();
+
+        I2B2QueryService.QueryResponse respXml = new I2B2QueryService.QueryResponse(xml);
+        NodeList list = respXml.getAllObservations();
+        assertEquals(32, list.getLength());
+    }
+
+    // It requires the IDM system up with a valid token pointing to a patient whose subject Id is 999999999
+    // It requires an active i2b2 crc cell
+    @Test
+    public void putMedications_simpleIT() throws Exception {
+        String json = readTextFile("mrJSON0.json");
+        String patientId = "999999999";
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0Mjk3MjUxNzk1NjksInN1YmplY3RJZCI6MTk2NjA4LCJqdGkiOiJhNmZkYjQ4ZC03OGJiLTQ1ZmQtOWMyZi0wYTVmMTczYWExZGMiLCJpYXQiOjE0Mjk3MjQ4Nzk1Njl9.fha9SOVg6L4tKZLRd1wod0Rzg-01i2X7h3cnvZHIJ3nXwgwpVJ5E4LxjBvweRfoKwhL2zxlj7BE1484qGB8fug";
+        String credentials = "MedRec2:MedRecApp1_";
+        String encoding =  javax.xml.bind.DatatypeConverter.printBase64Binary(credentials.getBytes("UTF-8"));
+        String auth = "Basic " + encoding;
+        String url = "http://127.0.0.1:8080/i2me2/rest/medications/putMedications";
+        String content = "token=" + token + "&" + "content=" + URLEncoder.encode(json, "UTF-8");
+        Response resp = httpRequest.doPostGeneric(url, content, auth,HTTP_TYPE_CONSUMES);
+        assertEquals(200,resp.getResponseCode());
+
+        validateDataPutMedications(patientId);
+    }
+
     @Test
     public void putMedicationsByPassIT() throws Exception {
         String json = readTextFile("mrJSON0.json");
@@ -77,6 +116,10 @@ public class MedicationsIT extends AbstractRestIT {
         Response resp = httpRequest.doPostGeneric(url, json, auth,"application/json");
         assertEquals(200,resp.getResponseCode());
 
+        validateDataPutMedications(patientId);
+    }
+
+    private void validateDataPutMedications(String patientId) throws Exception {
         // Check that the DB has been populated properly
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection con = DriverManager.getConnection("jdbc:oracle:thin:@10.17.16.148:1521:xe", "idmuser", "idmuser");
@@ -99,10 +142,10 @@ public class MedicationsIT extends AbstractRestIT {
 
         while(rs.next()) {
             i++;
-            encounterNum = rs.getNString("encounter_num");
-            String modifierCd =  rs.getNString("modifier_cd");
-            String tvalChar = rs.getNString("tval_char");
-            String nvalNum = rs.getNString("nval_num");
+            encounterNum = rs.getString("encounter_num");
+            String modifierCd = rs.getString("modifier_cd");
+            String tvalChar = rs.getString("tval_char");
+            String nvalNum = rs.getString("nval_num");
             String conceptCd = rs.getString("concept_cd");
             String unitsCd = rs.getString("units_cd");
             System.out.println(encounterNum + ", " + modifierCd + ", " + tvalChar + ", " + nvalNum + ", " + conceptCd + ", " + unitsCd);

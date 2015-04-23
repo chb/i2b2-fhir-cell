@@ -84,6 +84,8 @@ public class AppConfig {
     // The number of days that medication lists are returned
     public static String DAYS_WINDOW =                      "app.i2b2.pdo.windowdays";
 
+    // The jdbc connection string for IBD Registry database
+    public static String IBD_JDBC =                         "app.jdbc.ibdregistry";
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
     public static String CONFIG_PROPERTIES_FILE= "config.properties";

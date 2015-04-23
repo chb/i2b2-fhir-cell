@@ -41,7 +41,7 @@ public class Medications extends WrapperRest {
     @POST
     @Path("/getMedications")
     @Produces("application/xml")
-    public Response getMedications(@QueryParam("token") String token, @Context SecurityContext sc) {
+    public Response getMedications(@FormParam("token") String token, @Context SecurityContext sc) {
         this.log(Level.INFO, MODULE + OP_GET_MEDICATIONS + "IN. Auth User:" + sc.getUserPrincipal().getName());
         IDM.PersonalInfo phi;
         String pdoxml;
@@ -109,8 +109,7 @@ public class Medications extends WrapperRest {
 
     @POST
     @Path("/putMedications")
-    //@Consumes("application/json")
-    public Response putMedications(@QueryParam("content")String json, @QueryParam("token") String token, @Context SecurityContext sc) {
+    public Response putMedications(@FormParam("token") String token, @FormParam("content")String json, @Context SecurityContext sc) {
         this.log(Level.INFO, MODULE + OP_PUT_MEDICATIONS + "IN. Auth User:" + sc.getUserPrincipal().getName());
         IDM.PersonalInfo phi;
 
