@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link rel=stylesheet href="libs/codemirror/lib/codemirror.css">
     <link rel=stylesheet href="libs/codemirror/doc/docs.css">
@@ -33,8 +33,8 @@
                     <label>Place valid token:</label>
                     <input class="form-control" name="token" id="token" placeholder="Enter token">
                 </div>
-                <button type="submit" id="btnGetMed" class="btn btn-default">Submit</button>
             </form>
+            <button id="btnGetMed" class="btn btn-default">Submit</button>
             <label>Output</label>
             <textarea id=outputPdo></textarea>
         </div>
@@ -54,21 +54,20 @@
     </div>
 </div>
 <script>
-    $("#getMedForm").submit(function() {
+    $("#btnGetMed").on('click', function() {
         $.ajax({
             url: $('#getMedForm').attr('action'),
-            type: post,
+            type: "post",
             data: $("#getMedForm").serialize(),
             contents: "application/xml",
             success: function(xmlPdo) {
                 alert(xmlPdo);
                 $("#outputPdo").val(xmlPdo);
             },
-            error: function(a,b,c) {
-                alert(b);
+            error: function() {
+                alert("ERROR");
             }
         });
-        return false;
     });
     var outputPdoMirror = CodeMirror.fromTextArea(document.getElementById("outputPdo"), {
         lineNumbers: true,
