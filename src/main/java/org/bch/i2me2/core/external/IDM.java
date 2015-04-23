@@ -99,7 +99,7 @@ public class IDM extends WrapperAPI {
             pi.setSubjectId(getJSONValue(jsonRoot, SUBJECT_ID_KEY));
 
         } catch (JSONException e){
-            this.log(Level.SEVERE, MODULE+OP_PARSE_PER_INFO+ "Error parsing returned json");
+            this.log(Level.SEVERE, MODULE+OP_PARSE_PER_INFO+ "Error parsing returned json:" + jsonInput);
             throw new I2ME2Exception("json bad format", e);
         }
         return pi;
