@@ -122,7 +122,10 @@ public class MedicationsIT extends AbstractRestIT {
     private void validateDataPutMedications(String patientId) throws Exception {
         // Check that the DB has been populated properly
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@10.17.16.148:1521:xe", "idmuser", "idmuser");
+        String jdbcCon = AppConfig.getProp(AppConfig.I2B2_JDBC);
+        String auth = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_DB_I2B2);
+        String []auths = auth.split(":");
+        Connection con = DriverManager.getConnection(jdbcCon, auths[0], auths[1]);
         String query = "Select patient_num from patient_mapping where patient_ide='" + patientId + "' " +
                 "and patient_ide_source='" + AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH) + "'";
         Statement stmt = con.createStatement();

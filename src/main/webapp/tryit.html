@@ -46,8 +46,8 @@
         <div class="tab-pane fade in active" id="getMed">
             <form role="form" id="getMedForm" method="post" action="/i2me2/rest/medications/getMedications">
                 <div class="form-group">
-                    <label>Place valid token:</label>
-                    <input class="form-control" name="token" id="token" placeholder="Enter token">
+                    <label>Paste a valid token:</label>
+                    <input class="form-control" name="token" id="token" placeholder="Paste token">
                 </div>
             </form>
             <br>
@@ -56,17 +56,18 @@
             <label>Output</label>
             <textarea id=outputPdo></textarea>
         </div>
+
         <div class="tab-pane fade" id="putMed">
             <form role="form" id="putMedForm" method="post" action="/i2me2/rest/medications/putMedications">
                 <div class="form-group">
-                    <label>Place valid token:</label>
-                    <input class="form-control" name="token" id="tokenPut" placeholder="Enter token">
-                    <label>Place json-like string:</label>
-                    <input type="text" name="content" id="content">
+                    <label>Place a valid token:</label>
+                    <input class="form-control" name="token" id="tokenPut" placeholder="Paste token">
+                    <input type="hidden" type="text" name="content" id="content">
                 </div>
-                <button id="btnPutMed" class="btn btn-default">Submit</button>
             </form>
-            <textarea id="inputJson" form="putMedForm"></textarea>
+            <label>Place a valid json string:</label>
+            <textarea id="inputJson" form="putMedForm"></textarea><br>
+            <button id="btnPutMed" class="btn btn-default">Submit</button>
         </div>
         <div class="tab-pane fade" id="idm">Content inside tab C</div>
     </div>
@@ -86,15 +87,34 @@
             }
         });
     });
+    $("#btnPutMed").on('click', function() {
+        var aux = inputJsonMirror.getValue();
+        $('#content').val(aux);
+        $.ajax({
+            url: $('#putMedForm').attr('action'),
+            type: "POST",
+            data: $("#putMedForm").serialize(),
+            success: function(xmlPdo) {
+                alert("Successful transaction");
+            },
+            error: function(r,m,x) {
+                alert(x);
+            }
+        });
+    });
+
     var outputPdoMirror = CodeMirror.fromTextArea(document.getElementById("outputPdo"), {
         lineNumbers: true,
         readOnly:true,
         mode: "text/xml"
     });
+
+    outputPdoMirror.refresh();
     var inputJsonMirror = CodeMirror.fromTextArea(document.getElementById("inputJson"), {
         lineNumbers: true,
         mode: "application/ld+json"
     });
+    inputJsonMirror.refresh();
 </script>
 
 </body>

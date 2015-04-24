@@ -112,7 +112,10 @@ public class Medications extends WrapperRest {
     public Response putMedications(@FormParam("token") String token, @FormParam("content")String json, @Context SecurityContext sc) {
         this.log(Level.INFO, MODULE + OP_PUT_MEDICATIONS + "IN. Auth User:" + sc.getUserPrincipal().getName());
         IDM.PersonalInfo phi;
-
+        System.out.println("Token:");
+        System.out.println(token);
+        System.out.println("JSON:");
+        System.out.println(json);
         try {
             phi = idm.getPersonalSubjectId(token);
             this.medicationsManagement.putMedications(phi.getSubjectId(), json);

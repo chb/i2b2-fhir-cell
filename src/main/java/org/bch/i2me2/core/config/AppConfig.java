@@ -50,6 +50,8 @@ public class AppConfig {
     public static String CREDENTIALS_FILE_RXCONNECT =   "app.authfile.rxconnect";
     public static String CREDENTIALS_FILE_IDM =         "app.authfile.idm";
     public static String CREDENTIALS_FILE_I2B2 =        "app.authfile.i2b2.fr";
+    public static String CREDENTIALS_DB_I2B2 =          "app.authfile.db.i2b2";
+    public static String CREDENTIALS_DB_IBD=            "app.authfile.db.ibdregistry";
 
     // The message templates for i2b2 messages
     public static String FIELNAME_SOAP_TEMP_I2B2_FR_SEND =  "app.filename.soap.template.i2b2.fr.send";
@@ -86,6 +88,8 @@ public class AppConfig {
 
     // The jdbc connection string for IBD Registry database
     public static String IBD_JDBC =                         "app.jdbc.ibdregistry";
+    public static String I2B2_JDBC =                        "app.authfile.db.i2b2";
+
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
     public static String CONFIG_PROPERTIES_FILE= "config.properties";
