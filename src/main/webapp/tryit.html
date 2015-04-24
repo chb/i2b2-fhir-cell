@@ -54,7 +54,9 @@
             <button id="btnGetMed" class="btn btn-default">Submit</button>
             <br><br>
             <label>Output</label>
-            <textarea id=outputPdo></textarea>
+            <div id="divTextArea">
+                <textarea id='outputPdo'></textarea>
+            </div>
         </div>
 
         <div class="tab-pane fade" id="putMed">
@@ -74,15 +76,20 @@
 </div>
 <script>
     $("#btnGetMed").on('click', function() {
+        $("body").css('cursor','wait');
         $.ajax({
             url: $('#getMedForm').attr('action'),
             type: "POST",
             data: $("#getMedForm").serialize(),
+            dataType: "text",
             success: function(xmlPdo) {
-                alert(xmlPdo);
-                $("#outputPdo").val(xmlPdo);
+                $("body").css('cursor','default');
+                //$("#outputPdo").val(xmlPdo);
+                outputPdoMirror.setValue(xmlPdo);
+                outputPdoMirror.refresh();
             },
             error: function(r,m,x) {
+                $("body").css('cursor','default');
                 alert(x);
             }
         });
@@ -90,14 +97,17 @@
     $("#btnPutMed").on('click', function() {
         var aux = inputJsonMirror.getValue();
         $('#content').val(aux);
+        $("body").css('cursor','wait');
         $.ajax({
             url: $('#putMedForm').attr('action'),
             type: "POST",
             data: $("#putMedForm").serialize(),
             success: function(xmlPdo) {
+                $("body").css('cursor','default');
                 alert("Successful transaction");
             },
             error: function(r,m,x) {
+                $("body").css('cursor','default');
                 alert(x);
             }
         });
@@ -106,7 +116,7 @@
     var outputPdoMirror = CodeMirror.fromTextArea(document.getElementById("outputPdo"), {
         lineNumbers: true,
         readOnly:true,
-        mode: "text/xml"
+        mode: "application/xml"
     });
 
     outputPdoMirror.refresh();

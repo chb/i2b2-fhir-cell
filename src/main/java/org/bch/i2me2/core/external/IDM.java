@@ -78,6 +78,7 @@ public class IDM extends WrapperAPI {
                     "No authentication credentials found for IDM. Trying without authentication");
         }
         Response resp = getHttpRequest().doPostGeneric(url, content, auth, HTTP_TYPE_CONSUMES);
+        System.out.println(resp.getResponseCode());
         if (resp.getResponseCode()>= 400) {
             this.log(Level.SEVERE, MODULE+OP_GET_INFO + operation + ":" +
                     "IDM error. Error code: " + resp.getResponseCode());
