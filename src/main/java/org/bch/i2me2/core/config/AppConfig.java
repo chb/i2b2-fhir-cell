@@ -88,7 +88,7 @@ public class AppConfig {
 
     // The jdbc connection string for IBD Registry database
     public static String IBD_JDBC =                         "app.jdbc.ibdregistry";
-    public static String I2B2_JDBC =                        "app.authfile.db.i2b2";
+    public static String I2B2_JDBC =                        "app.jdbc.i2b2";
 
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
