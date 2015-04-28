@@ -27,12 +27,12 @@ public class I2B2RegistryIBD extends WrapperAPI {
     private static String INSERT_PATIENT = "insert into patient_dimension (patient_num) values (%s)";
     private static String INSERT_ENCOUNTER = "insert into visit_dimension (encounter_num, patient_num) values (%s, %s)";
     private static String INSERT_PAT_MAPPING = "insert into patient_mapping " +
-            "(patient_num, patient_ide, patient_ide_source) values" +
-            "(%s, '%s', '%s')";
+            "(patient_num, patient_ide, patient_ide_source, project_id) values" +
+            "(%s, '%s', '%s', '%s')";
 
     private static String INSERT_ENC_MAPPING = "insert into encounter_mapping " +
-            "(encounter_num, encounter_ide, encounter_ide_source) values " +
-            "(%s, '%s', '%s')";
+            "(encounter_num, encounter_ide, encounter_ide_source, project_id) values " +
+            "(%s, '%s', '%s', '%s')";
 
     private static String PRIOR_USE = "prior use";
     private static String CURRENT_USE = "current use";
@@ -73,7 +73,8 @@ public class I2B2RegistryIBD extends WrapperAPI {
         Map<String, String> mapValues = getValueMap();
 
         ResultSet rs = stmt.executeQuery(sb.toString());
-
+        int insOK = 0;
+        int insErr = 0;
         while(rs.next()) {
             String conceptCd = rs.getString("concept_path");
             String subjectId = rs.getString("subject_id");
@@ -96,32 +97,83 @@ public class I2B2RegistryIBD extends WrapperAPI {
             System.out.println(insFact);
             try {
                 stmtExec.execute(insFact);
+                this.log(Level.INFO, "Insert OK: " + insFact);
+                insOK++;
             } catch (Exception e) {
                 this.log(Level.WARNING, "IMPORT ERROR:" + e.getMessage());
+                insErr++;
             }
         }
         rs.close();
 
+        this.log(Level.INFO, "Facts inserted: " + insOK + ", Facts ignored: " + insErr);
         // Insert encounters
         Set<String>  keysEnc = mapEncounter.keySet();
 
         for(String enc: keysEnc) {
             String patientNum = mapEncounter.get(enc);
+
+            // Insert in visit dimension
             String insertEnc = String.format(INSERT_ENCOUNTER, enc, patientNum);
-            String insertEncMap = String.format(INSERT_ENC_MAPPING, enc, enc, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH));
-            String insertEncMapSelf = String.format(INSERT_ENC_MAPPING, enc, enc, "HIVE");
+
+            // Insert in encounter_mapping
+            String insertEncMap = String.format(
+                    INSERT_ENC_MAPPING,
+                    enc,
+                    enc,
+                    AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH),
+                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID));
+
+            // Insert in encounter_mapping self map
+            String insertEncMapSelf = String.format(
+                    INSERT_ENC_MAPPING,
+                    enc,
+                    enc,
+                    "HIVE",
+                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID));
+
+            // Insert into patient dimension
             String insertPat = String.format(INSERT_PATIENT, patientNum);
-            String insertPatMap = String.format(INSERT_PAT_MAPPING, patientNum, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH));
-            String insertPatMapSelf = String.format(INSERT_PAT_MAPPING, patientNum, patientNum, "HIVE");
-            stmtExec.execute(insertEnc);
-            stmtExec.execute(insertEncMap);
-            stmtExec.execute(insertEncMapSelf);
-            stmtExec.execute(insertPat);
-            stmtExec.execute(insertPatMap);
-            stmtExec.execute(insertPatMapSelf);
+
+            // Insert into patient mapping
+            String insertPatMap = String.format(
+                    INSERT_PAT_MAPPING,
+                    patientNum,
+                    patientNum,
+                    AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH),
+                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID));
+
+            // Insert into patient mapping self map
+            String insertPatMapSelf = String.format(
+                    INSERT_PAT_MAPPING,
+                    patientNum,
+                    patientNum,
+                    "HIVE",
+                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID));
+
+            // Execute the inserts
+            executeInsert(stmtExec, insertEnc);
+            executeInsert(stmtExec, insertEncMap);
+            executeInsert(stmtExec, insertEncMapSelf);
+            executeInsert(stmtExec, insertPat);
+            executeInsert(stmtExec, insertPatMap);
+            executeInsert(stmtExec, insertPatMapSelf);
         }
         conI2B2.close();
         conIBD.close();
+    }
+
+    // 0 OK
+    // 1 Error
+    private int executeInsert(Statement stmtExec, String sqlSentence) {
+        try {
+            stmtExec.execute(sqlSentence);
+            this.log(Level.INFO, "Insert OK: " + sqlSentence);
+            return 0;
+        } catch (Exception e) {
+            this.log(Level.WARNING, "Insert Error:" + sqlSentence);
+            return 1;
+        }
     }
 
     private Map<String, String> getValueMap() {
