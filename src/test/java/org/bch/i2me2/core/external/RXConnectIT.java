@@ -69,8 +69,9 @@ public class RXConnectIT extends AbstractIT {
     public void getMedicationsListCase_2_IT() throws Exception {
         try {
             String resp = rxconnect.getMedicationsList(firstName2, lastName2, zip2, birthDate2, gender2);
+            fail();
         } catch (I2ME2Exception e) {
-            assertTrue(e.getMessage().contains("400"));
+            assertTrue(e.getMessage().contains("502"));
         }
     }
 

@@ -18,7 +18,7 @@ It will execute automatically all unit tests. To execute unit tests without comp
      
 To execute integration tests using Arquillian on an existing JBoss AS server instance running:
 
-    mvn clean -Dtest=*IT test -Parq-jbossas-remote 
+    mvn clean -Dtest=*IT test -Parq-jbossas-remote
     
 To execute integration tests using Arquillian with no JBoss server running (it will start one and will do all the necessary deployments):
 

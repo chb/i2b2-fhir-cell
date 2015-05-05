@@ -19,4 +19,3 @@ wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.F
 sudo unzip jboss-as-7.1.1.Final.zip -d /usr/share/
 sudo chown -fR vagrant.vagrant /usr/share/jboss-as-7.1.1.Final/
 
-mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc14 -Dversion=10.2.0.3.0 -Dpackaging=jar -Dfile=ojdbc.jar -DgeneratePom=true
