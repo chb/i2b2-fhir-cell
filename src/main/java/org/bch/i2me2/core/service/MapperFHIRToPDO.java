@@ -35,11 +35,14 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
     private static final String PATIENTSEGMENTS__EVENTID = "eventId";
     private static final String PATIENTSEGMENTS__MSG_DATETIME = "msgDateTime";
 
+    private static final String MS_DOSAGE = "dosage";
+    private static final String MS_CONTAINED = "contained";
+
     private static final String RECS_RETURNED = "recsReturnedStatement";
     private static final String STATUS_MSG = "statusMsgStatement";
-    private static final String MEDICATION_CODE_KEY = "medicationStatement.medication.code";
+    private static final String MEDICATION_CODE_KEY = "contained_0.code.coding.code";
 
-    private static final String XML_MAP_TEMPLATE_FILE = "xmlpdoTemplateMedRec.xml";
+    private static final String XML_MAP_TEMPLATE_FILE = "xmlpdoTemplateMedRecNew.xml";
 
     private static String MODULE = "[FHIR_TO_PDO]";
     private static String OP_GET_PDOXML = "[GET_PDOXML]";
@@ -60,8 +63,16 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
         validate(subjectId, gender, source, sourceEvent);
         try {
             loadRealModifiers();
+
+            // Added to cope with IME-83 ************
+            // It should be refactor at some point, but for naw it should be fine
+            String rxJSONAdapted = modifyJSON(rxJson);
+            // ***************************************
+            System.out.println(rxJSONAdapted);
+
             String jsonExtra = generatePatientInfo(subjectId, gender, source, sourceEvent, dateMsg);
-            result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
+            //result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
+            result = doMap(rxJSONAdapted,PATIENTSEGMENTS, jsonExtra);
         } catch (I2ME2Exception e) {
             this.log(Level.SEVERE, MODULE+OP_GET_PDOXML+e.getMessage());
             throw e;
@@ -73,9 +84,35 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
         return result;
     }
 
+    // Added to cope with IME-83 ************
+    // Provisional
+    private String modifyJSON(String jsonInput) throws JSONException {
+        JSONObject jsonRoot = new JSONObject(jsonInput);
+        JSONArray dosages = jsonRoot.getJSONArray(MS_DOSAGE);
+        for (int i=0; i<dosages.length(); i++) {
+            JSONObject x = dosages.getJSONObject(i);
+            jsonRoot.put(MS_DOSAGE+"_"+i, x);
+        }
+
+        JSONArray conts = jsonRoot.getJSONArray(MS_CONTAINED);
+        for (int i=0; i<conts.length();i++) {
+            JSONObject x = conts.getJSONObject(i);
+            jsonRoot.put(MS_CONTAINED+"_"+i, x);
+        }
+
+        jsonRoot.remove(MS_DOSAGE);
+        jsonRoot.remove(MS_CONTAINED);
+
+        JSONObject jsonRet = new JSONObject();
+        JSONArray jsonMedArray = new JSONArray();
+        jsonMedArray.put(jsonRoot);
+        jsonRet.put(MEDREC_MEDICATIONS, jsonMedArray);
+        return jsonRet.toString();
+    }
+
     private void validate(String subjectId, String gender, String source,
-                          String sourceEvent) throws I2ME2Exception {
-        try {
+                String sourceEvent) throws I2ME2Exception {
+            try {
             if (subjectId==null) throw new I2ME2Exception("SubjectId cannot be null");
             if (subjectId.trim().equals("")) throw new I2ME2Exception("SubjectId cannot be empty");
             try {
@@ -122,7 +159,7 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
             this.log(Level.WARNING,MODULE+OP_GENERATE_PATIENT_INFO+"Error formatting dateTime");
         }
 
-        Long eventId = (dateMsg).getTime();
+        Long eventId = dateMsg.getTime();
         outJson = outJson + formatKeyValueJSON(PATIENTSEGMENTS__EVENTID, eventId.toString(),false);
 
         return outJson + "}";
