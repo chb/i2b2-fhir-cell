@@ -69,7 +69,7 @@
             <start_date>2015-05-06T17:14:15.572643</start_date>
             <observer_cd>@</observer_cd>
             <concept_cd>RXNORM:310798</concept_cd>
-            <nval_num>TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP1</nval_num>
+            <tval_char>TAKE 1 TABLET AT BEDTIME AS NEEDED FOR SLEEP1</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>

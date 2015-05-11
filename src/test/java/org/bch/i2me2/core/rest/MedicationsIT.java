@@ -92,7 +92,7 @@ public class MedicationsIT extends AbstractRestIT {
     // It requires an active i2b2 crc cell
     @Test
     public void putMedicationsNew_simpleIT() throws Exception {
-        String json = readTextFile("mrJSON0.json");
+        String json = readTextFile("mrNewJSON0.json");
         String patientId = "999999999";
         String token = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0Mjk3MjUxNzk1NjksInN1YmplY3RJZCI6MTk2NjA4LCJqdGkiOiJhNmZkYjQ4ZC03OGJiLTQ1ZmQtOWMyZi0wYTVmMTczYWExZGMiLCJpYXQiOjE0Mjk3MjQ4Nzk1Njl9.fha9SOVg6L4tKZLRd1wod0Rzg-01i2X7h3cnvZHIJ3nXwgwpVJ5E4LxjBvweRfoKwhL2zxlj7BE1484qGB8fug";
         String credentials = "MedRec2:MedRecApp1_";
@@ -105,7 +105,6 @@ public class MedicationsIT extends AbstractRestIT {
 
         validateDataPutMedicationsNew(patientId);
     }
-
 
     @Ignore
     public void putMedications_simpleIT() throws Exception {

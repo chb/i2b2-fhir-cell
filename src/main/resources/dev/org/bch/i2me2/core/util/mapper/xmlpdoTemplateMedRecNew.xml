@@ -79,7 +79,7 @@
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
             <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
-            <nval_num>F__dosage_0.text__F</nval_num>
+            <tval_char>F__dosage_0.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
             <instance_num>1</instance_num>

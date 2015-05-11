@@ -61,8 +61,12 @@ public class AbstractRestIT {
                         "org/bch/i2me2/core/util/mapper/xmlpdoTemplate.xml")
                 .addAsResource("org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRec.xml",
                         "org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRec.xml")
+                .addAsResource("org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRecNew.xml",
+                        "org/bch/i2me2/core/util/mapper/xmlpdoTemplateMedRecNew.xml")
                 .addAsResource("org/bch/i2me2/core/rest/mrJSON0.json",
                         "org/bch/i2me2/core/rest/mrJSON0.json")
+                .addAsResource("org/bch/i2me2/core/rest/mrNewJSON0.json",
+                        "org/bch/i2me2/core/rest/mrNewJSON0.json")
                         //.addAsWebInfResource("arquillian-ds.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
