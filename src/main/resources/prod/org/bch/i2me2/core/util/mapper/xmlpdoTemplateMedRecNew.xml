@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository:patient_data
+    xmlns:repository="http://i2b2.mgh.harvard.edu/repository_cell"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://i2b2.mgh.harvard.edu/repository_cell/patient_data.xsd">
+    <pid_set>
+        <pid>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+        </pid>
+    </pid_set>
+    <eid_set>
+        <eid>
+            <event_id patient_id="F__PatientSegments.patientId__F" patient_id_source="F__PatientSegments.patientIdSourceSystemName__F" source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+        </eid>
+    </eid_set>
+    <event_set>
+        <event>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__PatientSegments.msgDateTime__F</start_date>
+        </event>
+    </event_set>
+    <patient_set>
+        <patient>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <param column="sex_cd">F__PatientSegments.patientGender__F</param>
+        </patient>
+    </patient_set>
+    <observation_set>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__contained_0.name__F</tval_char>
+            <modifier_cd>medicationNameStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__status__F</tval_char>
+            <modifier_cd>statusStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__note__F</tval_char>
+            <modifier_cd>noteStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__wasNotGiven__F</tval_char>
+            <modifier_cd>wasNotGivenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+
+
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_0.text__F</tval_char>
+            <modifier_cd>dosageTextStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_0.asNeededBoolean__F</nval_num>
+            <modifier_cd>asNeededBooleanStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_0.quantity.value__F</nval_num>
+            <modifier_cd>quantityValueStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_0.schedule.repeat.count__F</nval_num>
+            <modifier_cd>countStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_0.schedule.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_0.schedule.repeat.frequency__F</nval_num>
+            <modifier_cd>frequencyStatement</modifier_cd>
+            <units_cd>F__dosage_0.schedule.repeat.durationUnits__F</units_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>1</instance_num>
+        </observation>
+
+
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_1.text__F</tval_char>
+            <modifier_cd>dosageTextStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>2</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_1.asNeededBoolean__F</tval_char>
+            <modifier_cd>asNeededBooleanStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>2</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_1.quantity.value__F</nval_num>
+            <modifier_cd>quantityValueStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>2</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_1.schedule.repeat.count__F</nval_num>
+            <modifier_cd>countStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>2</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_1.schedule.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>2</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_1.schedule.repeat.frequency__F</nval_num>
+            <modifier_cd>frequencyStatement</modifier_cd>
+            <units_cd>F__dosage_1.schedule.repeat.durationUnits__F</units_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>2</instance_num>
+        </observation>
+
+
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_2.text__F</tval_char>
+            <modifier_cd>dosageTextStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>3</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_2.asNeededBoolean__F</tval_char>
+            <modifier_cd>asNeededBooleanStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>3</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_2.quantity.value__F</nval_num>
+            <modifier_cd>quantityValueStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>3</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_2.schedule.repeat.count__F</nval_num>
+            <modifier_cd>countStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>3</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_2.schedule.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>3</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_2.schedule.repeat.frequency__F</nval_num>
+            <modifier_cd>frequencyStatement</modifier_cd>
+            <units_cd>F__dosage_2.schedule.repeat.durationUnits__F</units_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>3</instance_num>
+        </observation>
+
+
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_3.text__F</tval_char>
+            <modifier_cd>dosageTextStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>4</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_3.asNeededBoolean__F</tval_char>
+            <modifier_cd>asNeededBooleanStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>4</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_3.quantity.value__F</nval_num>
+            <modifier_cd>quantityValueStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>4</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_3.schedule.repeat.count__F</nval_num>
+            <modifier_cd>countStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>4</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_3.schedule.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>4</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_3.schedule.repeat.frequency__F</nval_num>
+            <modifier_cd>frequencyStatement</modifier_cd>
+            <units_cd>F__dosage_3.schedule.repeat.durationUnits__F</units_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>4</instance_num>
+        </observation>
+
+
+
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_4.text__F</tval_char>
+            <modifier_cd>dosageTextStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>5</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_4.asNeededBoolean__F</tval_char>
+            <modifier_cd>asNeededBooleanStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>5</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_4.quantity.value__F</nval_num>
+            <modifier_cd>quantityValueStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>5</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_4.schedule.repeat.count__F</nval_num>
+            <modifier_cd>countStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>5</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_4.schedule.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>5</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_4.schedule.repeat.frequency__F</nval_num>
+            <modifier_cd>frequencyStatement</modifier_cd>
+            <units_cd>F__dosage_4.schedule.repeat.durationUnits__F</units_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>5</instance_num>
+        </observation>
+
+
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_5.text__F</tval_char>
+            <modifier_cd>dosageTextStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>6</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_5.asNeededBoolean__F</tval_char>
+            <modifier_cd>asNeededBooleanStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>6</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_5.quantity.value__F</nval_num>
+            <modifier_cd>quantityValueStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>6</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_5.schedule.repeat.count__F</nval_num>
+            <modifier_cd>countStatement</modifier_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>6</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <tval_char>F__dosage_5.schedule.repeat.when__F</tval_char>
+            <modifier_cd>repeatWhenStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>6</instance_num>
+        </observation>
+        <observation>
+            <event_id source="F__PatientSegments.eventIdSourceSystemName__F">F__PatientSegments.eventId__F</event_id>
+            <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
+            <start_date>F__dateAsserted__F</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>RXNORM:F__contained_0.code.coding.code__F</concept_cd>
+            <nval_num>F__dosage_5.schedule.repeat.frequency__F</nval_num>
+            <modifier_cd>frequencyStatement</modifier_cd>
+            <units_cd>F__dosage_5.schedule.repeat.durationUnits__F</units_cd>
+            <valuetype_cd>N</valuetype_cd>
+            <instance_num>6</instance_num>
+        </observation>
+    </observation_set>
+
+    <!--
+    Other data we want to capture for post process and formatting
+
+    -->
+</repository:patient_data>
