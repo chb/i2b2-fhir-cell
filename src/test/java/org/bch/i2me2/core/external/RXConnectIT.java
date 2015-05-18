@@ -24,7 +24,7 @@ public class RXConnectIT extends AbstractIT {
     // Test case with data - Return ok. 6 claims and 53 fills
     private static String firstName="Bert";
     private static String lastName="Schnur";
-    private static String birthDate="19450419";
+    private static String birthDate="1945-04-19";
     private static String gender="M";
     private static String zip="63050";
 

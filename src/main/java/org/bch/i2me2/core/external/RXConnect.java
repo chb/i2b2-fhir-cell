@@ -10,7 +10,9 @@ import org.bch.i2me2.core.util.Validator;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -25,6 +27,7 @@ public class RXConnect extends WrapperAPI {
     public static String PARAM_GENDER="sex";
     public static String PARAM_ZIP_CODE="zipCode";
     private static String PARAM_BIRTH_OF_DATE_FORMAT = "yyyyMMdd";
+    private static String PARAM_BIRTH_OF_DATE_FORMAT_ALTER = "yyyy-MM-dd";
     private static String PARAM_ZIP_CODE_REGEXP="^\\d{5}(?:[-\\s]\\d{4})?$";
 
     private static String MODULE = "[RXCONNECT]";
@@ -104,7 +107,19 @@ public class RXConnect extends WrapperAPI {
             Validator.NotNullEmptyStr(this.firstName, "RX " + PARAM_FIRST_NAME);
             Validator.NotNullEmptyStr(this.lastName, "RX " + PARAM_LAST_NAME);
 
-            Validator.validDate(this.birthDate, PARAM_BIRTH_OF_DATE_FORMAT, "RX " + PARAM_BIRTH_DATE);
+            try {
+                Validator.validDate(this.birthDate, PARAM_BIRTH_OF_DATE_FORMAT, "RX " + PARAM_BIRTH_DATE);
+            } catch (I2ME2Exception e) {
+                Validator.validDate(this.birthDate, PARAM_BIRTH_OF_DATE_FORMAT_ALTER, "RX " + PARAM_BIRTH_DATE);
+                SimpleDateFormat dateFormatInput = new SimpleDateFormat(PARAM_BIRTH_OF_DATE_FORMAT_ALTER);
+                try {
+                    Date date = dateFormatInput.parse(this.birthDate);
+                    SimpleDateFormat dateFormatInput2 = new SimpleDateFormat(PARAM_BIRTH_OF_DATE_FORMAT);
+                    this.birthDate = dateFormatInput2.format(date);
+                } catch (Exception ee) {
+                    throw new I2ME2Exception("Error parsing date", ee);
+                }
+            }
 
             List<String> opt = new ArrayList<>();
             opt.add("M");

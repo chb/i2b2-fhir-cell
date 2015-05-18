@@ -114,15 +114,6 @@ public class RXConnectTest {
             assertTrue(e.getMessage().contains(RXConnect.PARAM_BIRTH_DATE));
         }
 
-        // Wrong format
-        this.rxconnect.setBirthDate("1957-05-01");
-        try {
-            this.rxconnect.getMedicationsList();
-            fail();
-        } catch (I2ME2Exception e) {
-            assertTrue(e.getMessage().contains(RXConnect.PARAM_BIRTH_DATE));
-        }
-
         // Invalid date
         this.rxconnect.setBirthDate("19450230");
         try {
@@ -239,6 +230,12 @@ public class RXConnectTest {
         this.rxconnect.setZipCode("12345 1234");
         out = this.rxconnect.getMedicationsList();
         verify(http, times(4)).doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString());
+        assertEquals(json, out);
+
+        // Make sure that we accept this date format for rx-connect
+        this.rxconnect.setBirthDate("1957-05-01");
+        out = this.rxconnect.getMedicationsList();
+        verify(http, times(5)).doPostGeneric(anyString(), anyString(), anyString(),anyString(),anyString());
         assertEquals(json, out);
     }
 
