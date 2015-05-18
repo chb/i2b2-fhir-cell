@@ -38,10 +38,10 @@ expectedDurationStatement:92dadf20-e51c-11e4-82cd-10ddb1e3e963
 repeatWhenStatement:d2700840-e51c-11e4-82cd-10ddb1e3e963
 wasNotGivenStatement:0ab11610-d2ec-11e4-9f88-10ddb1e3e963
 statusStatement:aa369140-ed10-11e4-a3c2-10ddb1e3e963
-countStatement:countStatementXXXXX
-noteStatement:noteStatementXXXXX
+countStatement:45952bd0-fd81-11e4-a28f-10ddb1e3e963
+noteStatement:131904a0-fd82-11e4-a28f-10ddb1e3e963
 durationUnitsStatement:durationUnitsStatementXXXXX
-frequencyStatement:frequencyStatementXXXXX
-dosageTextStatement:dosageTextStatementXXXXX
-asNeededBooleanStatement:asNeededBooleanStatementXXXXXX
+frequencyStatement:222d4c40-fd81-11e4-a28f-10ddb1e3e963
+dosageTextStatement:dd6156f0-fd81-11e4-a28f-10ddb1e3e963
+asNeededBooleanStatement:d70a0370-d2ec-11e4-9f88-10ddb1e3e963
 
