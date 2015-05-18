@@ -100,6 +100,20 @@ public abstract class MapperI2ME2 extends Mapper {
         return newElem;
     }
 
+    protected String placeAlterNDCCode(String elem, String alterNDCCode) {
+        String newElem = elem;
+        String conceptCD = this.getTagValueLine(newElem, XmlPdoObservationTag.TAG_CONCEPT_CD.toString());
+        String newConceptCD = "<" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
+        newConceptCD = newConceptCD + "NDC:" + alterNDCCode;
+        newConceptCD = newConceptCD + "</" + XmlPdoObservationTag.TAG_CONCEPT_CD.toString() + ">";
+        newElem = newElem.replaceAll(conceptCD, newConceptCD);
+        return newElem;
+    }
+
+    protected String placeRXNORMInsteadOfNDC(String elem) {
+        return elem.replaceAll("NDC", "RXNORM");
+    }
+
     protected String getModifierCode(String xmlElem) {
         String modifier_cd_line = this.getTagValueLine(xmlElem, XmlPdoObservationTag.TAG_MODIFIER_CD.toString());
         String modifier_cd = modifier_cd_line.replace("<"+XmlPdoObservationTag.TAG_MODIFIER_CD.toString()+">","");

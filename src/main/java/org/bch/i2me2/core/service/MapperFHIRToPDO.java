@@ -41,6 +41,10 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
     private static final String RECS_RETURNED = "recsReturnedStatement";
     private static final String STATUS_MSG = "statusMsgStatement";
     private static final String MEDICATION_CODE_KEY = "contained_0.code.coding.code";
+    private static final String MEDICATION_CODE_KEY_ALTER = "contained_1.code.coding.code";
+
+    private static final String MEDICATION_CODING_KEY = "contained_0.code.coding.system";
+    private static final String MEDICATION_CODING_KEY_ALTER = "contained_1.code.coding.system";
 
     private static final String XML_MAP_TEMPLATE_FILE = "xmlpdoTemplateMedRecNew.xml";
 
@@ -183,16 +187,35 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
             // If concept_cd is not set or it is empty!
             xmlElem = placeEmptyConceptCD(xmlElem);
         } else {
-            String val=jsonDataMapInArray.get(MEDICATION_CODE_KEY);
+            String val = jsonDataMapInArray.get(MEDICATION_CODE_KEY);
             if (val == null) {
                 xmlElem = placeEmptyConceptCD(xmlElem);
             } else if (val.trim().equals("")) {
                 xmlElem = placeEmptyConceptCD(xmlElem);
+            } else {
+                // In this case we have a code. Then we check whether it is an NDC or a RXNORM
+                String coding_0 = jsonDataMapInArray.get(MEDICATION_CODING_KEY);
+                if (!isRXNormCoding(coding_0)) {
+                    // it means it is an NDC code, so, do nothing since it is the default option
+                    // NOTE: we place it with an empty if because of clarity
+                } else {
+                    // In this case, the coding system in RXNORM! So, if coding alter exists, it'll be the NDC code!
+                    if (!jsonDataMapInArray.containsKey(MEDICATION_CODE_KEY_ALTER)) {
+                        // If coding alter is not present, we only have rxnorm, so, we must replace xmlElem with RXNORM
+                        xmlElem = placeRXNORMInsteadOfNDC(xmlElem);
+                    } else {
+                        // We do have the ndc, so we use this one instead
+                        xmlElem = placeAlterNDCCode(xmlElem, jsonDataMapInArray.get(MEDICATION_CODE_KEY_ALTER));
+                    }
+                }
             }
         }
         return xmlElem;
     }
 
+    private boolean isRXNormCoding(String coding) {
+        return coding.toLowerCase().contains("rxnorm");
+    }
 
     @Override
     protected JSONArray getJSONArray(JSONObject root) throws JSONException {

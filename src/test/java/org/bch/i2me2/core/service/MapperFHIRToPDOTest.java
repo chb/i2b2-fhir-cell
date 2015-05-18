@@ -155,6 +155,20 @@ public class MapperFHIRToPDOTest {
 
     }
 
+    @Test
+    public void getPDOXML_NewModel_1_Test() throws Exception {
+        String jsonFileName = "mrNewJSON1.json";
+        String expectedXMLFileName = "mrNewXMLPDO1.xml";
+        doTest(jsonFileName,expectedXMLFileName, subjectId, gender, source, sourceEvent, dateTimeStr);
+    }
+
+    @Test
+    public void getPDOXML_NewModel_2_Test() throws Exception {
+        String jsonFileName = "mrNewJSON2.json";
+        String expectedXMLFileName = "mrNewXMLPDO2.xml";
+        doTest(jsonFileName,expectedXMLFileName, subjectId, gender, source, sourceEvent, dateTimeStr);
+    }
+
     // test 0: Happy path with only onw medication
     @Ignore
     public void getPDOXMLDetail_0Test() throws Exception {
@@ -198,7 +212,7 @@ public class MapperFHIRToPDOTest {
         Diff diff = new Diff(xmlExpected, xmlResult);
         // We override the ElementQualifier so, order of elements does not matter in the comparison
         //diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        //if (jsonFile.equals("mrJSON2.json")) System.out.println(diff.toString());
+        //if (jsonFile.equals("mrNewJSON1.json")) System.out.println(diff.toString());
         assertTrue(diff.similar());
     }
 
