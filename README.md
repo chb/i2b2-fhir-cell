@@ -117,8 +117,3 @@ The ports mapping redirects guess port 8080 to 8888. It can be changed in the va
 So, from the host it is possible to access the VM as
 
     http://127.0.0.1:8888
-
-
-
-
-
