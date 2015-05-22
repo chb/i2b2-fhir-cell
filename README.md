@@ -15,9 +15,10 @@ It's the back end system of MedRec (https://github.com/chb/med-hub-installer), t
 
 ###Other external systems###
 
-RXConnect: The connector to surescripts. https://github.com/chb/rxconnect
-IDM: Indivo entity manager. https://bitbucket.org/ihlchip/i2me2-idm
-MedRecApp: Uses the end points. https://github.com/chb/med-hub-installer
+* RXConnect: The connector to surescripts. https://github.com/chb/rxconnect
+* IDM: Indivo entity manager. https://bitbucket.org/ihlchip/i2me2-idm
+* I2B2: The biomedical integration software system. https://www.i2b2.org/
+* MedRecApp: Uses the end points. https://github.com/chb/med-hub-installer
 
 #I2ME2 Installation#  
 
