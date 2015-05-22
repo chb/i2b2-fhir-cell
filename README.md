@@ -1,6 +1,36 @@
-#Prerequisites
+#Description#
+
+I2ME2 core offers two RESTfull end points to enable the construction of reconciled medication lists:
+    
+    POST /i2me2/rest/medications/getMedications
+    Data: token={token}
+    Consumes: application/x-www-form-urlencoded
+    Produces: application/xml
+
+    POST /i2me2/rest/medications/putMedications 
+    Data: token={token}&content={JSONFHIRMedicationStatement}
+    Consumes: application/x-www-form-urlencoded
+
+It's the back end system of MedRec (https://github.com/chb/med-hub-installer), the app that shows to the patients their recorded medications (via getMedications operation), and gives voice to them by enabling the selection for new medications or the correction of them. The result is sent back via putMedications. More information here in shared google drive at AU542/i2me2.
+
+###Other external systems###
+
+RXConnect: The connector to surescripts. https://github.com/chb/rxconnect
+IDM: Indivo entity manager. https://bitbucket.org/ihlchip/i2me2-idm
+MedRecApp: Uses the end points. https://github.com/chb/med-hub-installer
+
+#I2ME2 Installation#  
+
+###Dependencies###
 
 java7, maven 3, JBoss AS7 
+
+###I2B2 configuration###
+
+I2ME2 Cell consumes and stores data from/to i2b2. See https://www.i2b2.org/
+Some tables must be created to i2b2 crc schema that are specific for i2me2. The creation scripts are located in 
+    
+    src/main/scripts 
 
 #Building the war from source
 Clone the project in a local directory, access it and:
@@ -23,7 +53,8 @@ To execute integration tests using Arquillian on an existing JBoss AS server ins
 To execute integration tests using Arquillian with no JBoss server running (it will start one and will do all the necessary deployments):
 
     mvn clean -Dtest=*IT test -Parq-jbossas-managed
-    
+
+
 #Deploying the war
 
 If JBoss is installed in the same machine:
@@ -39,7 +70,6 @@ Also, it is possible to use the administration web application of JBoss to deplo
     http://localhost:9990/
     
 It requires an administration user of JBoss, which can be added in the JBoss server as follows:
-
 
     cd $JBOSS_HOME/bin
     ./add-user.sh
