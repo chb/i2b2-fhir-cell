@@ -37,14 +37,16 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
 
     private static final String MS_DOSAGE = "dosage";
     private static final String MS_CONTAINED = "contained";
+    private static final String MS_CODE = "code";
+    private static final String MS_CODING = "coding";
 
     private static final String RECS_RETURNED = "recsReturnedStatement";
     private static final String STATUS_MSG = "statusMsgStatement";
-    private static final String MEDICATION_CODE_KEY = "contained_0.code.coding.code";
-    private static final String MEDICATION_CODE_KEY_ALTER = "contained_1.code.coding.code";
+    private static final String MEDICATION_CODE_KEY = "contained_0.code.coding_0.code";
+    private static final String MEDICATION_CODE_KEY_ALTER = "contained_0.code.coding_1.code";
 
-    private static final String MEDICATION_CODING_KEY = "contained_0.code.coding.system";
-    private static final String MEDICATION_CODING_KEY_ALTER = "contained_1.code.coding.system";
+    private static final String MEDICATION_CODING_KEY = "contained_0.code.coding_0.system";
+    private static final String MEDICATION_CODING_KEY_ALTER = "contained_0.code.coding_1.system";
 
     private static final String XML_MAP_TEMPLATE_FILE = "xmlpdoTemplateMedRecNew.xml";
 
@@ -69,7 +71,7 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
             loadRealModifiers();
 
             // Added to cope with IME-83 ************
-            // It should be refactor at some point, but for naw it should be fine
+            // It should be refactor at some point, but for now it should be fine
             String rxJSONAdapted = modifyJSON(rxJson);
             // ***************************************
             System.out.println(rxJSONAdapted);
@@ -92,16 +94,32 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
     // Provisional
     private String modifyJSON(String jsonInput) throws JSONException {
         JSONObject jsonRoot = new JSONObject(jsonInput);
-        JSONArray dosages = jsonRoot.getJSONArray(MS_DOSAGE);
-        for (int i=0; i<dosages.length(); i++) {
-            JSONObject x = dosages.getJSONObject(i);
-            jsonRoot.put(MS_DOSAGE+"_"+i, x);
+        JSONArray dosages=null;
+        try {
+            dosages = jsonRoot.getJSONArray(MS_DOSAGE);
+            for (int i = 0; i < dosages.length(); i++) {
+                JSONObject x = dosages.getJSONObject(i);
+                jsonRoot.put(MS_DOSAGE + "_" + i, x);
+            }
         }
-
+        catch (Exception e) {
+            // Nothing happens. It means that dosage is not present
+        }
         JSONArray conts = jsonRoot.getJSONArray(MS_CONTAINED);
         for (int i=0; i<conts.length();i++) {
             JSONObject x = conts.getJSONObject(i);
-            jsonRoot.put(MS_CONTAINED+"_"+i, x);
+            try {
+                JSONObject code = x.getJSONObject(MS_CODE);
+                JSONArray codes = code.getJSONArray(MS_CODING);
+                for(int j=0; j < codes.length(); j++) {
+                    JSONObject codeObj = codes.getJSONObject(j);
+                    code.put(MS_CODING+ "_" + j, codeObj);
+                }
+                code.remove(MS_CODING);
+            } catch (Exception e) {
+                // Nothing happens. It means that no coding is available
+            }
+            jsonRoot.put(MS_CONTAINED + "_" + i, x);
         }
 
         jsonRoot.remove(MS_DOSAGE);

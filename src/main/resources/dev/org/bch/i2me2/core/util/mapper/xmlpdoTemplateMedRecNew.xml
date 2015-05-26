@@ -32,7 +32,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__contained_0.name__F</tval_char>
             <modifier_cd>medicationNameStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -43,7 +43,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__status__F</tval_char>
             <modifier_cd>statusStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -54,7 +54,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__note__F</tval_char>
             <modifier_cd>noteStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -65,7 +65,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__wasNotGiven__F</tval_char>
             <modifier_cd>wasNotGivenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -78,7 +78,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_0.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -89,7 +89,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_0.asNeededBoolean__F</nval_num>
             <modifier_cd>asNeededBooleanStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -100,7 +100,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_0.quantity.value__F</nval_num>
             <modifier_cd>quantityValueStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -111,7 +111,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_0.schedule.repeat.count__F</nval_num>
             <modifier_cd>countStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -122,7 +122,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_0.schedule.repeat.when__F</tval_char>
             <modifier_cd>repeatWhenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -133,7 +133,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_0.schedule.repeat.frequency__F</nval_num>
             <modifier_cd>frequencyStatement</modifier_cd>
             <units_cd>F__dosage_0.schedule.repeat.durationUnits__F</units_cd>
@@ -147,7 +147,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_1.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -158,7 +158,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_1.asNeededBoolean__F</tval_char>
             <modifier_cd>asNeededBooleanStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -169,7 +169,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_1.quantity.value__F</nval_num>
             <modifier_cd>quantityValueStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -180,7 +180,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_1.schedule.repeat.count__F</nval_num>
             <modifier_cd>countStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -191,7 +191,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_1.schedule.repeat.when__F</tval_char>
             <modifier_cd>repeatWhenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -202,7 +202,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_1.schedule.repeat.frequency__F</nval_num>
             <modifier_cd>frequencyStatement</modifier_cd>
             <units_cd>F__dosage_1.schedule.repeat.durationUnits__F</units_cd>
@@ -216,7 +216,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_2.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -227,7 +227,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_2.asNeededBoolean__F</tval_char>
             <modifier_cd>asNeededBooleanStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -238,7 +238,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_2.quantity.value__F</nval_num>
             <modifier_cd>quantityValueStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -249,7 +249,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_2.schedule.repeat.count__F</nval_num>
             <modifier_cd>countStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -260,7 +260,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_2.schedule.repeat.when__F</tval_char>
             <modifier_cd>repeatWhenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -271,7 +271,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_2.schedule.repeat.frequency__F</nval_num>
             <modifier_cd>frequencyStatement</modifier_cd>
             <units_cd>F__dosage_2.schedule.repeat.durationUnits__F</units_cd>
@@ -285,7 +285,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_3.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -296,7 +296,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_3.asNeededBoolean__F</tval_char>
             <modifier_cd>asNeededBooleanStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -307,7 +307,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_3.quantity.value__F</nval_num>
             <modifier_cd>quantityValueStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -318,7 +318,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_3.schedule.repeat.count__F</nval_num>
             <modifier_cd>countStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -329,7 +329,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_3.schedule.repeat.when__F</tval_char>
             <modifier_cd>repeatWhenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -340,7 +340,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_3.schedule.repeat.frequency__F</nval_num>
             <modifier_cd>frequencyStatement</modifier_cd>
             <units_cd>F__dosage_3.schedule.repeat.durationUnits__F</units_cd>
@@ -355,7 +355,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_4.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -366,7 +366,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_4.asNeededBoolean__F</tval_char>
             <modifier_cd>asNeededBooleanStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -377,7 +377,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_4.quantity.value__F</nval_num>
             <modifier_cd>quantityValueStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -388,7 +388,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_4.schedule.repeat.count__F</nval_num>
             <modifier_cd>countStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -399,7 +399,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_4.schedule.repeat.when__F</tval_char>
             <modifier_cd>repeatWhenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -410,7 +410,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_4.schedule.repeat.frequency__F</nval_num>
             <modifier_cd>frequencyStatement</modifier_cd>
             <units_cd>F__dosage_4.schedule.repeat.durationUnits__F</units_cd>
@@ -424,7 +424,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_5.text__F</tval_char>
             <modifier_cd>dosageTextStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -435,7 +435,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_5.asNeededBoolean__F</tval_char>
             <modifier_cd>asNeededBooleanStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -446,7 +446,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_5.quantity.value__F</nval_num>
             <modifier_cd>quantityValueStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -457,7 +457,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_5.schedule.repeat.count__F</nval_num>
             <modifier_cd>countStatement</modifier_cd>
             <valuetype_cd>N</valuetype_cd>
@@ -468,7 +468,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <tval_char>F__dosage_5.schedule.repeat.when__F</tval_char>
             <modifier_cd>repeatWhenStatement</modifier_cd>
             <valuetype_cd>T</valuetype_cd>
@@ -479,7 +479,7 @@
             <patient_id source="F__PatientSegments.patientIdSourceSystemName__F">F__PatientSegments.patientId__F</patient_id>
             <start_date>F__dateAsserted__F</start_date>
             <observer_cd>@</observer_cd>
-            <concept_cd>NDC:F__contained_0.code.coding.code__F</concept_cd>
+            <concept_cd>NDC:F__contained_0.code.coding_0.code__F</concept_cd>
             <nval_num>F__dosage_5.schedule.repeat.frequency__F</nval_num>
             <modifier_cd>frequencyStatement</modifier_cd>
             <units_cd>F__dosage_5.schedule.repeat.durationUnits__F</units_cd>
@@ -490,8 +490,8 @@
 
     <!--
     Other data we want to capture for post process and formatting
-    F__contained_0.code.coding.system__F
-    F__contained_1.code.coding.system__F
-    F__contained_1.code.coding.code__F
+    F__contained_0.code.coding_0.system__F
+    F__contained_0.code.coding_1.system__F
+    F__contained_0.code.coding_1.code__F
     -->
 </repository:patient_data>

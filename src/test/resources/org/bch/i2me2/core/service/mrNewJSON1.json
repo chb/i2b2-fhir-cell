@@ -7,22 +7,16 @@
       "id": "3373f5d4-27e8-421e-8303-e8eefaf0204b",
       "name": "CODETEXT",
       "code": {
-        "coding": {
+        "coding": [
+          {
           "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
           "code": "310798"
-        },
-        "text": "CODETEXT"
-      }
-    },
-    {
-      "resourceType": "Medication",
-      "id": "3373f5d4-27e8-421e-8303-e8eefaf0204b",
-      "name": "CODETEXT",
-      "code": {
-        "coding": {
-          "system": "ndc code",
-          "code": "0000310798"
-        },
+          },
+          {
+            "system": "ndc code",
+            "code": "0000310798"
+          }
+        ],
         "text": "CODETEXT"
       }
     }
