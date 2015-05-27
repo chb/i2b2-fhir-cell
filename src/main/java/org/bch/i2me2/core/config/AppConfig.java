@@ -76,6 +76,7 @@ public class AppConfig {
     // The patient and encounter source when data comming from surescripts and from bch
     public static String I2B2_PDO_SOURCE_SURESCRIPT =       "app.i2b2.pdo.source.surescript";
     public static String I2B2_PDO_SOURCE_BCH =              "app.i2b2.pdo.source.bch";
+    public static String I2B2_PDO_SOURCE_IBD =              "app.i2b2.pdo.source.ibd";
 
     // The number of days for triggering surescript refresh
     public static String DAYS_WINDOW_SURESCRIPT =           "app.i2b2.pdo.windowdays.surescript";

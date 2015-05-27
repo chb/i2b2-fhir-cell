@@ -31,8 +31,8 @@ public class I2B2RegistryIBD extends WrapperAPI {
             "(%s, '%s', '%s', '%s')";
 
     private static String INSERT_ENC_MAPPING = "insert into encounter_mapping " +
-            "(encounter_num, encounter_ide, encounter_ide_source, project_id) values " +
-            "(%s, '%s', '%s', '%s')";
+            "(encounter_num, encounter_ide, encounter_ide_source, project_id, patient_ide, patient_ide_source) values " +
+            "(%s, '%s', '%s', '%s', '%s','%s')";
 
     private static String PRIOR_USE = "prior use";
     private static String CURRENT_USE = "current use";
@@ -96,7 +96,7 @@ public class I2B2RegistryIBD extends WrapperAPI {
                     'T');
             System.out.println(insFact);
             try {
-                stmtExec.execute(insFact);
+                //stmtExec.execute(insFact);
                 this.log(Level.INFO, "Insert OK: " + insFact);
                 insOK++;
             } catch (Exception e) {
@@ -121,8 +121,10 @@ public class I2B2RegistryIBD extends WrapperAPI {
                     INSERT_ENC_MAPPING,
                     enc,
                     enc,
-                    AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH),
-                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID));
+                    AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD),
+                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID),
+                    patientNum,
+                    "HIVE");
 
             // Insert in encounter_mapping self map
             String insertEncMapSelf = String.format(
@@ -130,7 +132,9 @@ public class I2B2RegistryIBD extends WrapperAPI {
                     enc,
                     enc,
                     "HIVE",
-                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID));
+                    AppConfig.getProp(AppConfig.I2B2_PROJECT_ID),
+                    patientNum,
+                    "HIVE");
 
             // Insert into patient dimension
             String insertPat = String.format(INSERT_PATIENT, patientNum);

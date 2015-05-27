@@ -11,6 +11,16 @@
       <javaee:role-name>RestClient</javaee:role-name>
     </javaee:auth-constraint>
   </javaee:security-constraint>
+
+  <javaee:servlet>
+      <javaee:servlet-name>report</javaee:servlet-name>
+      <javaee:servlet-class>org.bch.i2me2.core.servlet.Report</javaee:servlet-class>
+  </javaee:servlet>
+  <javaee:servlet-mapping>
+      <javaee:servlet-name>report</javaee:servlet-name>
+      <javaee:url-pattern>/report</javaee:url-pattern>
+  </javaee:servlet-mapping>
+
   <javaee:login-config>
     <javaee:auth-method>BASIC</javaee:auth-method>
     <javaee:realm-name>ApplicationRealm</javaee:realm-name>
