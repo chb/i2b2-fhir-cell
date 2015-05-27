@@ -11,12 +11,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by CH176656 on 5/26/2015.
  */
 public class Report extends HttpServlet {
+    private static final String F_SOURCE = "Source";
+    private static final String F_MEDICATION = "Medication Code";
+    private static final String F_MEDICATION_NAME = "Medication Name";
+    private static final String F_STATUS = "Status";
+    private static final String F_DATE = "Start date";
+
+    private static final String SEP = ",";
+
+    private static final List<String> orderList = new ArrayList<>();
+    private static final Map<String, String> modifierMap = new HashMap();
+
+    private static final String SELECT_OBS_FACT_BASE =
+            "Select concept_cd, start_date, modifier_cd, tval_char, nval_num, instance_num, valtype_cd " +
+            "from observation_fact ob, encounter_mapping em " +
+            "where ob.encounter_num=em.encounter_num and em.encounter_ide_source='%s' and " +
+            "patient_num = %s";
+
+    private static final String ORDER_BY_DATE = " order by start_date";
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        initRows();
         String subjectId = request.getParameter("subjectId");
         String filename = generateCSVFile(subjectId);
         File file = new File(filename);
@@ -42,6 +66,48 @@ public class Report extends HttpServlet {
         fis.close();
     }
 
+    private void initRows() {
+        this.orderList.add(F_SOURCE);
+        this.orderList.add(F_MEDICATION);
+        this.orderList.add(F_MEDICATION_NAME);
+        this.orderList.add(F_DATE);
+        this.orderList.add(F_STATUS);
+
+        this.modifierMap.put(F_MEDICATION_NAME, "medicationNameStatement");
+        this.modifierMap.put(F_STATUS, "statusStatement");
+
+    }
+
+    private String getHeaders() {
+        String header="";
+        for(String col: this.orderList) {
+            if (!header.isEmpty()) header = header + SEP;
+            header = header + col;
+        }
+        return header+"\n";
+    }
+
+    private String addElement(Map<String, Map<String, String>> map, String medication, String date, String rawModifier, String value) {
+        String modifierInternal = AppConfig.getRealModifiersReverseMap().get(rawModifier);
+        if (this.modifierMap.values().contains(modifierInternal)) {
+            String key = medication + "###" + date;
+            String currValue = value;
+            Map<String, String> auxMap;
+            if (map.containsKey(key)) {
+                auxMap = map.get(key);
+            } else {
+                auxMap = new HashMap<>();
+                map.put(key, auxMap);
+            }
+            if (auxMap.containsKey(modifierInternal)) {
+                currValue = currValue + " - " + auxMap.get(key);
+            }
+            auxMap.put(modifierInternal, currValue);
+            return key;
+        }
+        return null;
+    }
+
     protected String generateCSVFile(String subjectId) throws IOException {
         String filename=null;
         try {
@@ -53,8 +119,11 @@ public class Report extends HttpServlet {
             String patientNum = getPatientNum(con, subjectId);
             filename = subjectId+".csv";
 
+            String idbData = getIBDData(con, patientNum);
+            String headers = getHeaders();
             PrintWriter out = new PrintWriter(filename);
-            out.print("1,2,3,4,5,6,7\n7,6,5,4,3,2,1");
+            out.print(headers);
+            out.print(idbData);
             out.close();
             return filename;
         } catch (FileNotFoundException e) {
@@ -64,9 +133,78 @@ public class Report extends HttpServlet {
         } catch (I2ME2Exception e) {
             throw new IOException("Error creating file " +  filename);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new IOException("Error creating file " +  filename);
         }
 
+    }
+
+    private String getIBDData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
+        String query = String.format(
+                SELECT_OBS_FACT_BASE,
+                AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD),
+                patientNum) + ORDER_BY_DATE;
+
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        Map<String, Map<String, String>> mapData = new HashMap<>();
+        List<String> keys = new ArrayList<>();
+        while(rs.next()) {
+            String conceptCd = rs.getString("concept_cd");
+            String startDate = rs.getString("start_date");
+            String modifierCd = rs.getString("modifier_cd");
+            String tvalChar = rs.getString("tval_char");
+            String nvalNum = rs.getString("nval_num");
+            String valtypeCd = rs.getString("valtype_cd");
+
+            String value = tvalChar;
+            if (valtypeCd!=null) {
+                if (valtypeCd.toLowerCase().equals("N")) {
+                    value = nvalNum;
+                }
+            }
+            String key = addElement(mapData, conceptCd, startDate, modifierCd, value);
+            if (key!=null) {
+                keys.add(key);
+            }
+        }
+        rs.close();
+
+        return generateRows(mapData, keys, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD));
+
+    }
+
+    private String generateRows(Map<String, Map<String, String>> mapData, List<String> keys, String source) {
+        String finalRows="";
+        for(String key:keys) {
+            if (mapData.containsKey(key)) {
+                Map<String, String> auxMap = mapData.get(key);
+                String []datas = key.split("###");
+                String row = generateRow(datas[0], datas[1], auxMap, source);
+                finalRows = finalRows + row + "\n";
+            }
+        }
+        return finalRows;
+    }
+
+    String generateRow(String medication, String startDate, Map<String,String> auxMap, String source) {
+        String row="";
+        for(String elem: this.orderList) {
+            if (!row.isEmpty()) row = row + ",";
+            if (elem.equals(F_SOURCE)) {
+                row = row + source;
+            } else if (elem.equals(F_MEDICATION)) {
+                row = row + medication;
+            } else if (elem.equals(F_DATE)) {
+                row = row + startDate;
+            } else {
+                String keyModif = this.modifierMap.get(elem);
+                if (auxMap.containsKey(keyModif)) {
+                    row = row + auxMap.get(keyModif);
+                }
+            }
+        }
+        return row;
     }
 
     private String getPatientNum(Connection con, String subjectId) throws SQLException, I2ME2Exception {

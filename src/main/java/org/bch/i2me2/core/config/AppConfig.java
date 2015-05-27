@@ -98,6 +98,7 @@ public class AppConfig {
     private static Properties prop = new Properties();
 
     private static Map<String, String> realModifiers = new HashMap<>();
+    private static Map<String, String> realModifiersReverse = new HashMap<>();
 
     // File name containing the list of real modifier codes
     private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
@@ -144,6 +145,23 @@ public class AppConfig {
             }
         }
         return realModifiers;
+    }
+
+    public static Map<String, String> getRealModifiersReverseMap() {
+        if (realModifiersReverse.isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            try {
+                Utils.textFileToStringBuffer(MedicationsManagement.class, REAL_MODIFIERS_FILE, sb, ",");
+            } catch (Exception e) {
+                return realModifiersReverse;
+            }
+            String [] modifiers = sb.toString().split(",");
+            for (String modifier: modifiers){
+                String [] codes = modifier.split(":");
+                realModifiersReverse.put(codes[1].trim(), codes[0].trim());
+            }
+        }
+        return realModifiersReverse;
     }
 
     public static String getProp(String key) throws I2ME2Exception {
