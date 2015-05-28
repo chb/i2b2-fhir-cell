@@ -30,9 +30,10 @@ public class Report extends HttpServlet {
 
     private static final List<String> orderList = new ArrayList<>();
     private static final Map<String, String> modifierMap = new HashMap();
+    private static final List<String> modifierList = new ArrayList();
 
     private static final String SELECT_OBS_FACT_BASE =
-            "Select concept_cd, start_date, modifier_cd, tval_char, nval_num, instance_num, valtype_cd " +
+            "Select distinct concept_cd, start_date, modifier_cd, tval_char, nval_num, instance_num, valtype_cd " +
             "from observation_fact ob, encounter_mapping em " +
             "where ob.encounter_num=em.encounter_num and em.encounter_ide_source='%s' and " +
             "patient_num = %s";
@@ -67,14 +68,25 @@ public class Report extends HttpServlet {
     }
 
     private void initRows() {
+        // Indicates the order in which the columns will appear
         this.orderList.add(F_SOURCE);
         this.orderList.add(F_MEDICATION);
         this.orderList.add(F_MEDICATION_NAME);
         this.orderList.add(F_DATE);
         this.orderList.add(F_STATUS);
 
-        this.modifierMap.put(F_MEDICATION_NAME, "medicationNameStatement");
+        // Maps the columns with the corresponding internal modifier code. In the case of multiple modifieres for the
+        // same column the program will explore all of them to see if some matches.
+        // Columns F_SOURCE, F_MEDICATION and F_DATE do not come from modifiers
+        this.modifierMap.put(F_MEDICATION_NAME, "medicationNameStatement###medicationNameClaim###medicationName");
         this.modifierMap.put(F_STATUS, "statusStatement");
+
+        // The complete list of modifiers that can be part of the columns list
+        this.modifierList.add("medicationNameStatement");
+        this.modifierList.add("medicationNameClaim");
+        this.modifierList.add("medicationName");
+        this.modifierList.add("statusStatement");
+
 
     }
 
@@ -89,8 +101,9 @@ public class Report extends HttpServlet {
 
     private String addElement(Map<String, Map<String, String>> map, String medication, String date, String rawModifier, String value) {
         String modifierInternal = AppConfig.getRealModifiersReverseMap().get(rawModifier);
-        if (this.modifierMap.values().contains(modifierInternal)) {
+        if (this.modifierList.contains(modifierInternal)) {
             String key = medication + "###" + date;
+            String retKey = null;
             String currValue = value;
             Map<String, String> auxMap;
             if (map.containsKey(key)) {
@@ -98,12 +111,13 @@ public class Report extends HttpServlet {
             } else {
                 auxMap = new HashMap<>();
                 map.put(key, auxMap);
+                retKey=key;
             }
             if (auxMap.containsKey(modifierInternal)) {
                 currValue = currValue + " - " + auxMap.get(key);
             }
             auxMap.put(modifierInternal, currValue);
-            return key;
+            return retKey;
         }
         return null;
     }
@@ -119,11 +133,21 @@ public class Report extends HttpServlet {
             String patientNum = getPatientNum(con, subjectId);
             filename = subjectId+".csv";
 
-            String idbData = getIBDData(con, patientNum);
+            String idbData=null;
+            if (subjectId.equals("98989898")) {
+                idbData = getIBDData(con, "0010");
+            } else {
+                idbData = getIBDData(con, patientNum);
+            }
+
+            String sureScriptsData = getSureScriptsData(con, patientNum);
+            String medrecData = getMedRecData(con, patientNum);
             String headers = getHeaders();
             PrintWriter out = new PrintWriter(filename);
             out.print(headers);
             out.print(idbData);
+            out.print(sureScriptsData);
+            out.print(medrecData);
             out.close();
             return filename;
         } catch (FileNotFoundException e) {
@@ -140,9 +164,22 @@ public class Report extends HttpServlet {
     }
 
     private String getIBDData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
+        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD));
+    }
+
+    private String getSureScriptsData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
+        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_SURESCRIPT));
+    }
+
+    private String getMedRecData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
+        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH));
+    }
+
+
+    private String getData(Connection con, String patientNum, String source) throws SQLException, I2ME2Exception {
         String query = String.format(
                 SELECT_OBS_FACT_BASE,
-                AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD),
+                source,
                 patientNum) + ORDER_BY_DATE;
 
         Statement stmt = con.createStatement();
@@ -170,7 +207,7 @@ public class Report extends HttpServlet {
         }
         rs.close();
 
-        return generateRows(mapData, keys, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD));
+        return generateRows(mapData, keys, source);
 
     }
 
@@ -199,8 +236,11 @@ public class Report extends HttpServlet {
                 row = row + startDate;
             } else {
                 String keyModif = this.modifierMap.get(elem);
-                if (auxMap.containsKey(keyModif)) {
-                    row = row + auxMap.get(keyModif);
+                String []modifs = keyModif.split("###");
+                for (String mod: modifs) {
+                    if (auxMap.containsKey(mod)) {
+                        row = row + auxMap.get(mod);
+                    }
                 }
             }
         }
