@@ -35,8 +35,8 @@ public class EchoIT {
                 .addClasses(Echo.class, EchoIT.class, JaxRsActivator.class, JSONPRequestFilter.class)
                //.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                //.setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
-               .addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))
-               .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
+               //.addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))
+               //.addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
       }
 
