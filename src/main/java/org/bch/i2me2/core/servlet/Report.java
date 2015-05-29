@@ -3,6 +3,7 @@ package org.bch.i2me2.core.servlet;
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -25,6 +26,8 @@ public class Report extends HttpServlet {
     private static final String F_MEDICATION_NAME = "Medication Name";
     private static final String F_STATUS = "Status";
     private static final String F_DATE = "Start date";
+    private static final String F_TEXT_STATEMENT = "Text Statement";
+    private static final String F_WHEN = "When";
 
     private static final String SEP = ",";
 
@@ -40,8 +43,12 @@ public class Report extends HttpServlet {
 
     private static final String ORDER_BY_DATE = " order by start_date";
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void init() throws ServletException {
         initRows();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String subjectId = request.getParameter("subjectId");
         String filename = generateCSVFile(subjectId);
         File file = new File(filename);
@@ -74,20 +81,25 @@ public class Report extends HttpServlet {
         this.orderList.add(F_MEDICATION_NAME);
         this.orderList.add(F_DATE);
         this.orderList.add(F_STATUS);
+        this.orderList.add(F_TEXT_STATEMENT);
+        this.orderList.add(F_WHEN);
+
 
         // Maps the columns with the corresponding internal modifier code. In the case of multiple modifieres for the
         // same column the program will explore all of them to see if some matches.
         // Columns F_SOURCE, F_MEDICATION and F_DATE do not come from modifiers
         this.modifierMap.put(F_MEDICATION_NAME, "medicationNameStatement###medicationNameClaim###medicationName");
         this.modifierMap.put(F_STATUS, "statusStatement");
+        this.modifierMap.put(F_TEXT_STATEMENT, "dosageTextStatement");
+        this.modifierMap.put(F_WHEN, "repeatWhenStatement");
 
         // The complete list of modifiers that can be part of the columns list
         this.modifierList.add("medicationNameStatement");
         this.modifierList.add("medicationNameClaim");
         this.modifierList.add("medicationName");
         this.modifierList.add("statusStatement");
-
-
+        this.modifierList.add("dosageTextStatement");
+        this.modifierList.add("repeatWhenStatement");
     }
 
     private String getHeaders() {
@@ -113,8 +125,8 @@ public class Report extends HttpServlet {
                 map.put(key, auxMap);
                 retKey=key;
             }
-            if (auxMap.containsKey(modifierInternal)) {
-                currValue = currValue + " - " + auxMap.get(key);
+            if (auxMap.containsKey(modifierInternal) && !modifierInternal.equals("dosageTextStatement")) {
+                currValue = currValue + " - " + auxMap.get(modifierInternal);
             }
             auxMap.put(modifierInternal, currValue);
             return retKey;
@@ -143,6 +155,8 @@ public class Report extends HttpServlet {
             String sureScriptsData = getSureScriptsData(con, patientNum);
             String medrecData = getMedRecData(con, patientNum);
             String headers = getHeaders();
+            //File file = new File(filename);
+            //file.delete();
             PrintWriter out = new PrintWriter(filename);
             out.print(headers);
             out.print(idbData);

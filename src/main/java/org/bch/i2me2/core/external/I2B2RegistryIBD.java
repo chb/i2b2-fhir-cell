@@ -17,8 +17,9 @@ import java.util.logging.Level;
 
 public class I2B2RegistryIBD extends WrapperAPI {
     private static String MODIFIER_MED_STATEMENT_STATUS = "statusStatement";
+    private static String MODIFIER_MED_STATEMENT_NAME = "medicationNameStatement";
     private static String QUERY_IBD = "ibd_rxnorm_import.sql";
-    private static String QUERY_RXCODES = "select rxcode,ibd_concept_cd from rxnorm_ibd";
+    private static String QUERY_RXCODES = "select rxcode,ibd_concept_cd, name from rxnorm_ibd";
 
     private static String INSERT_FACT = "insert into observation_fact" +
             "(patient_num, encounter_num, start_date, concept_cd, instance_num, modifier_cd, provider_id, tval_char, valtype_cd) values " +
@@ -60,7 +61,9 @@ public class I2B2RegistryIBD extends WrapperAPI {
         Statement stmtExec = conI2B2.createStatement();
 
         // Load all rxcodes with their associated conceptcd
-        Map<String, String> mapRX = loadRXCodes(stmtQuery.executeQuery(QUERY_RXCODES));
+        List<Map<String, String>> mapLists = loadRXCodes(stmtQuery.executeQuery(QUERY_RXCODES));
+        Map<String, String> mapRX = mapLists.get(0);
+        Map<String, String> mapName = mapLists.get(1);
 
         // Map to keep a link between patient_num and encounter_num
         Map<String, String> mapEncounter = new HashMap<>();
@@ -68,7 +71,7 @@ public class I2B2RegistryIBD extends WrapperAPI {
         // Map the real modifier codes
         Map<String, String> mapModifiers = AppConfig.getRealModifiersMap();
         String realModifierCD = mapModifiers.get(MODIFIER_MED_STATEMENT_STATUS);
-
+        String realModifierCDMedicationName = mapModifiers.get(MODIFIER_MED_STATEMENT_NAME);
         // Map the modifier values
         Map<String, String> mapValues = getValueMap();
 
@@ -85,6 +88,9 @@ public class I2B2RegistryIBD extends WrapperAPI {
             mapEncounter.put(encounterNum, subjectId);
             //System.out.println(conceptCd + ", " + subjectId + "," + startDate + "," + encounterNum + "," + name_char);
             String rxCode = getRXCode(mapRX, conceptCd);
+            String medicationName = mapName.get(rxCode);
+
+            // Insert status statement
             String insFact = String.format(
                     INSERT_FACT,
                     subjectId,
@@ -96,13 +102,36 @@ public class I2B2RegistryIBD extends WrapperAPI {
                     'T');
             System.out.println(insFact);
             try {
-                //stmtExec.execute(insFact);
+                stmtExec.execute(insFact);
                 this.log(Level.INFO, "Insert OK: " + insFact);
                 insOK++;
             } catch (Exception e) {
                 this.log(Level.WARNING, "IMPORT ERROR:" + e.getMessage());
                 insErr++;
             }
+
+            // Insert medication name statement
+            // Insert status statement
+            insFact = String.format(
+                    INSERT_FACT,
+                    subjectId,
+                    encounterNum,
+                    startDate.substring(0,10),
+                    rxCode,
+                    realModifierCDMedicationName,
+                    medicationName,
+                    'T');
+            System.out.println(insFact);
+            try {
+                stmtExec.execute(insFact);
+                this.log(Level.INFO, "Insert OK: " + insFact);
+                insOK++;
+            } catch (Exception e) {
+                this.log(Level.WARNING, "IMPORT ERROR:" + e.getMessage());
+                insErr++;
+            }
+
+
         }
         rs.close();
 
@@ -197,15 +226,21 @@ public class I2B2RegistryIBD extends WrapperAPI {
         return null;
     }
 
-    private Map<String, String> loadRXCodes(ResultSet rs) throws Exception {
-        Map<String, String> out = new HashMap<>();
+    private List<Map<String, String>> loadRXCodes(ResultSet rs) throws Exception {
+        Map<String, String> conceptToRxNorm = new HashMap<>();
+        Map<String, String> rxNormToName = new HashMap<>();
         while(rs.next()) {
             String rxcode = rs.getString("rxcode");
             String code_cd = rs.getString("ibd_concept_cd");
-            System.out.println(rxcode + ":"+code_cd);
-            out.put(code_cd, rxcode);
+            String name = rs.getString("name");
+            System.out.println(rxcode + ":"+code_cd + ":" + name);
+            conceptToRxNorm.put(code_cd, rxcode);
+            rxNormToName.put(rxcode, name);
         }
         rs.close();
+        List<Map<String, String>> out = new ArrayList<>();
+        out.add(conceptToRxNorm);
+        out.add(rxNormToName);
         return out;
     }
 }
