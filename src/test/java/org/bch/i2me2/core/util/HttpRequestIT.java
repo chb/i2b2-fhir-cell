@@ -38,8 +38,8 @@ public class HttpRequestIT {
         WebArchive ret = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(Echo.class, JaxRsActivator.class, JSONPRequestFilter.class, HttpRequest.class,
                         AppConfig.class, I2ME2Exception.class, Response.class)
-                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))
-                .addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
+                //.addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))
+                //.addAsWebInfResource(new File("src/main/webapp/WEB-INF/jboss-web.xml"))
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
         return ret;
