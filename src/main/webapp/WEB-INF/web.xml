@@ -5,6 +5,7 @@
       <javaee:web-resource-name>All resources</javaee:web-resource-name>
       <javaee:description>Protects all resources</javaee:description>
       <javaee:url-pattern>/rest/*</javaee:url-pattern>
+      <javaee:url-pattern>/report</javaee:url-pattern>
       <javaee:url-pattern>/tryit.html</javaee:url-pattern>
     </javaee:web-resource-collection>
     <javaee:auth-constraint>

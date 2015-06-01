@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Created by CH176656 on 5/26/2015.
@@ -47,9 +47,14 @@ public class Report extends HttpServlet {
         initRows();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        makeCall(request, response);
+    }
+
+    public void makeCall(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String subjectId = request.getParameter("subjectId");
+
         String filename = generateCSVFile(subjectId);
         File file = new File(filename);
         if(!file.exists()){
@@ -72,6 +77,10 @@ public class Report extends HttpServlet {
         os.flush();
         os.close();
         fis.close();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        makeCall(request, response);
     }
 
     private void initRows() {
@@ -137,6 +146,8 @@ public class Report extends HttpServlet {
     protected String generateCSVFile(String subjectId) throws IOException {
         String filename=null;
         try {
+            List<MedicationOrder> medicationsSimple = new ArrayList<>();
+
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String jdbcCon = AppConfig.getProp(AppConfig.I2B2_JDBC);
             String auth = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_DB_I2B2);
@@ -147,21 +158,25 @@ public class Report extends HttpServlet {
 
             String idbData=null;
             if (subjectId.equals("98989898")) {
-                idbData = getIBDData(con, "0010");
+                idbData = getIBDData(con, "0010", medicationsSimple);
             } else {
-                idbData = getIBDData(con, patientNum);
+                idbData = getIBDData(con, patientNum, medicationsSimple);
             }
 
-            String sureScriptsData = getSureScriptsData(con, patientNum);
-            String medrecData = getMedRecData(con, patientNum);
+            String sureScriptsData = getSureScriptsData(con, patientNum, medicationsSimple);
+            String medrecData = getMedRecData(con, patientNum, medicationsSimple);
             String headers = getHeaders();
             //File file = new File(filename);
             //file.delete();
+            String medSorted = generateSimplifiedList(medicationsSimple);
+
             PrintWriter out = new PrintWriter(filename);
-            out.print(headers);
-            out.print(idbData);
-            out.print(sureScriptsData);
-            out.print(medrecData);
+            out.print(medSorted);
+            // In the current version, we only place a simplified version of the report
+            //out.print(headers);
+            //out.print(idbData);
+            //out.print(sureScriptsData);
+            //out.print(medrecData);
             out.close();
             return filename;
         } catch (FileNotFoundException e) {
@@ -177,20 +192,38 @@ public class Report extends HttpServlet {
 
     }
 
-    private String getIBDData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
-        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD));
+    private String generateSimplifiedList(List<MedicationOrder> medicationsSimple) {
+        String out="";
+        String currMed="";
+        Collections.sort(medicationsSimple);
+        for(int i=medicationsSimple.size()-1; i>=0; i--) {
+            MedicationOrder mo = medicationsSimple.get(i);
+            if (!currMed.equals(mo.getName())) {
+                currMed = mo.getName();
+                out = out + mo.getName()+SEP+mo.getDate()+mo.getStatus() + "\n";
+            }
+        }
+        return out;
     }
 
-    private String getSureScriptsData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
-        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_SURESCRIPT));
+    private String getIBDData(Connection con, String patientNum, List<MedicationOrder> medicationsSimple)
+            throws SQLException, I2ME2Exception {
+        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_IBD), medicationsSimple);
     }
 
-    private String getMedRecData(Connection con, String patientNum) throws SQLException, I2ME2Exception {
-        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH));
+    private String getSureScriptsData(Connection con, String patientNum, List<MedicationOrder> medicationsSimple)
+            throws SQLException, I2ME2Exception {
+        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_SURESCRIPT), medicationsSimple);
+    }
+
+    private String getMedRecData(Connection con, String patientNum, List<MedicationOrder> medicationsSimple)
+            throws SQLException, I2ME2Exception {
+        return getData(con, patientNum, AppConfig.getProp(AppConfig.I2B2_PDO_SOURCE_BCH), medicationsSimple);
     }
 
 
-    private String getData(Connection con, String patientNum, String source) throws SQLException, I2ME2Exception {
+    private String getData(Connection con, String patientNum, String source, List<MedicationOrder> medicationsSimple)
+            throws SQLException, I2ME2Exception {
         String query = String.format(
                 SELECT_OBS_FACT_BASE,
                 source,
@@ -221,25 +254,29 @@ public class Report extends HttpServlet {
         }
         rs.close();
 
-        return generateRows(mapData, keys, source);
+        return generateRows(mapData, keys, source, medicationsSimple);
 
     }
 
-    private String generateRows(Map<String, Map<String, String>> mapData, List<String> keys, String source) {
+    private String generateRows(Map<String, Map<String, String>> mapData, List<String> keys, String source,
+                                List<MedicationOrder> medicationsSimple) {
         String finalRows="";
         for(String key:keys) {
             if (mapData.containsKey(key)) {
                 Map<String, String> auxMap = mapData.get(key);
                 String []datas = key.split("###");
-                String row = generateRow(datas[0], datas[1], auxMap, source);
+                String row = generateRow(datas[0], datas[1], auxMap, source, medicationsSimple);
                 finalRows = finalRows + row + "\n";
             }
         }
         return finalRows;
     }
 
-    String generateRow(String medication, String startDate, Map<String,String> auxMap, String source) {
+    String generateRow(String medication, String startDate, Map<String,String> auxMap, String source,
+                       List<MedicationOrder> medicationsSimple) {
         String row="";
+        String status = "";
+        String name = "";
         for(String elem: this.orderList) {
             if (!row.isEmpty()) row = row + ",";
             if (elem.equals(F_SOURCE)) {
@@ -254,10 +291,30 @@ public class Report extends HttpServlet {
                 for (String mod: modifs) {
                     if (auxMap.containsKey(mod)) {
                         row = row + auxMap.get(mod);
+                        if (mod.equals(F_STATUS)) {
+                            status = auxMap.get(mod);
+                        } else if (mod.contains("medicationName")) {
+                            name = auxMap.get(mod);
+                        }
                     }
                 }
             }
         }
+
+        String formatDate = startDate;
+        try {
+            /*
+            SimpleDateFormat dateFormatInput = new SimpleDateFormat(AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2));
+            Date date = dateFormatInput.parse(startDate);
+            SimpleDateFormat dateFormatOutput = new SimpleDateFormat("yyyy-MM-dd");
+            formatDate = dateFormatOutput.format(date);
+            */
+            formatDate = formatDate.substring(0,10);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Nothing happens
+        }
+        medicationsSimple.add(new MedicationOrder(name, formatDate, status));
         return row;
     }
 
@@ -270,5 +327,48 @@ public class Report extends HttpServlet {
         rs.next();
         String patientNum = rs.getString("patient_num");
         return patientNum;
+    }
+
+    private static class MedicationOrder implements Comparable<MedicationOrder>{
+        private String name;
+        private String date;
+        private String status;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public boolean equals (Object o) {
+            if (!(o instanceof MedicationOrder))
+                return false;
+            MedicationOrder n = (MedicationOrder) o;
+            return n.name.equals(this.name) && n.date.equals(this.date) && n.status.equals(this.status);
+        }
+
+        public int hashCode() {
+            return 31*name.hashCode() + 17*date.hashCode() + status.hashCode();
+        }
+
+        public int compareTo(MedicationOrder n) {
+            int cmpName = this.name.compareTo(n.getName());
+            int cmpDate = this.date.compareTo(n.getDate());
+            return (cmpName != 0 ? cmpName : cmpDate != 0 ? cmpDate : this.status.compareTo(n.getStatus()));
+        }
+
+        public MedicationOrder(String name, String date, String status) {
+            this.name = name.trim().toLowerCase();
+            this.date = date.trim().toLowerCase();
+            this.status = status.trim().toLowerCase();
+        }
+
+
     }
 }
