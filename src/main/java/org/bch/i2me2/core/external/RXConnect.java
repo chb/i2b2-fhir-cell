@@ -58,8 +58,8 @@ public class RXConnect extends WrapperAPI {
             this.log(Level.WARNING, MODULE+OP_GET_MEDS_LIST+
                     "No authentication credentials found for rxconnect. Trying without authentication");
         }
-        System.out.println(url);
-        System.out.println(auth);
+        //System.out.println(url);
+        //System.out.println(auth);
         Response resp = getHttpRequest().doPostGeneric(url, null, auth, null, "POST");
         if (resp.getResponseCode()>= 400) {
             this.log(Level.SEVERE, MODULE+OP_GET_MEDS_LIST+"RXConnect error. Error code: " + resp.getResponseCode());

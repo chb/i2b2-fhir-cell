@@ -74,7 +74,7 @@ public class MapperFHIRToPDO extends MapperI2ME2 {
             // It should be refactor at some point, but for now it should be fine
             String rxJSONAdapted = modifyJSON(rxJson);
             // ***************************************
-            System.out.println(rxJSONAdapted);
+            //System.out.println(rxJSONAdapted);
 
             String jsonExtra = generatePatientInfo(subjectId, gender, source, sourceEvent, dateMsg);
             //result = doMap(rxJson,PATIENTSEGMENTS, jsonExtra);
