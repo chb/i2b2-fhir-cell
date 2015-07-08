@@ -6,7 +6,7 @@ I2B2 FHIR CELL offers a FHIR REST API compliant to push and retrieve data from I
 
 * I2B2: The biomedical integration software system. https://www.i2b2.org/
 
-#I2ME2 Installation#  
+#I2B2 FHIR Cell Installation#  
 
 ###Dependencies###
 
