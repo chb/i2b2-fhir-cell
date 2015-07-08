@@ -1,4 +1,4 @@
-package org.bch.i2me2.core.util.mapper;
+package org.bch.fhir.i2b2.util.mapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.service.WrapperService;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.service.WrapperService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

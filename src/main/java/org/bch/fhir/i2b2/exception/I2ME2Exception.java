@@ -1,4 +1,4 @@
-package org.bch.fhir.core.exception;
+package org.bch.fhir.i2b2.exception;
 
 /**
  * I2ME2Exception

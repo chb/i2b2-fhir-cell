@@ -1,4 +1,4 @@
-package org.bch.i2me2.core.service;
+package org.bch.fhir.i2b2.service;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

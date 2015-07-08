@@ -1,7 +1,7 @@
-package org.bch.i2me2.core.external;
+package org.bch.fhir.i2b2.external;
 
-import org.bch.i2me2.core.util.HttpRequest;
-import org.bch.i2me2.core.util.SoapRequest;
+import org.bch.fhir.i2b2.util.HttpRequest;
+import org.bch.fhir.i2b2.util.SoapRequest;
 
 import javax.inject.Inject;
 import java.util.logging.Level;

@@ -1,10 +1,10 @@
-package org.bch.i2me2.core.external;
+package org.bch.fhir.i2b2.external;
 
 import org.apache.commons.codec.binary.Hex;
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.util.Response;
-import org.bch.i2me2.core.util.Utils;
+import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.util.Response;
+import org.bch.fhir.i2b2.util.Utils;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -19,7 +19,7 @@ import javax.ejb.Stateless;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
-import org.bch.i2me2.core.util.mapper.Mapper;
+import org.bch.fhir.i2b2.util.mapper.Mapper;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;

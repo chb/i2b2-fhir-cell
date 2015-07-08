@@ -1,6 +1,6 @@
-package org.bch.i2me2.core.util;
+package org.bch.fhir.i2b2.util;
 
-import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

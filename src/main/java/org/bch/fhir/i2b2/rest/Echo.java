@@ -1,4 +1,4 @@
-package org.bch.i2me2.core.rest;
+package org.bch.fhir.i2b2.rest;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;

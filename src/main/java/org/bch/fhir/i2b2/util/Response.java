@@ -1,4 +1,4 @@
-package org.bch.i2me2.core.util;
+package org.bch.fhir.i2b2.util;
 
 /**
  * Interface for http responses

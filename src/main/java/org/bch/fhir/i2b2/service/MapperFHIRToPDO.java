@@ -1,8 +1,8 @@
-package org.bch.i2me2.core.service;
+package org.bch.fhir.i2b2.service;
 
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.util.mapper.Mapper;
+import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.util.mapper.Mapper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

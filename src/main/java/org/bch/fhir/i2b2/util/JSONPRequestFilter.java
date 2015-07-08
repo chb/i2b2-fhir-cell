@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.bch.i2me2.core.util;
+package org.bch.fhir.i2b2.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

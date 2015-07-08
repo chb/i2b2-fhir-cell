@@ -1,6 +1,6 @@
-package org.bch.i2me2.core.util;
+package org.bch.fhir.i2b2.util;
 
-import org.bch.i2me2.core.config.AppConfig;
+import org.bch.fhir.i2b2.config.AppConfig;
 
 import javax.ejb.Stateless;
 import java.io.*;

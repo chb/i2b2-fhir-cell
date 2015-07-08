@@ -1,8 +1,9 @@
-package org.bch.fhir.core.config;
+package org.bch.fhir.i2b2.config;
 
 import org.apache.commons.io.IOUtils;
-import org.bch.fhir.core.exception.I2ME2Exception;
-import org.bch.fhir.core.util.Utils;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.service.WrapperService;
+import org.bch.fhir.i2b2.util.Utils;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -133,7 +134,7 @@ public class AppConfig {
         if (realModifiers.isEmpty()) {
             StringBuffer sb = new StringBuffer();
             try {
-                Utils.textFileToStringBuffer(MedicationsManagement.class, REAL_MODIFIERS_FILE, sb, ",");
+                Utils.textFileToStringBuffer(WrapperService.class, REAL_MODIFIERS_FILE, sb, ",");
             } catch (Exception e) {
                 return realModifiers;
             }
@@ -150,7 +151,7 @@ public class AppConfig {
         if (realModifiersReverse.isEmpty()) {
             StringBuffer sb = new StringBuffer();
             try {
-                Utils.textFileToStringBuffer(MedicationsManagement.class, REAL_MODIFIERS_FILE, sb, ",");
+                Utils.textFileToStringBuffer(WrapperService.class, REAL_MODIFIERS_FILE, sb, ",");
             } catch (Exception e) {
                 return realModifiersReverse;
             }
