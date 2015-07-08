@@ -21,37 +21,24 @@ public class AppConfig {
     // The keys of the configuration parameters
 
     // The end points
-    public static String EP_RXCONNECT =             "app.endpoint.rxconnect";
-    public static String EP_IDM_RESOURCE =          "app.endpoint.idm.resource";
-    public static String EP_IDM_ID =                "app.endpoint.idm.id";
     public static String EP_I2B2_FR_SEND =          "app.endpoint.i2b2.fr.send";
     public static String EP_I2B2_CRC_UPLOAD =       "app.endpoint.i2b2.crc.upload";
     public static String EP_I2B2_CRC_PDOREQUEST =   "app.endpoint.i2b2.crc.pdorequest";
 
     // The hosts
-    public static String HOST_RXCONNECT =           "app.host.rxconnect";
     public static String HOST_I2B2_FR =             "app.host.i2b2.fr";
     public static String HOST_I2B2_CRC =             "app.host.i2b2.crc";
-    public static String HOST_IDM =                 "app.host.idm";
 
     // The ports
-    public static String PORT_RXCONNECT =           "app.port.rxconnect";
-    public static String PORT_IDM =                 "app.port.idm";
     public static String PORT_I2B2_FR =             "app.port.i2b2.fr";
     public static String PORT_I2B2_CRC =             "app.port.i2b2.crc";
 
     // The internet protocol (http|https)
-    public static String NET_PROTOCOL_RXCONNECT =   "app.network.protocol.rxconnect";
-    public static String NET_PROTOCOL_IDM =         "app.network.protocol.idm";
     public static String NET_PROTOCOL_I2B2_FR =     "app.network.protocol.i2b2.fr";
     public static String NET_PROTOCOL_I2B2_CRC =     "app.network.protocol.i2b2.crc";
 
     // The location file of the credentials
-    public static String CREDENTIALS_FILE_RXCONNECT =   "app.authfile.rxconnect";
-    public static String CREDENTIALS_FILE_IDM =         "app.authfile.idm";
     public static String CREDENTIALS_FILE_I2B2 =        "app.authfile.i2b2.fr";
-    public static String CREDENTIALS_DB_I2B2 =          "app.authfile.db.i2b2";
-    public static String CREDENTIALS_DB_IBD=            "app.authfile.db.ibdregistry";
 
     // The message templates for i2b2 messages
     public static String FIELNAME_SOAP_TEMP_I2B2_FR_SEND =  "app.filename.soap.template.i2b2.fr.send";
@@ -74,21 +61,8 @@ public class AppConfig {
     public static String REST_CONTENT_TYPE_I2B2_CRC_QUERY=  "app.rest.contenttype.i2b2.crc.query";
 
     // The patient and encounter source when data comming from surescripts and from bch
-    public static String I2B2_PDO_SOURCE_SURESCRIPT =       "app.i2b2.pdo.source.surescript";
     public static String I2B2_PDO_SOURCE_BCH =              "app.i2b2.pdo.source.bch";
-    public static String I2B2_PDO_SOURCE_IBD =              "app.i2b2.pdo.source.ibd";
 
-    // The number of days for triggering surescript refresh
-    public static String DAYS_WINDOW_SURESCRIPT =           "app.i2b2.pdo.windowdays.surescript";
-
-    // Whether to bypass IDM for getMedications. This also bypass refresh.
-    public static String BYPASS_IDM =                       "app.idm.bypass";
-
-    // The number of days that medication lists are returned
-    public static String DAYS_WINDOW =                      "app.i2b2.pdo.windowdays";
-
-    // The jdbc connection string for IBD Registry database
-    public static String IBD_JDBC =                         "app.jdbc.ibdregistry";
     public static String I2B2_JDBC =                        "app.jdbc.i2b2";
 
     // Other constants

@@ -11,6 +11,15 @@
     </javaee:auth-constraint>
   </javaee:security-constraint>
 
+  <javaee:servlet-mapping>
+    <javaee:servlet-name>fhir</javaee:servlet-name>
+    <javaee:url-pattern>/fhir/*</javaee:url-pattern>
+  </javaee:servlet-mapping>
+
+  <javaee:servlet>
+    <javaee:servlet-name>fhir</javaee:servlet-name>
+    <javaee:servlet-class>org.bch.fhir.i2b2.servlet.FHIRServlet</javaee:servlet-class>
+  </javaee:servlet>
 
   <javaee:login-config>
     <javaee:auth-method>BASIC</javaee:auth-method>
