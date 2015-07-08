@@ -2,12 +2,12 @@
 
 I2ME2 core offers two RESTfull end points to enable the construction of reconciled medication lists:
     
-    POST /i2me2/rest/medications/getMedications
+    HTTP/1.1 POST /i2me2/rest/medications/getMedications
     Data: token={token}
     Consumes: application/x-www-form-urlencoded
     Produces: application/xml
 
-    POST /i2me2/rest/medications/putMedications 
+    HTTP/1.1 POST /i2me2/rest/medications/putMedications 
     Data: token={token}&content={JSONFHIRMedicationStatement}
     Consumes: application/x-www-form-urlencoded
 
