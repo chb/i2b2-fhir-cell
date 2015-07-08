@@ -1,4 +1,4 @@
-package org.bch.i2me2.core.external;
+package org.bch.fhir.i2b2.external;
 
 import org.junit.Test;
 import org.w3c.dom.NodeList;

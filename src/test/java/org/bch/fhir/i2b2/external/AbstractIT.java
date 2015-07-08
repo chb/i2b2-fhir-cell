@@ -1,9 +1,9 @@
-package org.bch.i2me2.core.external;
+package org.bch.fhir.i2b2.external;
 
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.rest.JaxRsActivator;
-import org.bch.i2me2.core.util.*;
+import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.rest.JaxRsActivator;
+import org.bch.fhir.i2b2.util.*;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -26,10 +26,9 @@ public abstract class AbstractIT {
                 .addAsLibraries(resolver.artifact("org.apache.axis2:axis2:1.6.2").resolveAsFiles())
                 .addAsLibraries(resolver.artifact("commons-io:commons-io:2.0.1").resolveAsFiles())
                 .addAsLibraries(resolver.artifact("org.json:json:20090211").resolveAsFiles())
-                .addClasses(RXConnect.class, HttpRequest.class, RXConnectIT.class, JaxRsActivator.class,
+                .addClasses(HttpRequest.class, JaxRsActivator.class,
                         AppConfig.class, I2ME2Exception.class, Response.class, JSONPRequestFilter.class,
-                        WrapperAPI.class, SoapRequest.class, Validator.class, Utils.class, AbstractIT.class,
-                        IDM.class, IDMIT.class)
+                        WrapperAPI.class, SoapRequest.class, Validator.class, Utils.class, AbstractIT.class)
                 .addAsResource("org/bch/i2me2/core/config/config.properties",
                         "org/bch/i2me2/core/config/config.properties")
                         //.addAsWebInfResource("arquillian-ds.xml")

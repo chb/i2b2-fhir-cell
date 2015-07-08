@@ -1,4 +1,4 @@
-package org.bch.i2me2.core.rest;
+package org.bch.fhir.i2b2.rest;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.bch.i2me2.core.util.JSONPRequestFilter;
+import org.bch.fhir.i2b2.util.JSONPRequestFilter;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;

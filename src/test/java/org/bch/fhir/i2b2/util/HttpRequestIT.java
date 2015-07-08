@@ -1,9 +1,9 @@
-package org.bch.i2me2.core.util;
+package org.bch.fhir.i2b2.util;
 
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.rest.Echo;
-import org.bch.i2me2.core.rest.JaxRsActivator;
+import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.rest.Echo;
+import org.bch.fhir.i2b2.rest.JaxRsActivator;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;

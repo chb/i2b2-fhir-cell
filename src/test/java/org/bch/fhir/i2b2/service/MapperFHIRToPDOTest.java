@@ -1,7 +1,7 @@
-package org.bch.i2me2.core.service;
+package org.bch.fhir.i2b2.service;
 
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Ignore;
@@ -217,7 +217,7 @@ public class MapperFHIRToPDOTest {
     }
 
     private String readTextFile(String fileName) throws Exception {
-        InputStream in = MapperRxToPDOTest.class.getResourceAsStream(fileName);
+        InputStream in = MapperFHIRToPDOTest.class.getResourceAsStream(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         StringBuilder sBuffer = new StringBuilder();
         String line;

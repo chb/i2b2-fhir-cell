@@ -1,9 +1,9 @@
-package org.bch.i2me2.core.rest;
+package org.bch.fhir.i2b2.rest;
 
-import org.bch.i2me2.core.config.AppConfig;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.util.*;
-import org.bch.i2me2.core.util.mapper.Mapper;
+import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.I2ME2Exception;
+import org.bch.fhir.i2b2.util.*;
+import org.bch.fhir.i2b2.util.mapper.Mapper;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -31,9 +31,6 @@ public class AbstractRestIT {
                 .addAsLibraries(resolver.artifact("com.oracle:ojdbc14:10.2.0.3.0").resolveAsFiles())
                 .addPackage(AppConfig.class.getPackage())
                 .addPackage(I2ME2Exception.class.getPackage())
-                .addPackage(IDM.class.getPackage())
-                .addPackage(Medications.class.getPackage())
-                .addPackage(MapperI2ME2.class.getPackage())
                 .addPackage(Response.class.getPackage())
                 .addPackage(Mapper.class.getPackage())
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/web.xml"))

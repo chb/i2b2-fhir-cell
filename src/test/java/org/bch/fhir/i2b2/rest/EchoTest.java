@@ -1,10 +1,10 @@
-package org.bch.i2me2.core.rest;
+package org.bch.fhir.i2b2.rest;
 
 import static org.junit.Assert.*;
 
 import javax.ws.rs.core.Response;
 
-import org.bch.i2me2.core.config.AppConfig;
+import org.bch.fhir.i2b2.config.AppConfig;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -131,7 +131,7 @@ public class EchoTest {
     }
 
     private String readTextFile(String fileName) throws Exception {
-        InputStream in = MedicationsIT.class.getResourceAsStream(fileName);
+        InputStream in = AbstractRestIT.class.getResourceAsStream(fileName);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         StringBuilder sBuffer = new StringBuilder();
         String line;

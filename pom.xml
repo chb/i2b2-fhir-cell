@@ -51,6 +51,17 @@
     </dependencyManagement>
     
     <dependencies>
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-base</artifactId>
+            <version>0.9</version>
+        </dependency>
+        <!-- At least one "structures" JAR must also be included -->
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-structures-dstu2</artifactId>
+            <version>0.9</version>
+        </dependency>
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss -->
         <dependency>
             <groupId>javax.enterprise</groupId>
