@@ -2,11 +2,6 @@ package org.bch.i2me2.core.rest;
 
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.external.IDM;
-import org.bch.i2me2.core.external.RXConnect;
-import org.bch.i2me2.core.external.RXConnectIT;
-import org.bch.i2me2.core.external.WrapperAPI;
-import org.bch.i2me2.core.service.MapperI2ME2;
 import org.bch.i2me2.core.util.*;
 import org.bch.i2me2.core.util.mapper.Mapper;
 import org.jboss.arquillian.container.test.api.Deployment;

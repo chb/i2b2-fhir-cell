@@ -4,23 +4,13 @@
     <javaee:web-resource-collection>
       <javaee:web-resource-name>All resources</javaee:web-resource-name>
       <javaee:description>Protects all resources</javaee:description>
-      <javaee:url-pattern>/rest/*</javaee:url-pattern>
-      <javaee:url-pattern>/report</javaee:url-pattern>
-      <javaee:url-pattern>/tryit.html</javaee:url-pattern>
+      <!--javaee:url-pattern>/rest/*</javaee:url-pattern-->
     </javaee:web-resource-collection>
     <javaee:auth-constraint>
       <javaee:role-name>RestClient</javaee:role-name>
     </javaee:auth-constraint>
   </javaee:security-constraint>
 
-  <javaee:servlet>
-      <javaee:servlet-name>report</javaee:servlet-name>
-      <javaee:servlet-class>org.bch.i2me2.core.servlet.Report</javaee:servlet-class>
-  </javaee:servlet>
-  <javaee:servlet-mapping>
-      <javaee:servlet-name>report</javaee:servlet-name>
-      <javaee:url-pattern>/report</javaee:url-pattern>
-  </javaee:servlet-mapping>
 
   <javaee:login-config>
     <javaee:auth-method>BASIC</javaee:auth-method>

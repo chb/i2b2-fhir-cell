@@ -1,6 +1,5 @@
 package org.bch.i2me2.core.external;
 
-import org.bch.i2me2.core.service.MapperRxToPDO;
 import org.bch.i2me2.core.util.Utils;
 import org.bch.i2me2.core.util.mapper.Mapper;
 import org.junit.Test;

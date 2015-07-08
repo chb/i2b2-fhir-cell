@@ -2,15 +2,12 @@ package org.bch.i2me2.core.rest;
 
 import org.bch.i2me2.core.config.AppConfig;
 import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.external.IDM;
-import org.bch.i2me2.core.service.MedicationsManagement;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import java.io.IOException;
