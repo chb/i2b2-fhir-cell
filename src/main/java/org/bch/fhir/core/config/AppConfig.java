@@ -1,8 +1,8 @@
-package org.bch.i2me2.core.config;
+package org.bch.fhir-i2b2.core.config;
 
 import org.apache.commons.io.IOUtils;
-import org.bch.i2me2.core.exception.I2ME2Exception;
-import org.bch.i2me2.core.util.Utils;
+import org.bch.fhir-i2b2.core.exception.I2ME2Exception;
+import org.bch.fhir-i2b2.core.util.Utils;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
