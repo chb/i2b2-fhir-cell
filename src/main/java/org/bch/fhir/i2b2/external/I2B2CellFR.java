@@ -2,6 +2,7 @@ package org.bch.fhir.i2b2.external;
 
 import org.apache.commons.codec.binary.Hex;
 import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.exception.I2ME2Exception;
 import org.bch.fhir.i2b2.util.Response;
 import org.bch.fhir.i2b2.util.Utils;
@@ -47,7 +48,7 @@ public class I2B2CellFR extends WrapperAPI {
      * @throws I2ME2Exception
      * @throws IOException
      */
-    public UploadI2B2Response pushPDOXML(String pdoxml) throws I2ME2Exception, IOException {
+    public UploadI2B2Response pushPDOXML(String pdoxml) throws FHIRI2B2Exception, IOException {
         this.log(Level.INFO, MODULE+OP_PUSH_PDO+"IN");
         try {
             loadTemplates();
@@ -62,7 +63,7 @@ public class I2B2CellFR extends WrapperAPI {
         return response;
     }
 
-    private String sendFile(String pdoxml) throws I2ME2Exception, IOException {
+    private String sendFile(String pdoxml) throws FHIRI2B2Exception, IOException {
         // Generate the file name
         String fileName = generateFileName();
 
@@ -111,13 +112,13 @@ public class I2B2CellFR extends WrapperAPI {
         //System.out.println("STATUS CODE SEND FILE:" + response.getResponseCode());
         if (response.getResponseCode()>=400) {
             this.log(Level.SEVERE, MODULE+OP_SEND_FILE+"I2B2 FR Send File Error.");
-            throw new I2ME2Exception("I2B2 FR Send File Error");
+            throw new FHIRI2B2Exception("I2B2 FR Send File Error");
         }
 
         return fileName;
     }
 
-    public String generateURLSend() throws I2ME2Exception {
+    public String generateURLSend() throws FHIRI2B2Exception {
         return Utils.generateURL(
                 AppConfig.getProp(AppConfig.NET_PROTOCOL_I2B2_FR),
                 AppConfig.getProp(AppConfig.HOST_I2B2_FR),
@@ -125,7 +126,7 @@ public class I2B2CellFR extends WrapperAPI {
                 AppConfig.getProp(AppConfig.EP_I2B2_FR_SEND));
     }
 
-    public String generateURLUpload() throws I2ME2Exception {
+    public String generateURLUpload() throws FHIRI2B2Exception {
         return Utils.generateURL(
                 AppConfig.getProp(AppConfig.NET_PROTOCOL_I2B2_FR),
                 AppConfig.getProp(AppConfig.HOST_I2B2_FR),
@@ -139,7 +140,7 @@ public class I2B2CellFR extends WrapperAPI {
         return filename+".xml";
     }
 
-    private UploadI2B2Response uploadFile(String fileName) throws I2ME2Exception, IOException {
+    private UploadI2B2Response uploadFile(String fileName) throws FHIRI2B2Exception, IOException {
         this.log(Level.INFO, MODULE+OP_UP_FILE + "IN");
         // Get credentials
         String credentials = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_I2B2);
@@ -182,14 +183,14 @@ public class I2B2CellFR extends WrapperAPI {
 
         if (response.getResponseCode() >= 400) {
             this.log(Level.SEVERE, MODULE+OP_UP_FILE+ "Error uploading I2B2 File: " + fileName);
-            throw new I2ME2Exception("Error uploading I2B2 File: " + fileName);
+            throw new FHIRI2B2Exception("Error uploading I2B2 File: " + fileName);
         }
         UploadI2B2Response out=null;
         try {
             out = new UploadI2B2Response(response.getContent());
         } catch (Exception e) {
             this.log(Level.SEVERE, MODULE+OP_UP_FILE+ "Error parsing xml file from I2B2 response. File: " + fileName);
-            throw new I2ME2Exception("Error parsing xml file from I2B2.", e);
+            throw new FHIRI2B2Exception("Error parsing xml file from I2B2.", e);
 
         }
         return out;
@@ -210,7 +211,7 @@ public class I2B2CellFR extends WrapperAPI {
                 i2b2date, i2b2Domain, i2b2User, i2b2Pass, projectId, fullFilePath, fileName);
     }
 
-    private static void loadTemplates() throws IOException, I2ME2Exception {
+    private static void loadTemplates() throws IOException, FHIRI2B2Exception {
         if (sendTemplate.length()==0) {
             Utils.textFileToStringBuffer(
                     I2B2CellFR.class,

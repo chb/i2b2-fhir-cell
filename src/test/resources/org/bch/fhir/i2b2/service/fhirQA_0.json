@@ -13,6 +13,9 @@
   "encounter": {
     "reference": "#period"
   },
+  "subject": {
+    "reference": "Patient/123456"
+  },
   "group": {
     "linkId": "org.chip.c3-pro.activity",
     "question": [

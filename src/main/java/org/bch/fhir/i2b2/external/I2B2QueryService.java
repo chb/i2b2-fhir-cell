@@ -1,6 +1,7 @@
 package org.bch.fhir.i2b2.external;
 
 import org.bch.fhir.i2b2.config.AppConfig;
+import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.exception.I2ME2Exception;
 import org.bch.fhir.i2b2.util.Response;
 import org.bch.fhir.i2b2.util.Utils;
@@ -43,7 +44,7 @@ public class I2B2QueryService extends WrapperAPI {
     private static String MODULE = "[I2B2QUERYSERVICE]";
     private static String OP_GET_PATIENT_DATA = "[GET_PATIENT_DATA]";
 
-    public QueryResponse getPatientData(String patientId, String source, Date date) throws IOException, I2ME2Exception {
+    public QueryResponse getPatientData(String patientId, String source, Date date) throws IOException, FHIRI2B2Exception {
         this.log(Level.INFO, MODULE+OP_GET_PATIENT_DATA+":IN, patientID:" + patientId);
         try {
             loadTemplateQueryPdo();
@@ -101,7 +102,7 @@ public class I2B2QueryService extends WrapperAPI {
         if (response.getResponseCode() >= 400) {
             this.log(Level.SEVERE, MODULE+OP_GET_PATIENT_DATA+ "Error querying i2b2. patientId: " + patientId + ", " +
                     "patientIdSource:" + source);
-            throw new I2ME2Exception("Error querying i2b2. patientId: " + patientId + ", "+
+            throw new FHIRI2B2Exception("Error querying i2b2. patientId: " + patientId + ", "+
                     "patientIdSource:" + source);
         }
 
@@ -111,13 +112,13 @@ public class I2B2QueryService extends WrapperAPI {
         } catch (Exception e) {
             this.log(Level.SEVERE, MODULE+OP_GET_PATIENT_DATA+ "Error parsing xml response from I2B2." +
                     patientId + ", " + "patientIdSource:" + source );
-            throw new I2ME2Exception("Error parsing xml file from I2B2.", e);
+            throw new FHIRI2B2Exception("Error parsing xml file from I2B2.", e);
 
         }
         return out;
     }
 
-    private static String generateURLQuery() throws I2ME2Exception{
+    private static String generateURLQuery() throws FHIRI2B2Exception{
         return Utils.generateURL(
                 AppConfig.getProp(AppConfig.NET_PROTOCOL_I2B2_CRC),
                 AppConfig.getProp(AppConfig.HOST_I2B2_CRC),
@@ -134,7 +135,7 @@ public class I2B2QueryService extends WrapperAPI {
 
     }
 
-    private static void loadTemplateQueryPdo() throws IOException, I2ME2Exception{
+    private static void loadTemplateQueryPdo() throws IOException, FHIRI2B2Exception{
         if (queryPdoTemplate.length()==0) {
             Utils.textFileToStringBuffer(
                     I2B2QueryService.class,

@@ -26,7 +26,7 @@ public class PDOModel {
                 "<repository:patient_data\n" +
                 "    xmlns:repository=\"http://i2b2.mgh.harvard.edu/repository_cell\"\n" +
                 "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                "    xsi:schemaLocation=\"http://i2b2.mgh.harvard.edu/repository_cell/patient_data.xsd\">+\n";
+                "    xsi:schemaLocation=\"http://i2b2.mgh.harvard.edu/repository_cell/patient_data.xsd\">\n";
     private static String PDO_FOOT = "</repository:patient_data>";
 
     private List<ElementSet> elementSets = new ArrayList<>();

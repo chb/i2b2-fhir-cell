@@ -77,7 +77,9 @@ public class QAnswersToI2B2 {
         if (enc.getId().isEmpty()) {
             eventId = "" + new Date().getTime();
         } else {
-            eventId = enc.getId().getIdPart();
+            // TODO: Provisional!!
+            eventId = "" + new Date().getTime();
+            //eventId = enc.getId().getIdPart();
         }
         return eventId;
     }
