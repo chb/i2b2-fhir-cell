@@ -16,6 +16,7 @@ public class PDOModel {
     public static final String PDO_END_DATE = "end_date";
     public static final String PDO_OBSERVER_CD = "observer_cd";
     public static final String PDO_CONCEPT_CD = "concept_cd";
+    public static final String PDO_INSTANCE_NUM = "instance_num";
     public static final String PDO_TVAL_CHAR = "tval_char";
     public static final String PDO_NVAL_NUM = "nval_numr";
     public static final String PDO_MODIFIER_CD = "modifier_cd";

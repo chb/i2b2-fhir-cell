@@ -5,6 +5,7 @@ import ca.uhn.fhir.model.dstu2.composite.ContainedDt;
 import ca.uhn.fhir.model.dstu2.composite.PeriodDt;
 import ca.uhn.fhir.model.dstu2.composite.ResourceReferenceDt;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
+import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
@@ -12,9 +13,11 @@ import org.bch.fhir.i2b2.pdomodel.Element;
 import org.bch.fhir.i2b2.pdomodel.ElementSet;
 import org.bch.fhir.i2b2.pdomodel.PDOModel;
 
+import javax.security.auth.message.callback.PrivateKeyCallback;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Converts a QuestionnaireAnswer FHIR resource to the corresponding XMLPDO
@@ -170,7 +173,121 @@ public class QAnswersToI2B2 {
         ElementSet observationSet = new ElementSet();
         observationSet.setTypePDOSet(ElementSet.PDO_OBSERVATION_SET);
 
+        QuestionnaireAnswers.Group group = qa.getGroup();
+
+        processGroup(group, observationSet);
         return observationSet;
+    }
+
+    private void processGroup(QuestionnaireAnswers.Group group, ElementSet observationSet) throws FHIRI2B2Exception{
+        if (group.getGroup().isEmpty() && group.getQuestion().isEmpty())
+            throw new FHIRI2B2Exception("Group does not have any question nor group");
+
+        if (!group.getGroup().isEmpty()) {
+            List<QuestionnaireAnswers.Group> groups = group.getGroup();
+            for (QuestionnaireAnswers.Group gr : groups) {
+                processGroup(gr, observationSet);
+            }
+        } else {
+            List<QuestionnaireAnswers.GroupQuestion> questions = group.getQuestion();
+            for (QuestionnaireAnswers.GroupQuestion question: questions) {
+                processQuestion(question, observationSet);
+            }
+        }
+    }
+
+    private void processQuestion(QuestionnaireAnswers.GroupQuestion question, ElementSet observationSet)
+            throws FHIRI2B2Exception {
+        if (!question.getAnswer().isEmpty()) {
+            List<QuestionnaireAnswers.GroupQuestionAnswer> answers = question.getAnswer();
+            String link = question.getLinkId();
+            int i=1;
+            for (QuestionnaireAnswers.GroupQuestionAnswer answer: answers) {
+                Element observation = generateObservation(answer, i, link);
+                observationSet.addElement(observation);
+            }
+        }
+
+        if (!question.getGroup().isEmpty()) {
+            for(QuestionnaireAnswers.Group gr: question.getGroup()) {
+                processGroup(gr, observationSet);
+            }
+        }
+    }
+
+    private Element generateObservation(QuestionnaireAnswers.GroupQuestionAnswer answer, int i, String link)
+            throws FHIRI2B2Exception{
+        Element out = new Element();
+        out.setTypePDO(Element.PDO_OBSERVATION);
+        Map<String, String> mapConceptCode = AppConfig.getRealConceptCodesMap();
+        Map<String, String> mapConceptCodeType = AppConfig.getConceptCodesTypeMap();
+
+        String pdoEventId = this.generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,
+                this.genParamStr("source", this.eventIdeSource));
+        out.addRow(pdoEventId);
+
+        String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
+                this.genParamStr("source", this.patientIdeSource));
+        out.addRow(pdoPatientId);
+
+        String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
+        SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
+        String pdoStartDate = this.generateRow(PDOModel.PDO_START_DATE, dateFormatOutput.format(new Date()));
+        out.addRow(pdoStartDate);
+
+        String pdoObserverCd = generateRow(PDOModel.PDO_OBSERVER_CD, "@");
+        out.addRow(pdoObserverCd);
+
+        String pdoConceptCd = null;
+        if (mapConceptCode.containsKey(link)) {
+            pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, mapConceptCode.get(link));
+        } else {
+            pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, link);
+        }
+        out.addRow(pdoConceptCd);
+
+        String pdoInstanceNum = generateRow(PDOModel.PDO_INSTANCE_NUM, ""+i);
+        out.addRow(pdoInstanceNum);
+
+        String pdoModifierCd = generateRow(PDOModel.PDO_MODIFIER_CD, "@");
+        out.addRow(pdoModifierCd);
+
+        if (mapConceptCodeType.containsKey(link)) {
+            String pdoValueTypeCd = null;
+            String type = mapConceptCodeType.get(link);
+            if (isNumericType(type)) {
+                pdoValueTypeCd = generateRow(PDOModel.PDO_VALUETYPE_CD, "N");
+            } else {
+                pdoValueTypeCd = generateRow(PDOModel.PDO_VALUETYPE_CD, "T");
+            }
+            out.addRow(pdoValueTypeCd);
+            addValues(answer, type, out);
+
+        }
+
+        return out;
+
+        /*
+        <event_id source="SCR">1423742400000</event_id>
+            <patient_id source="BCH">1234</patient_id>
+            <start_date>2015-02-12T12:00:00.00</start_date>
+            <observer_cd>@</observer_cd>
+            <concept_cd>PBM_transaction</concept_cd>
+            <tval_char>ALL</tval_char>
+            <modifier_cd>recsReturnedStatement</modifier_cd>
+            <valuetype_cd>T</valuetype_cd>
+            <instance_num>1</instance_num>
+         */
+    }
+
+    private void addValues(QuestionnaireAnswers.GroupQuestionAnswer answer, String type, Element observation) {
+        if (type.equals("valueQuantity")) {
+            // TODO: FINISH THIS!!!!!!!
+        }
+    }
+    private boolean isNumericType(String type) {
+        if (type.equals("valueQuantity")) return true;
+        return false;
     }
 
     private IResource findResourceById(List<IResource> resources, String id){
