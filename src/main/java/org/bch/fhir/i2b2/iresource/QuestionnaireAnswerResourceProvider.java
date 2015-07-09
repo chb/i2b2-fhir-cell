@@ -38,13 +38,13 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
         jsonParser.setPrettyPrint(true);
         String message = jsonParser.encodeResourceToString(theQA);
         System.out.println(message);
-        String newId = generateNewId();
-        addNewVersion(theQA, newId);
+        //String newId = generateNewId();
+        //addNewVersion(theQA, newId);
         //this.sendMessage(theQA);
         // Let the caller know the ID of the newly created resource
-        return new MethodOutcome(new IdDt(newId));
+        return new MethodOutcome();
     }
-
+/*
     private void addNewVersion(QuestionnaireAnswers theQA, String theId) {
         InstantDt publishedDate;
         if (!myIdToQVersions.containsKey(theId)) {
@@ -56,10 +56,7 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
             publishedDate = (InstantDt) resourceMetadata.get(ResourceMetadataKeyEnum.PUBLISHED);
         }
 
-		/*
-		 * PUBLISHED time will always be set to the time that the first version was stored. UPDATED time is set to the time that the new version was stored.
-		 */
-        theQA.getResourceMetadata().put(ResourceMetadataKeyEnum.PUBLISHED, publishedDate);
+      theQA.getResourceMetadata().put(ResourceMetadataKeyEnum.PUBLISHED, publishedDate);
         theQA.getResourceMetadata().put(ResourceMetadataKeyEnum.UPDATED, InstantDt.withCurrentTime());
 
         Deque<QuestionnaireAnswers> existingVersions = myIdToQVersions.get(theId);
@@ -72,7 +69,7 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
         theQA.setId(newId);
         existingVersions.add(theQA);
     }
-
+*/
     @Read(version = true)
     public QuestionnaireAnswers readQA(@IdParam IdDt theId) {
         Deque<QuestionnaireAnswers> retVal;

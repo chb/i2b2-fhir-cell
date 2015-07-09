@@ -1,6 +1,7 @@
 package org.bch.fhir.i2b2.config;
 
 import org.apache.commons.io.IOUtils;
+import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.exception.I2ME2Exception;
 import org.bch.fhir.i2b2.service.WrapperService;
 import org.bch.fhir.i2b2.util.Utils;
@@ -74,34 +75,74 @@ public class AppConfig {
     private static Map<String, String> realModifiers = new HashMap<>();
     private static Map<String, String> realModifiersReverse = new HashMap<>();
 
+    private static Map<String, String> realConceptCodes = new HashMap<>();
+    private static Map<String, String> conceptCodesType = new HashMap<>();
+
     // File name containing the list of real modifier codes
     private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
+
+    private static final String REAL_CONCEPT_CODES_FILE = "conceptCodes.c3pro";
+    private static final String CONCEPT_CODES_TYPE_FILE = "conceptCodes.c3pro";
 
     /**
      * Upload the configuration from config.properties files
      */
-    private static void uploadConfiguration() throws I2ME2Exception {
+    private static void uploadConfiguration() throws FHIRI2B2Exception {
         InputStream input = null;
 
         try {
             String filename = CONFIG_PROPERTIES_FILE;
             input = AppConfig.class.getResourceAsStream(filename);
             if (input == null) {
-                throw new I2ME2Exception("No " + filename + " has found!");
+                throw new FHIRI2B2Exception("No " + filename + " has found!");
             }
             prop.load(input);
 
         } catch (IOException ex) {
-            throw new I2ME2Exception("Properties file error", ex);
+            throw new FHIRI2B2Exception("Properties file error", ex);
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    throw new I2ME2Exception("Error closing properties file", e);
+                    throw new FHIRI2B2Exception("Error closing properties file", e);
                 }
             }
         }
+    }
+
+    public static Map<String, String> getRealConceptCodesMap() {
+        if (realConceptCodes.isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            try {
+                Utils.textFileToStringBuffer(WrapperService.class, REAL_CONCEPT_CODES_FILE, sb, ",");
+            } catch (Exception e) {
+                return realConceptCodes;
+            }
+            String [] modifiers = sb.toString().split(",");
+            for (String modifier: modifiers){
+                String [] codes = modifier.split(":");
+                realConceptCodes.put(codes[0].trim(), codes[1].trim());
+            }
+        }
+        return realConceptCodes;
+    }
+
+    public static Map<String, String> getConceptCodesTypeMap() {
+        if (conceptCodesType.isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            try {
+                Utils.textFileToStringBuffer(WrapperService.class, CONCEPT_CODES_TYPE_FILE, sb, ",");
+            } catch (Exception e) {
+                return conceptCodesType;
+            }
+            String [] modifiers = sb.toString().split(",");
+            for (String modifier: modifiers){
+                String [] codes = modifier.split(":");
+                conceptCodesType.put(codes[0].trim(), codes[1].trim());
+            }
+        }
+        return conceptCodesType;
     }
 
     public static Map<String, String> getRealModifiersMap() {
@@ -138,21 +179,21 @@ public class AppConfig {
         return realModifiersReverse;
     }
 
-    public static String getProp(String key) throws I2ME2Exception {
+    public static String getProp(String key) throws FHIRI2B2Exception {
         if (prop.isEmpty()) {
             uploadConfiguration();
         }
         return prop.getProperty(key);
     }
 
-    public static String getAuthCredentials(String key) throws IOException, I2ME2Exception {
+    public static String getAuthCredentials(String key) throws IOException, FHIRI2B2Exception {
         String path = getProp(key);
         String finalPath = path;
         int i = path.indexOf("[");
         int j = path.indexOf("]");
-        if (i<0 && j>=0) throw new I2ME2Exception("Missing [ in " + key);
+        if (i<0 && j>=0) throw new FHIRI2B2Exception("Missing [ in " + key);
         if (i>=0) {
-            if (j<0) throw new I2ME2Exception("Missing ] in " + key);
+            if (j<0) throw new FHIRI2B2Exception("Missing ] in " + key);
             String var = path.substring(i+1,j);
             String aux = System.getenv(var);
             if (aux == null) aux = "";
