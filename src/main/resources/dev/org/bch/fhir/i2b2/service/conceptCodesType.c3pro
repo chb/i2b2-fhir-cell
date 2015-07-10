@@ -1,12 +1,12 @@
-motion-coprocessor.light, valueQuantity
-motion-coprocessor.moderate, valueQuantity
-motion-coprocessor.sedentary, valueQuantity
-motion-coprocessor.driving, valueQuantity
-motion-coprocessor.cycling, valueQuantity
-motion-coprocessor.running, valueQuantity
-motion-coprocessor.sleeping, valueQuantity
-motion-coprocessor.unknown, valueQuantity
-healthkit.HKQuantityTypeIdentifierFlightsClimbed, valueQuantity
-healthkit.HKQuantityTypeIdentifierStepCount, valueQuantity
-healthkit.HKQuantityTypeIdentifierActiveEnergyBurned, valueQuantity
+motion-coprocessor.light:valueQuantity
+motion-coprocessor.moderate:valueQuantity
+motion-coprocessor.sedentary:valueQuantity
+motion-coprocessor.driving:valueQuantity
+motion-coprocessor.cycling:valueQuantity
+motion-coprocessor.running:valueQuantity
+motion-coprocessor.sleeping:valueQuantity
+motion-coprocessor.unknown:valueQuantity
+healthkit.HKQuantityTypeIdentifierFlightsClimbed:valueQuantity
+healthkit.HKQuantityTypeIdentifierStepCount:valueQuantity
+healthkit.HKQuantityTypeIdentifierActiveEnergyBurned:valueQuantity
 

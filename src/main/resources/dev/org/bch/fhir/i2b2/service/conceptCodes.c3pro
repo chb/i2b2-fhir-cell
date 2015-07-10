@@ -1,12 +1,12 @@
-motion-coprocessor.light,motion-coprocessor.light
-motion-coprocessor.moderate, motion-coprocessor.moderate
-motion-coprocessor.sedentary, motion-coprocessor.sedentary
-motion-coprocessor.driving, motion-coprocessor.driving
-motion-coprocessor.cycling, motion-coprocessor.cycling
-motion-coprocessor.running, motion-coprocessor.running
-motion-coprocessor.sleeping, motion-coprocessor.sleeping
-motion-coprocessor.unknown, motion-coprocessor.unknown
-healthkit.HKQuantityTypeIdentifierFlightsClimbed, healthkit.HKQuantityTypeIdentifierFlightsClimbed
-healthkit.HKQuantityTypeIdentifierStepCount, healthkit.HKQuantityTypeIdentifierStepCount
-healthkit.HKQuantityTypeIdentifierActiveEnergyBurned, healthkit.HKQuantityTypeIdentifierActiveEnergyBurned
+motion-coprocessor.light:motion-coprocessor.light
+motion-coprocessor.moderate:motion-coprocessor.moderate
+motion-coprocessor.sedentary:motion-coprocessor.sedentary
+motion-coprocessor.driving:motion-coprocessor.driving
+motion-coprocessor.cycling:motion-coprocessor.cycling
+motion-coprocessor.running:motion-coprocessor.running
+motion-coprocessor.sleeping:motion-coprocessor.sleeping
+motion-coprocessor.unknown:motion-coprocessor.unknown
+healthkit.HKQuantityTypeIdentifierFlightsClimbed:healthkit.HKQuantityTypeIdentifierFlightsClimbed
+healthkit.HKQuantityTypeIdentifierStepCount:healthkit.HKQuantityTypeIdentifierStepCount
+healthkit.HKQuantityTypeIdentifierActiveEnergyBurned:healthkit.HKQuantityTypeIdentifierActiveEnergyBurned
 
