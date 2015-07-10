@@ -135,7 +135,7 @@ public class MapperFHIRToPDOTest {
         }
     }
 
-    @Test
+    @Ignore
     public void getPDOXML_NewModel_Test() throws Exception {
         String jsonFileName = "mrNewJSON0.json";
         String expectedXMLFileName = "mrNewXMLPDO0.xml";
@@ -155,14 +155,14 @@ public class MapperFHIRToPDOTest {
 
     }
 
-    @Test
+    @Ignore
     public void getPDOXML_NewModel_1_Test() throws Exception {
         String jsonFileName = "mrNewJSON1.json";
         String expectedXMLFileName = "mrNewXMLPDO1.xml";
         doTest(jsonFileName,expectedXMLFileName, subjectId, gender, source, sourceEvent, dateTimeStr);
     }
 
-    @Test
+    @Ignore
     public void getPDOXML_NewModel_2_Test() throws Exception {
         String jsonFileName = "mrNewJSON2.json";
         String expectedXMLFileName = "mrNewXMLPDO2.xml";
