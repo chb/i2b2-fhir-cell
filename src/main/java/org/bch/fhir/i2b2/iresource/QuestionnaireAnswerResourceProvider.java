@@ -9,14 +9,24 @@ import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.rest.annotation.*;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
+import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
+import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
+import org.bch.fhir.i2b2.external.I2B2CellFR;
+import org.bch.fhir.i2b2.service.QAnswersToI2B2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+import java.io.IOException;
 import java.util.*;
 
 /**
  * Created by CH176656 on 4/30/2015.
  */
 public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
+
+    Logger log = LoggerFactory.getLogger(QuestionnaireAnswerResourceProvider.class);
 
     private Map<String, Deque<QuestionnaireAnswers>> myIdToQVersions = new HashMap<>();
 
@@ -26,6 +36,9 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
 
     protected FhirContext ctx = FhirContext.forDstu2();
 
+    protected QAnswersToI2B2 mapper = new QAnswersToI2B2();
+    protected I2B2CellFR i2b2 = new I2B2CellFR();
+
     @Override
     public Class<QuestionnaireAnswers> getResourceType() {
         return QuestionnaireAnswers.class;
@@ -33,15 +46,23 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
 
     @Create()
     public MethodOutcome createQA(@ResourceParam QuestionnaireAnswers theQA) {
-        System.out.println("--------");
-        IParser jsonParser = this.ctx.newJsonParser();
-        jsonParser.setPrettyPrint(true);
-        String message = jsonParser.encodeResourceToString(theQA);
-        System.out.println(message);
-        //String newId = generateNewId();
-        //addNewVersion(theQA, newId);
-        //this.sendMessage(theQA);
-        // Let the caller know the ID of the newly created resource
+        log.info("New POST QuestionnaireAnswers");
+
+        String xmlpdo = null;
+        try {
+            xmlpdo = mapper.getPDOXML(theQA);
+            i2b2.pushPDOXML(xmlpdo);
+        } catch (FHIRI2B2Exception e) {
+            // We return 500!
+            log.error("Error POST QuestionnaireAnswers:" + e.getMessage());
+            e.printStackTrace();
+            throw new InternalErrorException(e.getMessage());
+        } catch (IOException e) {
+            log.error("Error POST QuestionnaireAnswers IOException:" + e.getMessage());
+            e.printStackTrace();
+            throw new InternalErrorException(e.getMessage());
+        }
+
         return new MethodOutcome();
     }
 /*

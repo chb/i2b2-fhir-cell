@@ -1,122 +1,147 @@
 {
-  "resourceType":"QuestionnaireAnswers",
-  "id":"4067",
-  "meta":{
-    "versionId":"1",
-    "lastUpdated":"2015-07-07T16:22:09.944-04:00"
+  "contained": [
+    {
+      "id": "period",
+      "period": {
+        "end": "2015-07-09T16:16:34.0388Z",
+        "start": "2015-07-02T16:16:34.0388Z"
+      },
+      "resourceType": "Encounter",
+      "status": "finished"
+    }
+  ],
+  "encounter": {
+    "reference": "#period"
   },
-  "text":{
-    "status":"generated",
-    "div":"<div xmlns=\"http://www.w3.org/1999/xhtml\"> <h1>Diagnosis NCI Standard Template</h1> <h2>Mandatory Diagnosis Questions</h2> <pre>These items must be included when this data is collected for reporting.\n\n  \n        <b>Date of Current Pathologic Diagnosis</b>: 02/18/2003\n  \n        <b>Diagnosis Type</b>                      : Primary Diagnosis__\n  \n        <b>Primary Site</b>                        : Left Ovary\n\n      </pre> <h2>Conditional Diagnosis Questions</h2> <pre>There are business rules to indicate situations under which these elements should be used on a case report form.\n\n  \n        <b>Diagnosis Time Point</b>: Restaging\n\n      </pre> <h2>Optional Diagnosis Conditions</h2> <pre>There is no requirement for inclusion of these elements on the case report form. If the design and scientific questions posed in the study dictate the need to collect this type of data, these elements should be included.\n\n  \n        <b>Reviewing Pathologist</b>: Harold Ornada\n  \n        <b>MedDRA Source Code</b>   : __________\n  \n        <b>Assessment Method</b>    : Histological Procedure\n  \n        <b>Tumor Grade</b>          : Moderately Differentiated\n      </pre> </div>"
+  "subject": {
+    "reference": "Patient/123456"
   },
-  "status":"completed",
-  "authored":"2014-01-21",
-  "group":{
-    "title":"Diagnosis NCI Standard Template",
-    "group":[
+  "group": {
+    "linkId": "org.chip.c3-pro.activity",
+    "question": [
       {
-        "linkId":"3921053v1.0",
-        "title":"Mandatory Diagnosis Questions",
-        "text":"These items must be included when this data is collected for reporting.",
-        "question":[
+        "answer": [
           {
-            "linkId":"3921059v1.0",
-            "text":"Date of Current Pathologic Diagnosis",
-            "answer":[
-              {
-                "valueDate":"2003-02-18"
-              }
-            ]
-          },
-          {
-            "linkId":"3921060v1.0",
-            "text":"Diagnosis Type",
-            "answer":[
-              {
-                "valueCoding":{
-                  "system":"http://nci.nih.gov/xml/owl/cadsr/data_element_scoped_identifier#3921060v1.0-cs",
-                  "code":"1",
-                  "display":"Primary Diagnosis"
-                }
-              }
-            ]
-          },
-          {
-            "linkId":"3921053v1.0",
-            "text":"Primary Site",
-            "answer":[
-              {
-                "valueString":"Left Ovary"
-              }
-            ]
+            "valueQuantity": {
+              "units": "minute",
+              "value": 366
+            }
           }
-        ]
+        ],
+        "linkId": "motion-coprocessor.light"
       },
       {
-        "linkId":"3921066v1.0",
-        "title":"Conditional Diagnosis Questions",
-        "text":"There are business rules to indicate situations under which these elements should be used on a case report form.",
-        "question":[
+        "answer": [
           {
-            "text":"Diagnosis Time Point",
-            "answer":[
-              {
-                "valueCoding":{
-                  "system":"http://nci.nih.gov/xml/owl/cadsr/data_element_scoped_identifier#3921066v1.0-cs",
-                  "code":"3",
-                  "display":"Restaging"
-                }
-              }
-            ]
+            "valueQuantity": {
+              "units": "minute",
+              "value": 154
+            }
           }
-        ]
+        ],
+        "linkId": "motion-coprocessor.moderate"
       },
       {
-        "linkId":"3921077v1.0",
-        "title":"Optional Diagnosis Questions",
-        "text":"There is no requirement for inclusion of these elements on the case report form. If the design and scientific questions posed in the study dictate the need to collect this type of data, these elements should be included.",
-        "question":[
+        "answer": [
           {
-            "linkId":"3921079v1.0",
-            "text":"Reviewing Pathologist",
-            "answer":[
-              {
-                "valueString":"Harold Ornada"
-              }
-            ]
-          },
-          {
-            "linkId":"3921080v1.0",
-            "text":"MedDRA disease code"
-          },
-          {
-            "linkId":"3921081v1.0",
-            "text":"Assessment Method",
-            "answer":[
-              {
-                "valueCoding":{
-                  "system":"http://nci.nih.gov/xml/owl/cadsr/data_element_scoped_identifier#3921081v1.0-cs",
-                  "code":"2",
-                  "display":"Histological Procedure"
-                }
-              }
-            ]
-          },
-          {
-            "linkId":"3921085v1.0",
-            "text":"Tumor grade",
-            "answer":[
-              {
-                "valueCoding":{
-                  "system":"http://nci.nih.gov/xml/owl/cadsr/data_element_scoped_identifier#3921085v1.0-cs",
-                  "code":"2",
-                  "display":"Moderately Differentiated"
-                }
-              }
-            ]
+            "valueQuantity": {
+              "units": "minute",
+              "value": 5051
+            }
           }
-        ]
+        ],
+        "linkId": "motion-coprocessor.sedentary"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "minute",
+              "value": 23
+            }
+          }
+        ],
+        "linkId": "motion-coprocessor.driving"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "minute",
+              "value": 9
+            }
+          }
+        ],
+        "linkId": "motion-coprocessor.cycling"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "minute",
+              "value": 228
+            }
+          }
+        ],
+        "linkId": "motion-coprocessor.running"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "minute",
+              "value": 3072
+            }
+          }
+        ],
+        "linkId": "motion-coprocessor.sleeping"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "minute",
+              "value": 163
+            }
+          }
+        ],
+        "linkId": "motion-coprocessor.unknown"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "count",
+              "value": 169
+            }
+          }
+        ],
+        "linkId": "healthkit.HKQuantityTypeIdentifierFlightsClimbed"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "count",
+              "value": 54899
+            }
+          }
+        ],
+        "linkId": "healthkit.HKQuantityTypeIdentifierStepCount"
+      },
+      {
+        "answer": [
+          {
+            "valueQuantity": {
+              "units": "kJ",
+              "value": 9786.35089599998
+            }
+          }
+        ],
+        "linkId": "healthkit.HKQuantityTypeIdentifierActiveEnergyBurned"
       }
     ]
-  }
+  },
+  "resourceType": "QuestionnaireAnswers",
+  "status": "completed"
 }

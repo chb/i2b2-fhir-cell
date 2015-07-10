@@ -14,6 +14,8 @@ import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.pdomodel.Element;
 import org.bch.fhir.i2b2.pdomodel.ElementSet;
 import org.bch.fhir.i2b2.pdomodel.PDOModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.message.callback.PrivateKeyCallback;
 import java.math.BigDecimal;
@@ -28,6 +30,7 @@ import java.util.Map;
  */
 public class QAnswersToI2B2 {
 
+    Logger log = LoggerFactory.getLogger(QAnswersToI2B2.class);
 
     public static final String DEFAULT_PATIENT_SOURCE = "BCH";
     public static final String DEFAULT_EVENT_SOURCE = "BCH";
@@ -242,11 +245,18 @@ public class QAnswersToI2B2 {
         out.addRow(pdoObserverCd);
 
         String pdoConceptCd = null;
+        String conceptCd=null;
         if (mapConceptCode.containsKey(link)) {
-            pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, mapConceptCode.get(link));
+            conceptCd = mapConceptCode.get(link);
         } else {
-            pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, link);
+            conceptCd = link;
+            log.warn("Link: " + link + " does not have a correspondence concept_cd. Using: " + link + " as concept_cd");
         }
+        if (conceptCd.length()>50) {
+            conceptCd = conceptCd.substring(0,50);
+            log.warn("Concept_cd is longer than 50 characters. Triming to: " + conceptCd + " to continue");
+        }
+        pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
         out.addRow(pdoConceptCd);
 
         String pdoInstanceNum = generateRow(PDOModel.PDO_INSTANCE_NUM, ""+i);
