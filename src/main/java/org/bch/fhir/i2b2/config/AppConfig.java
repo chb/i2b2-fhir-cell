@@ -82,7 +82,7 @@ public class AppConfig {
     private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
 
     private static final String REAL_CONCEPT_CODES_FILE = "conceptCodes.c3pro";
-    private static final String CONCEPT_CODES_TYPE_FILE = "conceptCodes.c3pro";
+    private static final String CONCEPT_CODES_TYPE_FILE = "conceptCodesType.c3pro";
 
     /**
      * Upload the configuration from config.properties files

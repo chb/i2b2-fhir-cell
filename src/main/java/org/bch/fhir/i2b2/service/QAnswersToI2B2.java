@@ -1,8 +1,10 @@
 package org.bch.fhir.i2b2.service;
 
+import ca.uhn.fhir.model.api.IDatatype;
 import ca.uhn.fhir.model.api.IResource;
 import ca.uhn.fhir.model.dstu2.composite.ContainedDt;
 import ca.uhn.fhir.model.dstu2.composite.PeriodDt;
+import ca.uhn.fhir.model.dstu2.composite.QuantityDt;
 import ca.uhn.fhir.model.dstu2.composite.ResourceReferenceDt;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
@@ -14,6 +16,7 @@ import org.bch.fhir.i2b2.pdomodel.ElementSet;
 import org.bch.fhir.i2b2.pdomodel.PDOModel;
 
 import javax.security.auth.message.callback.PrivateKeyCallback;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -133,8 +136,8 @@ public class QAnswersToI2B2 {
         //<event_id patient_id="1234" patient_id_source="BCH" source="SCR">1423742400000</event_id>
         String pdoEventId = this.generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,
                 genParamStr(PDOModel.PDO_PATIENT_ID, this.patientIde),
-                genParamStr("patient_id_source", this.patientIdeSource),
-                genParamStr("source", this.eventIdeSource));
+                genParamStr(PDOModel.PDO_PATIENT_ID_SOURCE, this.patientIdeSource),
+                genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
 
         eid.addRow(pdoEventId);
         eidSet.addElement(eid);
@@ -163,7 +166,7 @@ public class QAnswersToI2B2 {
         patient.setTypePDO(Element.PDO_PATIENT);
 
         String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
-                genParamStr("source", this.patientIdeSource));
+                genParamStr(PDOModel.PDO_SOURCE, this.patientIdeSource));
         patient.addRow(pdoPatientId);
         patientSet.addElement(patient);
         return patientSet;
@@ -223,11 +226,11 @@ public class QAnswersToI2B2 {
         Map<String, String> mapConceptCodeType = AppConfig.getConceptCodesTypeMap();
 
         String pdoEventId = this.generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,
-                this.genParamStr("source", this.eventIdeSource));
+                this.genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
         out.addRow(pdoEventId);
 
         String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
-                this.genParamStr("source", this.patientIdeSource));
+                this.genParamStr(PDOModel.PDO_SOURCE, this.patientIdeSource));
         out.addRow(pdoPatientId);
 
         String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
@@ -261,7 +264,7 @@ public class QAnswersToI2B2 {
                 pdoValueTypeCd = generateRow(PDOModel.PDO_VALUETYPE_CD, "T");
             }
             out.addRow(pdoValueTypeCd);
-            addValues(answer, type, out);
+            addValuesPdo(answer, type, out);
 
         }
 
@@ -280,9 +283,27 @@ public class QAnswersToI2B2 {
          */
     }
 
-    private void addValues(QuestionnaireAnswers.GroupQuestionAnswer answer, String type, Element observation) {
-        if (type.equals("valueQuantity")) {
-            // TODO: FINISH THIS!!!!!!!
+    private void addValuesPdo(QuestionnaireAnswers.GroupQuestionAnswer answer, String type, Element observation) {
+        IDatatype data = answer.getValue();
+        System.out.println("****** " + type);
+        if (type.equals("valueQuantity"))  {
+            QuantityDt qdt = (QuantityDt) data;
+            BigDecimal value = qdt.getValue();
+            String units = qdt.getUnits();
+            System.out.println(value + ", " + units);
+            String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, ""+value);
+            observation.addRow(pdoNValNum);
+
+            if (units!=null) {
+                if (!units.isEmpty()) {
+                    String pdoUnits = generateRow(PDOModel.PDO_UNITS_CD, units);
+                    observation.addRow(pdoUnits);
+                }
+            }
+        } else if(type.equals("valueString")) {
+            String value = data.toString();
+            String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
+            observation.addRow(pdoTValChar);
         }
     }
     private boolean isNumericType(String type) {

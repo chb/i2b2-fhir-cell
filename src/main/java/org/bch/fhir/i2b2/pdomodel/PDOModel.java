@@ -18,9 +18,13 @@ public class PDOModel {
     public static final String PDO_CONCEPT_CD = "concept_cd";
     public static final String PDO_INSTANCE_NUM = "instance_num";
     public static final String PDO_TVAL_CHAR = "tval_char";
-    public static final String PDO_NVAL_NUM = "nval_numr";
+    public static final String PDO_NVAL_NUM = "nval_num";
+    public static final String PDO_UNITS_CD = "units_cd";
     public static final String PDO_MODIFIER_CD = "modifier_cd";
     public static final String PDO_VALUETYPE_CD = "valuetype_cd";
+    public static final String PDO_PATIENT_ID_SOURCE = "patient_id_source";
+    public static final String PDO_SOURCE = "source";
+
 
 
     private static String PDO_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
