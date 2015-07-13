@@ -139,6 +139,22 @@
           }
         ],
         "linkId": "healthkit.HKQuantityTypeIdentifierActiveEnergyBurned"
+      },
+      {
+        "answer": [
+          {
+            "valueString": "string value"
+          }
+        ],
+        "linkId": "testString"
+      },
+      {
+        "answer": [
+          {
+            "valueInteger": 123456
+          }
+        ],
+        "linkId": "testInteger"
       }
     ]
   },

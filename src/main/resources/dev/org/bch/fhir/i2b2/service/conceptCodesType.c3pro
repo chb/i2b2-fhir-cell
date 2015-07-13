@@ -9,4 +9,5 @@ motion-coprocessor.unknown:valueQuantity
 healthkit.HKQuantityTypeIdentifierFlightsClimbed:valueQuantity
 healthkit.HKQuantityTypeIdentifierStepCount:valueQuantity
 healthkit.HKQuantityTypeIdentifierActiveEnergyBurned:valueQuantity
-
+testString:valueString
+testInteger:valueInteger

@@ -32,6 +32,10 @@ public class QAnswersToI2B2 {
 
     Logger log = LoggerFactory.getLogger(QAnswersToI2B2.class);
 
+    public static final String FHIR_TAG_VALUE_QUANTITY = "valueQuantity";
+    public static final String FHIR_TAG_VALUE_STRING = "valueString";
+    public static final String FHIR_TAG_VALUE_INTEGER = "valueInteger";
+
     public static final String DEFAULT_PATIENT_SOURCE = "BCH";
     public static final String DEFAULT_EVENT_SOURCE = "BCH";
 
@@ -99,7 +103,7 @@ public class QAnswersToI2B2 {
         Element event = new Element();
         event.setTypePDO(Element.PDO_EVENT);
 
-        String pdoEventId = generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,genParamStr("source", this.eventIdeSource));
+        String pdoEventId = generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
         String pdoPatientId = generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
                 genParamStr("source", this.patientIdeSource));
         event.addRow(pdoEventId);
@@ -155,7 +159,7 @@ public class QAnswersToI2B2 {
 
         //<patient_id source="BCH">1234</patient_id>
         String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
-                genParamStr("source", this.patientIdeSource));
+                genParamStr(PDOModel.PDO_SOURCE, this.patientIdeSource));
 
         pid.addRow(pdoPatientId);
         pidSet.addElement(pid);
@@ -295,8 +299,7 @@ public class QAnswersToI2B2 {
 
     private void addValuesPdo(QuestionnaireAnswers.GroupQuestionAnswer answer, String type, Element observation) {
         IDatatype data = answer.getValue();
-        System.out.println("****** " + type);
-        if (type.equals("valueQuantity"))  {
+        if (type.equals(FHIR_TAG_VALUE_QUANTITY))  {
             QuantityDt qdt = (QuantityDt) data;
             BigDecimal value = qdt.getValue();
             String units = qdt.getUnits();
@@ -310,14 +313,20 @@ public class QAnswersToI2B2 {
                     observation.addRow(pdoUnits);
                 }
             }
-        } else if(type.equals("valueString")) {
+        } else if(type.equals(FHIR_TAG_VALUE_STRING)) {
             String value = data.toString();
             String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
             observation.addRow(pdoTValChar);
+        } else if(type.equals(FHIR_TAG_VALUE_INTEGER)) {
+            String value = data.toString();
+            String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
+            observation.addRow(pdoNValNum);
         }
     }
+
     private boolean isNumericType(String type) {
-        if (type.equals("valueQuantity")) return true;
+        if (type.equals(FHIR_TAG_VALUE_QUANTITY)) return true;
+        else if (type.equals(FHIR_TAG_VALUE_INTEGER)) return true;
         return false;
     }
 
