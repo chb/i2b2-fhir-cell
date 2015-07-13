@@ -9,6 +9,7 @@ import ca.uhn.fhir.model.dstu2.composite.ResourceReferenceDt;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
+import ca.uhn.fhir.model.primitive.IntegerDt;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.pdomodel.Element;
@@ -318,7 +319,8 @@ public class QAnswersToI2B2 {
             String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
             observation.addRow(pdoTValChar);
         } else if(type.equals(FHIR_TAG_VALUE_INTEGER)) {
-            String value = data.toString();
+            IntegerDt valueInt = (IntegerDt) data;
+            String value = valueInt.getValueAsString();
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
             observation.addRow(pdoNValNum);
         }
