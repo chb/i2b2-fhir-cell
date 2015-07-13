@@ -2,10 +2,7 @@ package org.bch.fhir.i2b2.service;
 
 import ca.uhn.fhir.model.api.IDatatype;
 import ca.uhn.fhir.model.api.IResource;
-import ca.uhn.fhir.model.dstu2.composite.ContainedDt;
-import ca.uhn.fhir.model.dstu2.composite.PeriodDt;
-import ca.uhn.fhir.model.dstu2.composite.QuantityDt;
-import ca.uhn.fhir.model.dstu2.composite.ResourceReferenceDt;
+import ca.uhn.fhir.model.dstu2.composite.*;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
@@ -36,6 +33,7 @@ public class QAnswersToI2B2 {
     public static final String FHIR_TAG_VALUE_QUANTITY = "valueQuantity";
     public static final String FHIR_TAG_VALUE_STRING = "valueString";
     public static final String FHIR_TAG_VALUE_INTEGER = "valueInteger";
+    public static final String FHIR_TAG_VALUE_CODING = "valueCoding";
 
     public static final String DEFAULT_PATIENT_SOURCE = "BCH";
     public static final String DEFAULT_EVENT_SOURCE = "BCH";
@@ -251,18 +249,6 @@ public class QAnswersToI2B2 {
 
         String pdoConceptCd = null;
         String conceptCd=null;
-        if (mapConceptCode.containsKey(link)) {
-            conceptCd = mapConceptCode.get(link);
-        } else {
-            conceptCd = link;
-            log.warn("Link: " + link + " does not have a correspondence concept_cd. Using: " + link + " as concept_cd");
-        }
-        if (conceptCd.length()>50) {
-            conceptCd = conceptCd.substring(0,50);
-            log.warn("Concept_cd is longer than 50 characters. Triming to: " + conceptCd + " to continue");
-        }
-        pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
-        out.addRow(pdoConceptCd);
 
         String pdoInstanceNum = generateRow(PDOModel.PDO_INSTANCE_NUM, ""+i);
         out.addRow(pdoInstanceNum);
@@ -281,21 +267,38 @@ public class QAnswersToI2B2 {
             out.addRow(pdoValueTypeCd);
             addValuesPdo(answer, type, out);
 
+            String realLink = link;
+
+            if (!isRawConceptCD(type)) {
+                realLink = getRealLink(link, answer, type);
+            }
+
+            if (mapConceptCode.containsKey(link)) {
+                conceptCd = mapConceptCode.get(realLink);
+            } else {
+                conceptCd = realLink;
+                log.warn("Link: " + realLink + " does not have a correspondence concept_cd. Using: " + realLink + " as concept_cd");
+            }
+            if (conceptCd.length() > 50) {
+                conceptCd = conceptCd.substring(0, 50);
+                log.warn("Concept_cd is longer than 50 characters. Triming to: " + conceptCd + " to continue");
+            }
+            pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
+            out.addRow(pdoConceptCd);
         }
 
         return out;
 
-        /*
-        <event_id source="SCR">1423742400000</event_id>
-            <patient_id source="BCH">1234</patient_id>
-            <start_date>2015-02-12T12:00:00.00</start_date>
-            <observer_cd>@</observer_cd>
-            <concept_cd>PBM_transaction</concept_cd>
-            <tval_char>ALL</tval_char>
-            <modifier_cd>recsReturnedStatement</modifier_cd>
-            <valuetype_cd>T</valuetype_cd>
-            <instance_num>1</instance_num>
-         */
+    }
+
+    private String getRealLink(String link, QuestionnaireAnswers.GroupQuestionAnswer answer, String type) {
+        String out = link;
+        if (type.equals(FHIR_TAG_VALUE_CODING)) {
+            CodingDt cdt = (CodingDt) answer.getValue();
+            out = out + "_" + cdt.getCode();
+        }
+
+        return out;
     }
 
     private void addValuesPdo(QuestionnaireAnswers.GroupQuestionAnswer answer, String type, Element observation) {
@@ -324,6 +327,11 @@ public class QAnswersToI2B2 {
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
             observation.addRow(pdoNValNum);
         }
+    }
+
+    private boolean isRawConceptCD(String type) {
+        if (!type.equals(FHIR_TAG_VALUE_CODING)) return true;
+        return false;
     }
 
     private boolean isNumericType(String type) {

@@ -121,8 +121,10 @@ public class AppConfig {
             }
             String [] modifiers = sb.toString().split(",");
             for (String modifier: modifiers){
-                String [] codes = modifier.split(":");
-                realConceptCodes.put(codes[0].trim(), codes[1].trim());
+                if (modifier.contains(":")) {
+                    String[] codes = modifier.split(":");
+                    realConceptCodes.put(codes[0].trim(), codes[1].trim());
+                }
             }
         }
         return realConceptCodes;
@@ -138,8 +140,10 @@ public class AppConfig {
             }
             String [] modifiers = sb.toString().split(",");
             for (String modifier: modifiers){
-                String [] codes = modifier.split(":");
-                conceptCodesType.put(codes[0].trim(), codes[1].trim());
+                if (modifier.contains(":")) {
+                    String[] codes = modifier.split(":");
+                    conceptCodesType.put(codes[0].trim(), codes[1].trim());
+                }
             }
         }
         return conceptCodesType;
