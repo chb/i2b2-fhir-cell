@@ -3,6 +3,7 @@ package org.bch.fhir.i2b2.service;
 import ca.uhn.fhir.model.api.IDatatype;
 import ca.uhn.fhir.model.api.IResource;
 import ca.uhn.fhir.model.dstu2.composite.*;
+import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
@@ -26,7 +27,7 @@ import java.util.Map;
  * Converts a QuestionnaireAnswer FHIR resource to the corresponding XMLPDO
  * Created by ipinyol on 7/9/15.
  */
-public class QAnswersToI2B2 {
+public class QAnswersToI2B2 extends FHIRToPDO {
 
     Logger log = LoggerFactory.getLogger(QAnswersToI2B2.class);
 
@@ -43,7 +44,9 @@ public class QAnswersToI2B2 {
     private String eventIdeSource=DEFAULT_EVENT_SOURCE;
     private String eventIde=null;
 
-    public String getPDOXML(QuestionnaireAnswers qa) throws FHIRI2B2Exception {
+    @Override
+    public String getPDOXML(BaseResource resource) throws FHIRI2B2Exception {
+        QuestionnaireAnswers qa = (QuestionnaireAnswers) resource;
         PDOModel pdo = new PDOModel();
         if (qa!=null) {
             this.patientIde = this.getPatientId(qa);
