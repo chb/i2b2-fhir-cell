@@ -95,6 +95,9 @@ public class ObservationToI2B2 extends FHIRToPDO {
         Map<String, String> mapConceptCode = AppConfig.getRealConceptCodesObsMap();
         Map<String, String> mapConceptCodeType = AppConfig.getRealConceptCodesTypeObsMap();
 
+        System.out.println(mapConceptCodeType.toString());
+        System.out.println(mapConceptCode.toString());
+
         String pdoEventId = this.generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,
                 this.genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
         out.addRow(pdoEventId);
@@ -164,6 +167,7 @@ public class ObservationToI2B2 extends FHIRToPDO {
 
     private void addValuesPdo(Observation obs, String type, Element out) {
         IDatatype data = obs.getValue();
+        if (type == null) type = FHIR_TAG_VALUE_STRING;
         if (type.equals(FHIR_TAG_VALUE_QUANTITY))  {
             QuantityDt qdt = (QuantityDt) data;
             BigDecimal value = qdt.getValue();
