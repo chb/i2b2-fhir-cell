@@ -176,6 +176,7 @@ public abstract class FHIRToPDO {
     }
 
     protected boolean isNumericType(String type) {
+        if (type == null) return false;
         if (type.equals(FHIR_TAG_VALUE_QUANTITY)) return true;
         else if (type.equals(FHIR_TAG_VALUE_INTEGER)) return true;
         return false;

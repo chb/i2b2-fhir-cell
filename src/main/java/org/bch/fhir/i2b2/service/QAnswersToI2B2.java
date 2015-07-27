@@ -180,7 +180,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             }
             if (conceptCd.length() > 50) {
                 conceptCd = conceptCd.substring(0, 50);
-                log.warn("Concept_cd is longer than 50 characters. Triming to: " + conceptCd + " to continue");
+                log.warn("Concept_cd is longer than 50 characters. Trimming to: " + conceptCd + " to continue");
             }
             pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
             out.addRow(pdoConceptCd);

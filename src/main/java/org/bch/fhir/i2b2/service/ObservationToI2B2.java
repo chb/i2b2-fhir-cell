@@ -132,7 +132,7 @@ public class ObservationToI2B2 extends FHIRToPDO {
 
         String codeToLookFor = systemCode + "/" + codeCode;
 
-
+        System.out.println(codeToLookFor);
         String pdoValueTypeCd = null;
         String type = mapConceptCodeType.get(codeToLookFor);
         if (isNumericType(type)) {
@@ -143,6 +143,20 @@ public class ObservationToI2B2 extends FHIRToPDO {
         out.addRow(pdoValueTypeCd);
 
         addValuesPdo(obs, type, out);
+        if (mapConceptCode.containsKey(codeToLookFor)) {
+            conceptCd = mapConceptCode.get(codeToLookFor);
+        } else {
+            conceptCd = codeToLookFor;
+            log.warn("Code: " + codeToLookFor + " does not have a correspondence concept_cd. Using: " + codeToLookFor +
+                    " as concept_cd");
+        }
+        if (conceptCd.length() > 50) {
+            conceptCd = conceptCd.substring(0, 50);
+            log.warn("Concept_cd is longer than 50 characters. Trimming to: " + conceptCd + " to continue");
+        }
+        pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
+        out.addRow(pdoConceptCd);
+
         observationSet.addElement(out);
         return observationSet;
 
