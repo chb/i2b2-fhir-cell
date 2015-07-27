@@ -78,11 +78,18 @@ public class AppConfig {
     private static Map<String, String> realConceptCodes = new HashMap<>();
     private static Map<String, String> conceptCodesType = new HashMap<>();
 
+    private static Map<String, String> realConceptCodesObs = new HashMap<>();
+    private static Map<String, String> conceptCodesTypeObs = new HashMap<>();
+
+
     // File name containing the list of real modifier codes
     private static final String REAL_MODIFIERS_FILE = "modifierCodes.i2me2";
 
     private static final String REAL_CONCEPT_CODES_FILE = "conceptCodes.c3pro";
     private static final String CONCEPT_CODES_TYPE_FILE = "conceptCodesType.c3pro";
+    private static final String REAL_CONCEPT_CODES_FILE_OBS = "observationCodes.c3pro";
+    private static final String CONCEPT_CODES_TYPE_FILE_OBS = "observationCodesType.c3pro";
+
 
     /**
      * Upload the configuration from config.properties files
@@ -111,7 +118,37 @@ public class AppConfig {
         }
     }
 
+
+    public static Map<String, String> getRealConceptCodesObsMap() {
+        return getRealConceptCodesMapGeneric(REAL_CONCEPT_CODES_FILE_OBS, realConceptCodesObs);
+    }
+
+    public static Map<String, String> getRealConceptCodesTypeObsMap() {
+        return getRealConceptCodesMapGeneric(CONCEPT_CODES_TYPE_FILE_OBS, conceptCodesTypeObs);
+    }
+
+    private static Map<String, String> getRealConceptCodesMapGeneric(String file, Map<String, String> out) {
+        if (out.isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            try {
+                Utils.textFileToStringBuffer(WrapperService.class, file, sb, ",");
+            } catch (Exception e) {
+                return out;
+            }
+            String [] modifiers = sb.toString().split(",");
+            for (String modifier: modifiers){
+                if (modifier.contains(":")) {
+                    String[] codes = modifier.split(":");
+                    out.put(codes[0].trim(), codes[1].trim());
+                }
+            }
+        }
+        return out;
+    }
+
     public static Map<String, String> getRealConceptCodesMap() {
+        return getRealConceptCodesMapGeneric(REAL_CONCEPT_CODES_FILE, realConceptCodes);
+        /*
         if (realConceptCodes.isEmpty()) {
             StringBuffer sb = new StringBuffer();
             try {
@@ -128,9 +165,12 @@ public class AppConfig {
             }
         }
         return realConceptCodes;
+        */
     }
 
     public static Map<String, String> getConceptCodesTypeMap() {
+        return getRealConceptCodesMapGeneric(CONCEPT_CODES_TYPE_FILE, conceptCodesType);
+        /*
         if (conceptCodesType.isEmpty()) {
             StringBuffer sb = new StringBuffer();
             try {
@@ -147,6 +187,7 @@ public class AppConfig {
             }
         }
         return conceptCodesType;
+        */
     }
 
     public static Map<String, String> getRealModifiersMap() {
