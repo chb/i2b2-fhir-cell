@@ -90,6 +90,8 @@ public class AppConfig {
     private static final String REAL_CONCEPT_CODES_FILE_OBS = "observationCodes.c3pro";
     private static final String CONCEPT_CODES_TYPE_FILE_OBS = "observationCodesType.c3pro";
 
+    // separator between concept codes and concept_cd and types for *.c3pro
+    private static final String SEP = ":::";
 
     /**
      * Upload the configuration from config.properties files
@@ -137,8 +139,8 @@ public class AppConfig {
             }
             String [] modifiers = sb.toString().split(",");
             for (String modifier: modifiers){
-                if (modifier.contains(":")) {
-                    String[] codes = modifier.split(":");
+                if (modifier.contains(SEP)) {
+                    String[] codes = modifier.split(SEP);
                     out.put(codes[0].trim(), codes[1].trim());
                 }
             }

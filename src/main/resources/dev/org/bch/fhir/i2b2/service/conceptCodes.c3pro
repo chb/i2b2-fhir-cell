@@ -1,93 +1,93 @@
-motion-coprocessor.light:motion-coprocessor.light
-motion-coprocessor.moderate:motion-coprocessor.moderate
-motion-coprocessor.sedentary:motion-coprocessor.sedentary
-motion-coprocessor.driving:motion-coprocessor.driving
-motion-coprocessor.cycling:motion-coprocessor.cycling
-motion-coprocessor.running:motion-coprocessor.running
-motion-coprocessor.sleeping:motion-coprocessor.sleeping
-motion-coprocessor.unknown:motion-coprocessor.unknown
-healthkit.HKQuantityTypeIdentifierFlightsClimbed:healthkit.HKQuantityTypeIdentifierFlightsClimbed
-healthkit.HKQuantityTypeIdentifierStepCount:healthkit.HKQuantityTypeIdentifierStepCount
-healthkit.HKQuantityTypeIdentifierActiveEnergyBurned:healthkit.HKQuantityTypeIdentifierActiveEnergyBurned
-testString:testString
-testInteger:testInteger
-hepc.base.1_1:hepc.base.1_1_YES
-hepc.base.1_2:hepc.base.1_2_NO
+motion-coprocessor.light:::motion-coprocessor.light
+motion-coprocessor.moderate:::motion-coprocessor.moderate
+motion-coprocessor.sedentary:::motion-coprocessor.sedentary
+motion-coprocessor.driving:::motion-coprocessor.driving
+motion-coprocessor.cycling:::motion-coprocessor.cycling
+motion-coprocessor.running:::motion-coprocessor.running
+motion-coprocessor.sleeping:::motion-coprocessor.sleeping
+motion-coprocessor.unknown:::motion-coprocessor.unknown
+healthkit.HKQuantityTypeIdentifierFlightsClimbed:::healthkit.HKQuantityTypeIdentifierFlightsClimbed
+healthkit.HKQuantityTypeIdentifierStepCount:::healthkit.HKQuantityTypeIdentifierStepCount
+healthkit.HKQuantityTypeIdentifierActiveEnergyBurned:::healthkit.HKQuantityTypeIdentifierActiveEnergyBurned
+testString:::testString
+testInteger:::testInteger
+hepc.base.1_1:::hepc.base.1_1_YES
+hepc.base.1_2:::hepc.base.1_2_NO
 
-hepc.base.2_1:hepc.base.2_1_YES
-hepc.base.2_2:hepc.base.2_2_NO
-hepc.base.2_3:hepc.base.2_3_DONTKNOW
+hepc.base.2_1:::hepc.base.2_1_YES
+hepc.base.2_2:::hepc.base.2_2_NO
+hepc.base.2_3:::hepc.base.2_3_DONTKNOW
 
-hepc.base.4_1:hepc.base.4_1_YES
-hepc.base.4_2:hepc.base.4_2_NO
-hepc.base.4_3:hepc.base.4_3_DONT_KNOW
+hepc.base.4_1:::hepc.base.4_1_YES
+hepc.base.4_2:::hepc.base.4_2_NO
+hepc.base.4_3:::hepc.base.4_3_DONT_KNOW
 
-hepc.base.6_1:hepc.base.6_1_YES
-hepc.base.6_2:hepc.base.6_1_NO
+hepc.base.6_1:::hepc.base.6_1_YES
+hepc.base.6_2:::hepc.base.6_1_NO
 
-hepc.base.8_1:hepc.base.8_1_NOT_SEVERE_ENOUGH
-hepc.base.8_2:hepc.base.8_2_TREATMENT_NOT_OFFERED
-hepc.base.8_3:hepc.base.8_3_DONT_KNOW
-hepc.base.8_4:hepc.base.8_4_OTHER
-hepc.base.8.other:hepc.base.8_4_OTHER
+hepc.base.8_1:::hepc.base.8_1_NOT_SEVERE_ENOUGH
+hepc.base.8_2:::hepc.base.8_2_TREATMENT_NOT_OFFERED
+hepc.base.8_3:::hepc.base.8_3_DONT_KNOW
+hepc.base.8_4:::hepc.base.8_4_OTHER
+hepc.base.8.other:::hepc.base.8_4_OTHER
 
-hepc.mhossf36.3_1:hepc.mhossf36.3_1_LIMITED_A_LOT
-hepc.mhossf36.3_2:hepc.mhossf36.3_2_LIMITED_A_LITTLE
-hepc.mhossf36.3_3:hepc.mhossf36.3_3_NOT_LIMITED
+hepc.mhossf36.3_1:::hepc.mhossf36.3_1_LIMITED_A_LOT
+hepc.mhossf36.3_2:::hepc.mhossf36.3_2_LIMITED_A_LITTLE
+hepc.mhossf36.3_3:::hepc.mhossf36.3_3_NOT_LIMITED
 
-hepc.mhossf36.4_1:hepc.mhossf36.4_1_LIMITED_A_LOT
-hepc.mhossf36.4_2:hepc.mhossf36.4_2_LIMITED_A_LITTLE
-hepc.mhossf36.4_3:hepc.mhossf36.4_3_NOT_LIMITED
+hepc.mhossf36.4_1:::hepc.mhossf36.4_1_LIMITED_A_LOT
+hepc.mhossf36.4_2:::hepc.mhossf36.4_2_LIMITED_A_LITTLE
+hepc.mhossf36.4_3:::hepc.mhossf36.4_3_NOT_LIMITED
 
-hepc.mhossf36.5_1:hepc.mhossf36.5_1_LIMITED_A_LOT
-hepc.mhossf36.5_2:hepc.mhossf36.5_2_LIMITED_A_LITTLE
-hepc.mhossf36.5_3:hepc.mhossf36.5_3_NOT_LIMITED
+hepc.mhossf36.5_1:::hepc.mhossf36.5_1_LIMITED_A_LOT
+hepc.mhossf36.5_2:::hepc.mhossf36.5_2_LIMITED_A_LITTLE
+hepc.mhossf36.5_3:::hepc.mhossf36.5_3_NOT_LIMITED
 
-hepc.mhossf36.6_1:hepc.mhossf36.6_1_LIMITED_A_LOT
-hepc.mhossf36.6_2:hepc.mhossf36.6_2_LIMITED_A_LITTLE
-hepc.mhossf36.6_3:hepc.mhossf36.6_3_NOT_LIMITED
+hepc.mhossf36.6_1:::hepc.mhossf36.6_1_LIMITED_A_LOT
+hepc.mhossf36.6_2:::hepc.mhossf36.6_2_LIMITED_A_LITTLE
+hepc.mhossf36.6_3:::hepc.mhossf36.6_3_NOT_LIMITED
 
-hepc.mhossf36.7_1:hepc.mhossf36.7_1_LIMITED_A_LOT
-hepc.mhossf36.7_2:hepc.mhossf36.7_2_LIMITED_A_LITTLE
-hepc.mhossf36.7_3:hepc.mhossf36.7_3_NOT_LIMITED
+hepc.mhossf36.7_1:::hepc.mhossf36.7_1_LIMITED_A_LOT
+hepc.mhossf36.7_2:::hepc.mhossf36.7_2_LIMITED_A_LITTLE
+hepc.mhossf36.7_3:::hepc.mhossf36.7_3_NOT_LIMITED
 
-hepc.mhossf36.8_1:hepc.mhossf36.8_1_LIMITED_A_LOT
-hepc.mhossf36.8_2:hepc.mhossf36.8_2_LIMITED_A_LITTLE
-hepc.mhossf36.8_3:hepc.mhossf36.8_3_NOT_LIMITED
+hepc.mhossf36.8_1:::hepc.mhossf36.8_1_LIMITED_A_LOT
+hepc.mhossf36.8_2:::hepc.mhossf36.8_2_LIMITED_A_LITTLE
+hepc.mhossf36.8_3:::hepc.mhossf36.8_3_NOT_LIMITED
 
-hepc.mhossf36.9_1:hepc.mhossf36.9_1_LIMITED_A_LOT
-hepc.mhossf36.9_2:hepc.mhossf36.9_2_LIMITED_A_LITTLE
-hepc.mhossf36.9_3:hepc.mhossf36.9_3_NOT_LIMITED
+hepc.mhossf36.9_1:::hepc.mhossf36.9_1_LIMITED_A_LOT
+hepc.mhossf36.9_2:::hepc.mhossf36.9_2_LIMITED_A_LITTLE
+hepc.mhossf36.9_3:::hepc.mhossf36.9_3_NOT_LIMITED
 
-hepc.mhossf36.10_1:hepc.mhossf36.10_1_LIMITED_A_LOT
-hepc.mhossf36.10_2:hepc.mhossf36.10_2_LIMITED_A_LITTLE
-hepc.mhossf36.10_3:hepc.mhossf36.10_3_NOT_LIMITED
+hepc.mhossf36.10_1:::hepc.mhossf36.10_1_LIMITED_A_LOT
+hepc.mhossf36.10_2:::hepc.mhossf36.10_2_LIMITED_A_LITTLE
+hepc.mhossf36.10_3:::hepc.mhossf36.10_3_NOT_LIMITED
 
-hepc.mhossf36.11_1:hepc.mhossf36.11_1_LIMITED_A_LOT
-hepc.mhossf36.11_2:hepc.mhossf36.11_2_LIMITED_A_LITTLE
-hepc.mhossf36.11_3:hepc.mhossf36.11_3_NOT_LIMITED
+hepc.mhossf36.11_1:::hepc.mhossf36.11_1_LIMITED_A_LOT
+hepc.mhossf36.11_2:::hepc.mhossf36.11_2_LIMITED_A_LITTLE
+hepc.mhossf36.11_3:::hepc.mhossf36.11_3_NOT_LIMITED
 
-hepc.mhossf36.12_1:hepc.mhossf36.12_1_LIMITED_A_LOT
-hepc.mhossf36.12_2:hepc.mhossf36.12_2_LIMITED_A_LITTLE
-hepc.mhossf36.12_3:hepc.mhossf36.12_3_NOT_LIMITED
+hepc.mhossf36.12_1:::hepc.mhossf36.12_1_LIMITED_A_LOT
+hepc.mhossf36.12_2:::hepc.mhossf36.12_2_LIMITED_A_LITTLE
+hepc.mhossf36.12_3:::hepc.mhossf36.12_3_NOT_LIMITED
 
-hepc.mhossf36.13_1:hepc.mhossf36.13_1_YES
-hepc.mhossf36.13_2:hepc.mhossf36.13_2_NO
+hepc.mhossf36.13_1:::hepc.mhossf36.13_1_YES
+hepc.mhossf36.13_2:::hepc.mhossf36.13_2_NO
 
-hepc.mhossf36.14_1:hepc.mhossf36.14_1_YES
-hepc.mhossf36.14_2:hepc.mhossf36.14_2_NO
+hepc.mhossf36.14_1:::hepc.mhossf36.14_1_YES
+hepc.mhossf36.14_2:::hepc.mhossf36.14_2_NO
 
-hepc.mhossf36.15_1:hepc.mhossf36.15_1_YES
-hepc.mhossf36.15_2:hepc.mhossf36.15_2_NO
+hepc.mhossf36.15_1:::hepc.mhossf36.15_1_YES
+hepc.mhossf36.15_2:::hepc.mhossf36.15_2_NO
 
-hepc.mhossf36.16_1:hepc.mhossf36.16_1_YES
-hepc.mhossf36.16_2:hepc.mhossf36.16_2_NO
+hepc.mhossf36.16_1:::hepc.mhossf36.16_1_YES
+hepc.mhossf36.16_2:::hepc.mhossf36.16_2_NO
 
-hepc.wpai.1_1: hepc.wpai.1_1_YES
-hepc.wpai.1_2: hepc.wpai.1_2_NO
+hepc.wpai.1_1::: hepc.wpai.1_1_YES
+hepc.wpai.1_2::: hepc.wpai.1_2_NO
 
-hepc.wpai.2:hepc.wpai.2
-hepc.wpai.3:hepc.wpai.3
-hepc.wpai.4:hepc.wpai.4
-hepc.wpai.5:hepc.wpai.5
-hepc.wpai.6:hepc.wpai.6
+hepc.wpai.2:::hepc.wpai.2
+hepc.wpai.3:::hepc.wpai.3
+hepc.wpai.4:::hepc.wpai.4
+hepc.wpai.5:::hepc.wpai.5
+hepc.wpai.6:::hepc.wpai.6
