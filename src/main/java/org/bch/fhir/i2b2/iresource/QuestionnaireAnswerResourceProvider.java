@@ -13,6 +13,7 @@ import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
 import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.external.I2B2CellFR;
+import org.bch.fhir.i2b2.service.FHIRToPDO;
 import org.bch.fhir.i2b2.service.QAnswersToI2B2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
 
     protected FhirContext ctx = FhirContext.forDstu2();
 
-    protected QAnswersToI2B2 mapper = new QAnswersToI2B2();
+    protected FHIRToPDO mapper = new QAnswersToI2B2();
     protected I2B2CellFR i2b2 = new I2B2CellFR();
 
     @Override

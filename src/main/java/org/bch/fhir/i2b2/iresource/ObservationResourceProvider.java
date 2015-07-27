@@ -9,6 +9,10 @@ import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
+import org.bch.fhir.i2b2.external.I2B2CellFR;
+import org.bch.fhir.i2b2.service.FHIRToPDO;
+import org.bch.fhir.i2b2.service.ObservationToI2B2;
+import org.bch.fhir.i2b2.service.QAnswersToI2B2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +38,9 @@ public class ObservationResourceProvider implements IResourceProvider {
 
     protected FhirContext ctx = FhirContext.forDstu2();
 
+    protected FHIRToPDO mapper = new ObservationToI2B2();
+    protected I2B2CellFR i2b2 = new I2B2CellFR();
+
     @Override
     public Class<Observation> getResourceType() {
         return Observation.class;
@@ -43,10 +50,9 @@ public class ObservationResourceProvider implements IResourceProvider {
         log.info("New POST Observation");
 
         String xmlpdo = null;
-        /*
         try {
-            //xmlpdo = mapper.getPDOXML(theQA);
-            //i2b2.pushPDOXML(xmlpdo);
+            xmlpdo = mapper.getPDOXML(obs);
+            i2b2.pushPDOXML(xmlpdo);
         } catch (FHIRI2B2Exception e) {
             // We return 500!
             log.error("Error POST QuestionnaireAnswers:" + e.getMessage());
@@ -57,7 +63,7 @@ public class ObservationResourceProvider implements IResourceProvider {
             e.printStackTrace();
             throw new InternalErrorException(e.getMessage());
         }
-        */
+
         return new MethodOutcome();
     }
 
