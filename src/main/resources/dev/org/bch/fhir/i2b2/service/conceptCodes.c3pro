@@ -11,19 +11,19 @@ healthkit.HKQuantityTypeIdentifierStepCount:healthkit.HKQuantityTypeIdentifierSt
 healthkit.HKQuantityTypeIdentifierActiveEnergyBurned:healthkit.HKQuantityTypeIdentifierActiveEnergyBurned
 testString:testString
 testInteger:testInteger
-hepc.base.1_1:hepc.base.1_1_YES
-hepc.base.1_2:hepc.base.1_2_NO
+hepc.base.1_Y:hepc.base.1_Y
+hepc.base.1_N:hepc.base.1_N
 
-hepc.base.2_1:hepc.base.2_1_YES
-hepc.base.2_2:hepc.base.2_2_NO
-hepc.base.2_3:hepc.base.2_3_DONTKNOW
+hepc.base.2_Y:hepc.base.2_Y
+hepc.base.2_N:hepc.base.2_N
+hepc.base.2_asked:hepc.base.2_asked
 
-hepc.base.4_1:hepc.base.4_1_YES
-hepc.base.4_2:hepc.base.4_2_NO
-hepc.base.4_3:hepc.base.4_3_DONT_KNOW
+hepc.base.4_Y:hepc.base.4_Y
+hepc.base.4_N:hepc.base.4_N
+hepc.base.4_asked:hepc.base.4_asked
 
-hepc.base.6_1:hepc.base.6_1_YES
-hepc.base.6_2:hepc.base.6_1_NO
+hepc.base.6_Y:hepc.base.6_Y
+hepc.base.6_N:hepc.base.6_N
 
 hepc.base.8_1:hepc.base.8_1_NOT_SEVERE_ENOUGH
 hepc.base.8_2:hepc.base.8_2_TREATMENT_NOT_OFFERED
@@ -71,20 +71,20 @@ hepc.mhossf36.12_1:hepc.mhossf36.12_1_LIMITED_A_LOT
 hepc.mhossf36.12_2:hepc.mhossf36.12_2_LIMITED_A_LITTLE
 hepc.mhossf36.12_3:hepc.mhossf36.12_3_NOT_LIMITED
 
-hepc.mhossf36.13_1:hepc.mhossf36.13_1_YES
-hepc.mhossf36.13_2:hepc.mhossf36.13_2_NO
+hepc.mhossf36.13_Y:hepc.mhossf36.13_Y
+hepc.mhossf36.13_N:hepc.mhossf36.13_N
 
-hepc.mhossf36.14_1:hepc.mhossf36.14_1_YES
-hepc.mhossf36.14_2:hepc.mhossf36.14_2_NO
+hepc.mhossf36.14_Y:hepc.mhossf36.14_Y
+hepc.mhossf36.14_N:hepc.mhossf36.14_N
 
-hepc.mhossf36.15_1:hepc.mhossf36.15_1_YES
-hepc.mhossf36.15_2:hepc.mhossf36.15_2_NO
+hepc.mhossf36.15_Y:hepc.mhossf36.15_Y
+hepc.mhossf36.15_N:hepc.mhossf36.15_N
 
-hepc.mhossf36.16_1:hepc.mhossf36.16_1_YES
-hepc.mhossf36.16_2:hepc.mhossf36.16_2_NO
+hepc.mhossf36.16_Y:hepc.mhossf36.16_Y
+hepc.mhossf36.16_N:hepc.mhossf36.16_N
 
-hepc.wpai.1_1: hepc.wpai.1_1_YES
-hepc.wpai.1_2: hepc.wpai.1_2_NO
+hepc.wpai.1_Y: hepc.wpai.1_Y
+hepc.wpai.1_N: hepc.wpai.1_N
 
 hepc.wpai.2:hepc.wpai.2
 hepc.wpai.3:hepc.wpai.3
