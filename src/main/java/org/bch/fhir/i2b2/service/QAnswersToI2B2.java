@@ -3,6 +3,7 @@ package org.bch.fhir.i2b2.service;
 import ca.uhn.fhir.model.api.IDatatype;
 import ca.uhn.fhir.model.api.IResource;
 import ca.uhn.fhir.model.dstu2.composite.*;
+import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
@@ -26,24 +27,14 @@ import java.util.Map;
  * Converts a QuestionnaireAnswer FHIR resource to the corresponding XMLPDO
  * Created by ipinyol on 7/9/15.
  */
-public class QAnswersToI2B2 {
+public class QAnswersToI2B2 extends FHIRToPDO {
 
     Logger log = LoggerFactory.getLogger(QAnswersToI2B2.class);
 
-    public static final String FHIR_TAG_VALUE_QUANTITY = "valueQuantity";
-    public static final String FHIR_TAG_VALUE_STRING = "valueString";
-    public static final String FHIR_TAG_VALUE_INTEGER = "valueInteger";
-    public static final String FHIR_TAG_VALUE_CODING = "valueCoding";
 
-    public static final String DEFAULT_PATIENT_SOURCE = "BCH";
-    public static final String DEFAULT_EVENT_SOURCE = "BCH";
-
-    private String patientIdeSource=DEFAULT_PATIENT_SOURCE;
-    private String patientIde=null;
-    private String eventIdeSource=DEFAULT_EVENT_SOURCE;
-    private String eventIde=null;
-
-    public String getPDOXML(QuestionnaireAnswers qa) throws FHIRI2B2Exception {
+    @Override
+    public String getPDOXML(BaseResource resource) throws FHIRI2B2Exception {
+        QuestionnaireAnswers qa = (QuestionnaireAnswers) resource;
         PDOModel pdo = new PDOModel();
         if (qa!=null) {
             this.patientIde = this.getPatientId(qa);
@@ -84,99 +75,7 @@ public class QAnswersToI2B2 {
         return idPat;
     }
 
-    private String getEventId(Encounter enc) throws FHIRI2B2Exception {
-        String eventId = null;
-        if (enc.getId().isEmpty()) {
-            eventId = "" + new Date().getTime();
-        } else {
-            // TODO: Provisional!!
-            eventId = "" + new Date().getTime();
-            //eventId = enc.getId().getIdPart();
-        }
-        return eventId;
-    }
 
-    private ElementSet generateEventSet(Encounter enc) throws FHIRI2B2Exception {
-        ElementSet eventSet = new ElementSet();
-        eventSet.setTypePDOSet(ElementSet.PDO_EVENT_SET);
-        Element event = new Element();
-        event.setTypePDO(Element.PDO_EVENT);
-
-        String pdoEventId = generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
-        String pdoPatientId = generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
-                genParamStr("source", this.patientIdeSource));
-        event.addRow(pdoEventId);
-        event.addRow(pdoPatientId);
-
-        if (!enc.getPeriod().isEmpty()) {
-            PeriodDt period = enc.getPeriod();
-            Date startDate = period.getStart();
-            Date endDate = period.getEnd();
-            if (startDate!=null) {
-                String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
-                SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
-                String startDateStr = dateFormatOutput.format(startDate);
-
-                String pdoStartDate = generateRow(PDOModel.PDO_START_DATE, startDateStr);
-                event.addRow(pdoStartDate);
-            }
-            if (endDate!=null) {
-                String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
-                SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
-                String endDateStr = dateFormatOutput.format(endDate);
-
-                String pdoEndDate = generateRow(PDOModel.PDO_END_DATE, endDateStr);
-                event.addRow(pdoEndDate);
-            }
-        }
-        eventSet.addElement(event);
-        return eventSet;
-    }
-
-    private ElementSet generateEIDSet() throws FHIRI2B2Exception {
-        ElementSet eidSet = new ElementSet();
-        eidSet.setTypePDOSet(ElementSet.PDO_EID_SET);
-        Element eid = new Element();
-        eid.setTypePDO(Element.PDO_EID);
-
-        //<event_id patient_id="1234" patient_id_source="BCH" source="SCR">1423742400000</event_id>
-        String pdoEventId = this.generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,
-                genParamStr(PDOModel.PDO_PATIENT_ID, this.patientIde),
-                genParamStr(PDOModel.PDO_PATIENT_ID_SOURCE, this.patientIdeSource),
-                genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
-
-        eid.addRow(pdoEventId);
-        eidSet.addElement(eid);
-        return eidSet;
-    }
-
-    private ElementSet generatePIDSet() throws FHIRI2B2Exception {
-        ElementSet pidSet = new ElementSet();
-        pidSet.setTypePDOSet(ElementSet.PDO_PID_SET);
-        Element pid = new Element();
-        pid.setTypePDO(Element.PDO_PID);
-
-        //<patient_id source="BCH">1234</patient_id>
-        String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
-                genParamStr(PDOModel.PDO_SOURCE, this.patientIdeSource));
-
-        pid.addRow(pdoPatientId);
-        pidSet.addElement(pid);
-        return pidSet;
-    }
-
-    private ElementSet generatePatientSet() throws FHIRI2B2Exception {
-        ElementSet patientSet = new ElementSet();
-        patientSet.setTypePDOSet(ElementSet.PDO_PATIENT_SET);
-        Element patient = new Element();
-        patient.setTypePDO(Element.PDO_PATIENT);
-
-        String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
-                genParamStr(PDOModel.PDO_SOURCE, this.patientIdeSource));
-        patient.addRow(pdoPatientId);
-        patientSet.addElement(patient);
-        return patientSet;
-    }
 
     private ElementSet generateObservationSet(QuestionnaireAnswers qa) throws FHIRI2B2Exception {
         ElementSet observationSet = new ElementSet();
@@ -281,7 +180,7 @@ public class QAnswersToI2B2 {
             }
             if (conceptCd.length() > 50) {
                 conceptCd = conceptCd.substring(0, 50);
-                log.warn("Concept_cd is longer than 50 characters. Triming to: " + conceptCd + " to continue");
+                log.warn("Concept_cd is longer than 50 characters. Trimming to: " + conceptCd + " to continue");
             }
             pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
             out.addRow(pdoConceptCd);
@@ -329,66 +228,4 @@ public class QAnswersToI2B2 {
         }
     }
 
-    private boolean isRawConceptCD(String type) {
-        if (!type.equals(FHIR_TAG_VALUE_CODING)) return true;
-        return false;
-    }
-
-    private boolean isNumericType(String type) {
-        if (type.equals(FHIR_TAG_VALUE_QUANTITY)) return true;
-        else if (type.equals(FHIR_TAG_VALUE_INTEGER)) return true;
-        return false;
-    }
-
-    private IResource findResourceById(List<IResource> resources, String id){
-        int i=0;
-        IResource out = null;
-        while (i<resources.size() && out==null) {
-            IResource res = resources.get(i);
-            if (res.getId().getIdPart().equals(id)) {
-                out = res;
-            }
-            i++;
-        }
-        return out;
-    }
-
-    private String finishRow(StringBuffer in, String tag, String value) {
-        in.append(value);
-        in.append("</").append(tag).append(">");
-        return in.toString();
-    }
-
-    private String generateRow(String tag, String value) {
-        StringBuffer out = new StringBuffer();
-        out.append("<").append(tag).append(">");
-        return finishRow(out,tag, value);
-    }
-
-    private String generateRow(String tag, String value, String param) {
-        StringBuffer out = new StringBuffer();
-        out.append("<").append(tag).append(" ").append(param).append(">");
-        return finishRow(out,tag, value);
-    }
-
-    private String generateRow(String tag, String value, String param1, String param2) {
-        StringBuffer out = new StringBuffer();
-        out.append("<").append(tag).append(" ").append(param1).append(" ").append(param2).append(">");
-        return finishRow(out,tag, value);
-    }
-
-    private String generateRow(String tag, String value, String param1, String param2, String param3) {
-        StringBuffer out = new StringBuffer();
-        out.append("<").append(tag).append(" ").append(param1).append(" ").
-                append(param2).append(" ").append(param3).append(">");
-        return finishRow(out,tag, value);
-    }
-
-    private String genParamStr(String paramName, String valueStr) {
-        return paramName + "=\"" + valueStr + "\"";
-    }
-
-    private String genParamNum(String paramName, String valueNum) {
-        return paramName + "=" + valueNum;
-    }
 }

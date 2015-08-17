@@ -3,6 +3,7 @@ package org.bch.fhir.i2b2.servlet;
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.RestfulServer;
+import org.bch.fhir.i2b2.iresource.ObservationResourceProvider;
 import org.bch.fhir.i2b2.iresource.QuestionnaireAnswerResourceProvider;
 
 import javax.servlet.ServletException;
@@ -26,8 +27,8 @@ public class FHIRServlet extends RestfulServer {
 
         List<IResourceProvider> resourceProviders = new ArrayList<>();
 	    resourceProviders.add(new QuestionnaireAnswerResourceProvider());
+        resourceProviders.add(new ObservationResourceProvider());
         setResourceProviders(resourceProviders);
         setUseBrowserFriendlyContentTypes(true);
     }
-
 }

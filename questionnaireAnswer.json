@@ -14,7 +14,7 @@
     "reference": "#period"
   },
   "subject": {
-    "reference": "Patient/123456"
+    "reference": "Patient/3C42AF26-4C0B-4FC9-A154-9D1484672DA9"
   },
   "group": {
     "linkId": "org.chip.c3-pro.activity",
