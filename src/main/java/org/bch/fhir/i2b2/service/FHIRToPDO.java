@@ -28,6 +28,7 @@ public abstract class FHIRToPDO {
     public static final String FHIR_TAG_VALUE_STRING = "valueString";
     public static final String FHIR_TAG_VALUE_INTEGER = "valueInteger";
     public static final String FHIR_TAG_VALUE_CODING = "valueCoding";
+    public static final String FHIR_TAG_VALUE_BOOLEAN = "valueBoolean";
 
     public static final String DEFAULT_PATIENT_SOURCE = "BCH";
     public static final String DEFAULT_EVENT_SOURCE = "BCH";

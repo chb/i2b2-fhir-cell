@@ -7,6 +7,7 @@ import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
+import ca.uhn.fhir.model.primitive.BooleanDt;
 import ca.uhn.fhir.model.primitive.IntegerDt;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
@@ -195,6 +196,14 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         if (type.equals(FHIR_TAG_VALUE_CODING)) {
             CodingDt cdt = (CodingDt) answer.getValue();
             out = out + "_" + cdt.getCode();
+        } else if(type.equals(FHIR_TAG_VALUE_BOOLEAN)) {
+            IDatatype data = answer.getValue();
+            BooleanDt valueBool = (BooleanDt) data;
+            if (valueBool.getValue()) {
+                out = out + "_Y";
+            } else {
+                out = out + "_N";
+            }
         }
 
         return out;
@@ -225,6 +234,14 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             String value = valueInt.getValueAsString();
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
             observation.addRow(pdoNValNum);
+        } else if(type.equals(FHIR_TAG_VALUE_BOOLEAN)) {
+            BooleanDt valueBool = (BooleanDt) data;
+            String value = "Y";
+            if (!valueBool.getValue()) {
+                value="N";
+            }
+            String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
+            observation.addRow(pdoTValChar);
         }
     }
 
