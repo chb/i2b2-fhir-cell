@@ -1,6 +1,7 @@
 package org.bch.fhir.i2b2.service;
 
 import ca.uhn.fhir.model.api.IResource;
+import ca.uhn.fhir.model.dstu2.composite.CodingDt;
 import ca.uhn.fhir.model.dstu2.composite.PeriodDt;
 import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
@@ -13,6 +14,7 @@ import org.bch.fhir.i2b2.pdomodel.PDOModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +25,8 @@ import java.util.List;
  */
 public abstract class FHIRToPDO {
     public abstract String getPDOXML(BaseResource resource) throws FHIRI2B2Exception;
+
+    public static final String METADATA_CONCEPT_CD = "META";
 
     public static final String FHIR_TAG_VALUE_QUANTITY = "valueQuantity";
     public static final String FHIR_TAG_VALUE_STRING = "valueString";
@@ -194,6 +198,53 @@ public abstract class FHIRToPDO {
             i++;
         }
         return out;
+    }
+
+    /**
+     * Adds a metadata element associated to the current fhir resource. It does it by adding a new observation in an
+     * ElementSet of type ObservationSet
+     * @param info The metadata that will be stored in TVAL_CHAR
+     * @param conceptCdMetadada The desired ConceptCd
+     * @param observationSet The observation set
+     */
+    protected void addMetadataInObservationSet(String info, String conceptCdMetadada, ElementSet observationSet)
+            throws FHIRI2B2Exception {
+
+        Element out = new Element();
+        out.setTypePDO(Element.PDO_OBSERVATION);
+
+        String pdoEventId = this.generateRow(PDOModel.PDO_EVENT_ID, this.eventIde,
+                this.genParamStr(PDOModel.PDO_SOURCE, this.eventIdeSource));
+        out.addRow(pdoEventId);
+
+        String pdoPatientId = this.generateRow(PDOModel.PDO_PATIENT_ID, this.patientIde,
+                this.genParamStr(PDOModel.PDO_SOURCE, this.patientIdeSource));
+        out.addRow(pdoPatientId);
+
+        String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
+        SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
+        String pdoStartDate = this.generateRow(PDOModel.PDO_START_DATE, dateFormatOutput.format(new Date()));
+        out.addRow(pdoStartDate);
+
+        String pdoObserverCd = generateRow(PDOModel.PDO_OBSERVER_CD, "@");
+        out.addRow(pdoObserverCd);
+
+        String pdoInstanceNum = generateRow(PDOModel.PDO_INSTANCE_NUM, ""+1);
+        out.addRow(pdoInstanceNum);
+
+        String pdoModifierCd = generateRow(PDOModel.PDO_MODIFIER_CD, "@");
+        out.addRow(pdoModifierCd);
+
+        String pdoValueTypeCd = generateRow(PDOModel.PDO_VALUETYPE_CD, "T");
+        out.addRow(pdoValueTypeCd);
+
+        String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, info);
+        out.addRow(pdoTValChar);
+
+        String pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCdMetadada);
+        out.addRow(pdoConceptCd);
+
+        observationSet.addElement(out);
     }
 
 }

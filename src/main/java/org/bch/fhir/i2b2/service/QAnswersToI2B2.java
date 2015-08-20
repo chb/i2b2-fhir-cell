@@ -51,6 +51,9 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             pdo.addElementSet(eventSet);
             pdo.addElementSet(patientSet);
             pdo.addElementSet(observationSet);
+
+            String metaInfo = "QuestionnaireAnswers#" + qa.getGroup().getLinkId();
+            addMetadataInObservationSet(metaInfo, METADATA_CONCEPT_CD, observationSet);
         }
         return pdo.generatePDOXML();
     }
