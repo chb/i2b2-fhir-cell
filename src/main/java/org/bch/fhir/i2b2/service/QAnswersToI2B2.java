@@ -256,11 +256,13 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             String value = data.toString();
             String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
             observation.addRow(pdoTValChar);
+
         } else if(type.equals(FHIR_TAG_VALUE_INTEGER)) {
             IntegerDt valueInt = (IntegerDt) data;
             String value = valueInt.getValueAsString();
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
             observation.addRow(pdoNValNum);
+
         } else if(type.equals(FHIR_TAG_VALUE_BOOLEAN)) {
             BooleanDt valueBool = (BooleanDt) data;
             String value = "Y";
@@ -269,6 +271,13 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             }
             String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
             observation.addRow(pdoTValChar);
+
+        } else if (type.equals(FHIR_TAG_VALUE_CODING)) {
+            String value = data.toString();
+            if (value!=null) {
+                String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
+                observation.addRow(pdoTValChar);
+            }
         }
     }
 
