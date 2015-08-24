@@ -72,14 +72,14 @@ public class AppConfig {
 
     private static Properties prop = new Properties();
 
-    private static Map<String, String> realModifiers = new HashMap<>();
-    private static Map<String, String> realModifiersReverse = new HashMap<>();
+    private static final Map<String, String> realModifiers = new HashMap<>();
+    private static final Map<String, String> realModifiersReverse = new HashMap<>();
 
-    private static Map<String, String> realConceptCodes = new HashMap<>();
-    private static Map<String, String> conceptCodesType = new HashMap<>();
+    private static final Map<String, String> realConceptCodes = new HashMap<>();
+    private static final Map<String, String> conceptCodesType = new HashMap<>();
 
-    private static Map<String, String> realConceptCodesObs = new HashMap<>();
-    private static Map<String, String> conceptCodesTypeObs = new HashMap<>();
+    private static final Map<String, String> realConceptCodesObs = new HashMap<>();
+    private static final Map<String, String> conceptCodesTypeObs = new HashMap<>();
 
 
     // File name containing the list of real modifier codes
@@ -142,8 +142,6 @@ public class AppConfig {
                 if (modifier.contains(SEP)) {
                     String[] codes = modifier.split(SEP);
                     out.put(codes[0].trim(), codes[1].trim());
-                    System.out.println(codes[0].trim());
-                    System.out.println(codes[1].trim());
                 }
             }
         }

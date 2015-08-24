@@ -197,7 +197,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
                 realLink = getRealLink(link, answer, type);
             }
 
-            if (mapConceptCode.containsKey(link)) {
+            if (mapConceptCode.containsKey(realLink)) {
                 conceptCd = mapConceptCode.get(realLink);
             } else {
                 conceptCd = realLink;
