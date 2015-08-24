@@ -31,6 +31,7 @@ public abstract class FHIRToPDO {
     public static final String FHIR_TAG_VALUE_QUANTITY = "valueQuantity";
     public static final String FHIR_TAG_VALUE_STRING = "valueString";
     public static final String FHIR_TAG_VALUE_INTEGER = "valueInteger";
+    public static final String FHIR_TAG_VALUE_DECIMAL = "valueDecimal";
     public static final String FHIR_TAG_VALUE_CODING = "valueCoding";
     public static final String FHIR_TAG_VALUE_BOOLEAN = "valueBoolean";
 
@@ -193,7 +194,8 @@ public abstract class FHIRToPDO {
     protected boolean isNumericType(String type) {
         if (type == null) return false;
         if (type.equals(FHIR_TAG_VALUE_QUANTITY)) return true;
-        else if (type.equals(FHIR_TAG_VALUE_INTEGER)) return true;
+        if (type.equals(FHIR_TAG_VALUE_INTEGER)) return true;
+        if (type.equals(FHIR_TAG_VALUE_DECIMAL)) return true;
         return false;
     }
 

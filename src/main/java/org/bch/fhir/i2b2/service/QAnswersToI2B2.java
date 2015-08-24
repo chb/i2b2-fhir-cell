@@ -8,6 +8,7 @@ import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
 import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
 import ca.uhn.fhir.model.primitive.BooleanDt;
+import ca.uhn.fhir.model.primitive.DecimalDt;
 import ca.uhn.fhir.model.primitive.IntegerDt;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
@@ -243,7 +244,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             BigDecimal value = qdt.getValue();
             String units = qdt.getUnits();
             System.out.println(value + ", " + units);
-            String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, ""+value);
+            String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, "" + value);
             observation.addRow(pdoNValNum);
 
             if (units!=null) {
@@ -272,6 +273,11 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             String pdoTValChar = generateRow(PDOModel.PDO_TVAL_CHAR, value);
             observation.addRow(pdoTValChar);
 
+        } else if (type.equals(FHIR_TAG_VALUE_DECIMAL)) {
+            DecimalDt valueDec = (DecimalDt) data;
+            String value = valueDec.getValueAsString();
+            String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
+            observation.addRow(pdoNValNum);
         } else if (type.equals(FHIR_TAG_VALUE_CODING)) {
             String value = data.toString();
             if (value!=null) {
