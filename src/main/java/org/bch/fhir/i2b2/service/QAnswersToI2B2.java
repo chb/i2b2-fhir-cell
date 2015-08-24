@@ -201,16 +201,21 @@ public class QAnswersToI2B2 extends FHIRToPDO {
                 conceptCd = mapConceptCode.get(realLink);
             } else {
                 conceptCd = realLink;
-                log.warn("Link: " + realLink + " does not have a correspondence concept_cd. Using: " + realLink + " as concept_cd");
+                log.warn("Link: " + realLink + " does not have a correspondence concept_cd. Using: " + realLink +
+                        " as concept_cd");
             }
             if (conceptCd.length() > 50) {
                 conceptCd = conceptCd.substring(0, 50);
                 log.warn("Concept_cd is longer than 50 characters. Trimming to: " + conceptCd + " to continue");
             }
             pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, conceptCd);
-            out.addRow(pdoConceptCd);
+        } else {
+            log.warn("link " + link + " does not map to any i2b2 concept_cd. Continue using NO_CONCEPT_CD as " +
+                    "concept_cd");
+            pdoConceptCd = generateRow(PDOModel.PDO_CONCEPT_CD, "NO_CONCEPT_CD");
         }
 
+        out.addRow(pdoConceptCd);
         return out;
 
     }
