@@ -19,7 +19,7 @@ hoursMissedFromWorkBecauseOfHepC:::valueQuentity
 hoursWorked:::valueQuentity
 effectOfHepCOnWork:::valueQuentity
 effectOfHepCOnDailyLiving:::valueQuentity
-consideredAntivirals:::valueBoolean
+consideredAntivirals:::valueCoding
 insuranceYesNo:::valueCoding
 insuranceName:::valueCoding
 paysForMeds:::valueCoding
