@@ -62,9 +62,9 @@ physicalFunctioning-groceries_3:::93a422a0-c780-4ad3-ac85-1ee2ec198039
 physicalFunctioning-stairs-flights_1:::f9af790d-5dd7-4df2-87ec-a529cd008096
 physicalFunctioning-stairs-flights_2:::20e855d0-e0fb-4127-afd3-aab13bb7f81e
 physicalFunctioning-stairs-flights_3:::c1a15f16-1f9a-46e4-8d31-b58e1e1b5c94
-physicalFunctioning-one-flight_1:::b9de4747-9aa9-41ad-b19d-aa17021dc30a
-physicalFunctioning-one-flight_2:::d34f0eca-2487-4977-b570-cfa9e3979a10
-physicalFunctioning-one-flight_3:::787cab4c-80a6-4db6-8aaa-bb8855970be7
+physicalFunctioning-stairs-flight_1:::b9de4747-9aa9-41ad-b19d-aa17021dc30a
+physicalFunctioning-stairs-flight_2:::d34f0eca-2487-4977-b570-cfa9e3979a10
+physicalFunctioning-stairs-flight_3:::787cab4c-80a6-4db6-8aaa-bb8855970be7
 physicalFunctioning-kneeling_1:::189569d5-c75d-485c-8c13-a36ba587f932
 physicalFunctioning-kneeling_2:::d9536dd7-70f7-4661-840d-07ed7c6f3c12
 physicalFunctioning-kneeling_3:::b34fbcb5-d7a5-423a-a484-760e6bf7a968
@@ -74,9 +74,9 @@ physicalFunctioning-walking-mile_3:::2a8b3fa5-8cdd-48ba-a79c-080ce36d4697
 physicalFunctioning-walking-blocks_1:::a887ae5a-adb8-496c-b5b1-55f94c27c3af
 physicalFunctioning-walking-blocks_2:::75369951-84f7-4fb5-bdf6-fb4245505dfa
 physicalFunctioning-walking-blocks_3:::14301ec1-a0b2-4560-a9c1-fe0936b47e3e
-physicalFunctioning-walking-one-block_1:::33c1807e-5be9-4beb-b5c5-6985aa7c3d14
-physicalFunctioning-walking-one-block_2:::ce71d935-d573-4719-8b95-7136b48996d0
-physicalFunctioning-walking-one-block_3:::aa453800-c2ee-4504-9df7-903c496d4bf9
+physicalFunctioning-walking-block_1:::33c1807e-5be9-4beb-b5c5-6985aa7c3d14
+physicalFunctioning-walking-block_2:::ce71d935-d573-4719-8b95-7136b48996d0
+physicalFunctioning-walking-block_3:::aa453800-c2ee-4504-9df7-903c496d4bf9
 physicalFunctioning-bathing_1:::f410ca48-0aca-4806-83dd-177bf649935c
 physicalFunctioning-bathing_2:::26875c4a-456b-402c-af15-82bd99ef63d7
 physicalFunctioning-bathing_3:::0ae7b6cc-1293-4e99-9546-54442f1ffa16

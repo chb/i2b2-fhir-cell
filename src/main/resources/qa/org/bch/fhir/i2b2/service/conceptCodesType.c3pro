@@ -31,11 +31,11 @@ physicalFunctioning-vigorous:::valueCoding
 physicalFunctioning-moderate:::valueCoding
 physicalFunctioning-groceries:::valueCoding
 physicalFunctioning-stairs-flights:::valueCoding
-physicalFunctioning-one-flight:::valueCoding
+physicalFunctioning-stairs-flight:::valueCoding
 physicalFunctioning-kneeling:::valueCoding
 physicalFunctioning-walking-mile:::valueCoding
 physicalFunctioning-walking-blocks:::valueCoding
-physicalFunctioning-walking-one-block:::valueCoding
+physicalFunctioning-walking-block:::valueCoding
 physicalFunctioning-bathing:::valueCoding
 roleLimitations-reduce-work:::valueBoolean
 roleLimitations-accomplished-less:::valueBoolean
