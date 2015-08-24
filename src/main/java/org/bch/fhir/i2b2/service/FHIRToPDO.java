@@ -44,7 +44,9 @@ public abstract class FHIRToPDO {
 
     protected String getEventId(Encounter enc) throws FHIRI2B2Exception {
         String eventId = null;
-        if (enc.getId().isEmpty()) {
+        if (enc==null) {
+            eventId = "" + new Date().getTime();
+        } else if (enc.getId().isEmpty()) {
             eventId = "" + new Date().getTime();
         } else {
             // TODO: Provisional!!

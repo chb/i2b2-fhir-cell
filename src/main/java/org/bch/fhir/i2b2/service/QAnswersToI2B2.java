@@ -52,22 +52,41 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             pdo.addElementSet(patientSet);
             pdo.addElementSet(observationSet);
 
-            String metaInfo = "QuestionnaireAnswers#" + qa.getGroup().getLinkId();
+            String ref = getQReference(qa);
+            String metaInfo = "QuestionnaireAnswers#" + ref;
             addMetadataInObservationSet(metaInfo, METADATA_CONCEPT_CD, observationSet);
         }
         return pdo.generatePDOXML();
     }
 
+    private String getQReference(QuestionnaireAnswers qa) {
+        ResourceReferenceDt questionnaireRef = qa.getQuestionnaire();
+        if (questionnaireRef!=null) {
+            return questionnaireRef.getReference().getIdPart();
+        } else {
+            QuestionnaireAnswers.Group gr = qa.getGroup();
+            if (gr != null) {
+                return qa.getGroup().getLinkId();
+            }
+        }
+        return "";
+    }
+
     private Encounter findEncounter(QuestionnaireAnswers qa) throws FHIRI2B2Exception{
         ResourceReferenceDt refEncounter = qa.getEncounter();
-        if (refEncounter.isEmpty()) throw new FHIRI2B2Exception("Encounter reference is not informed");
+        if (refEncounter.isEmpty()) {
+            log.warn("Encounter reference is not informed. We continue");
+            return null;
+        }
 
         String idEnc = refEncounter.getReference().getIdPart();
 
         ContainedDt containedDt = qa.getContained();
         List<IResource> iResources = containedDt.getContainedResources();
         IResource encRes = findResourceById(iResources, idEnc);
-        if (encRes == null) throw new FHIRI2B2Exception("Encounter reference not found in contained list");
+        if (encRes == null) {
+            throw new FHIRI2B2Exception("Encounter reference not found in contained list");
+        }
         Encounter enc = (Encounter) encRes;
         return enc;
     }

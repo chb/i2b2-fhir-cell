@@ -1,0 +1,11 @@
+{
+     "resourceType":"Patient",
+     "id":"215D8A46-9589-4B9F-B60E-9EECD8FF6240",
+     "address":[
+         {
+             "state":"CA",
+             "postalCode":"950",
+             "country":"United States"
+         }
+     ]
+}

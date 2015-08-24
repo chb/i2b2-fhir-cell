@@ -1,0 +1,20 @@
+{
+  "resourceType":"QuestionnaireAnswers",
+  "subject":{
+    "reference":"Patient\/215D8A46-9589-4B9F-B60E-9EECD8FF6240"
+  },
+  "group": {
+    "linkId":"c-tracker.survey-in-app.withdrawal",
+    "group":[
+      {"question":[
+        {"answer":[
+          {"valueCoding":{
+            "code":"too-difficult",
+            "system":"http:\/\/fhir-registry.smarthealthit.org\/ValueSet\/clinicaltrial-withdrawal-reason"}
+          }],
+          "linkId":"withdrawalReason"}]
+      }]
+  },
+  "status":"completed",
+  "questionnaire":{"reference":"c-tracker.survey-in-app.withdrawal"}
+}
