@@ -178,9 +178,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         String pdoModifierCd = generateRow(PDOModel.PDO_MODIFIER_CD, "@");
         out.addRow(pdoModifierCd);
 
-        System.out.println("Link: " + link);
         if (mapConceptCodeType.containsKey(link)) {
-            System.out.println("Link IN: " + link);
             String pdoValueTypeCd = null;
             String type = mapConceptCodeType.get(link);
             if (isNumericType(type)) {
@@ -222,12 +220,10 @@ public class QAnswersToI2B2 extends FHIRToPDO {
 
     private String getRealLink(String link, QuestionnaireAnswers.GroupQuestionAnswer answer, String type) {
         String out = link;
-        System.out.println(type);
         if (type.equals(FHIR_TAG_VALUE_CODING)) {
             CodingDt cdt = (CodingDt) answer.getValue();
             out = out + "_" + cdt.getCode();
         } else if(type.equals(FHIR_TAG_VALUE_BOOLEAN)) {
-            System.out.println("IN BOOLEAN");
             IDatatype data = answer.getValue();
             BooleanDt valueBool = (BooleanDt) data;
             if (valueBool.getValue()) {

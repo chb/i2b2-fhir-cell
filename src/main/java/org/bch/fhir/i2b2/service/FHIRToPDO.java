@@ -185,8 +185,9 @@ public abstract class FHIRToPDO {
     }
 
     protected boolean isRawConceptCD(String type) {
-        if (!type.equals(FHIR_TAG_VALUE_CODING)) return true;
-        return false;
+        if (type.equals(FHIR_TAG_VALUE_CODING)) return false;
+        if (type.equals(FHIR_TAG_VALUE_BOOLEAN)) return false;
+        return true;
     }
 
     protected boolean isNumericType(String type) {
