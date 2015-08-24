@@ -182,13 +182,11 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         if (mapConceptCodeType.containsKey(link)) {
             String pdoValueTypeCd = null;
             String type = mapConceptCodeType.get(link);
-            System.out.println("TYPE: " + type);
             if (isNumericType(type)) {
                 pdoValueTypeCd = generateRow(PDOModel.PDO_VALUETYPE_CD, "N");
             } else {
                 pdoValueTypeCd = generateRow(PDOModel.PDO_VALUETYPE_CD, "T");
             }
-            System.out.println(pdoValueTypeCd);
             out.addRow(pdoValueTypeCd);
             addValuesPdo(answer, type, out);
 
