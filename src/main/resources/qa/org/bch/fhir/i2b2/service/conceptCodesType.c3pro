@@ -15,10 +15,10 @@ physicalFunctioning-walking-blocks:::valueCoding
 physicalFunctioning-bathing:::valueCoding
 roleLimitations-reduce-work:::valueBoolean
 isEmployed:::valueBoolean
-hoursMissedFromWorkBecauseOfHepC:::valueQuentity
-hoursWorked:::valueQuentity
-effectOfHepCOnWork:::valueQuentity
-effectOfHepCOnDailyLiving:::valueQuentity
+hoursMissedFromWorkBecauseOfHepC:::valueQuantity
+hoursWorked:::valueQuantity
+effectOfHepCOnWork:::valueDecimal
+effectOfHepCOnDailyLiving:::valueDecimal
 consideredAntivirals:::valueCoding
 insuranceYesNo:::valueCoding
 insuranceName:::valueCoding
@@ -44,5 +44,5 @@ roleLimitations-had-difficulties:::valueBoolean
 employedYesNo:::valueBoolean
 hoursMissedFromWorkBecauseOfHepC:::valueQuantity
 hoursWorked:::valueQuantity
-effectOfHepCOnWork:::valueQuantity
+effectOfHepCOnWork:::valueDecimal
 withdrawalReason:::valueCoding
