@@ -142,6 +142,8 @@ public class AppConfig {
                 if (modifier.contains(SEP)) {
                     String[] codes = modifier.split(SEP);
                     out.put(codes[0].trim(), codes[1].trim());
+                    System.out.println(codes[0].trim());
+                    System.out.println(codes[1].trim());
                 }
             }
         }
