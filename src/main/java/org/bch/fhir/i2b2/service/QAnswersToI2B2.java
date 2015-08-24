@@ -278,6 +278,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
             String value = valueDec.getValueAsString();
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, value);
             observation.addRow(pdoNValNum);
+            
         } else if (type.equals(FHIR_TAG_VALUE_CODING)) {
             String value = data.toString();
             if (value!=null) {
