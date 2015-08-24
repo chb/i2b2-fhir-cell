@@ -68,27 +68,34 @@ public abstract class FHIRToPDO {
         event.addRow(pdoEventId);
         event.addRow(pdoPatientId);
 
-        if (!enc.getPeriod().isEmpty()) {
-            PeriodDt period = enc.getPeriod();
-            Date startDate = period.getStart();
-            Date endDate = period.getEnd();
-            if (startDate!=null) {
-                String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
-                SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
-                String startDateStr = dateFormatOutput.format(startDate);
+        Date startDate = null;
+        Date endDate = null;
 
-                String pdoStartDate = generateRow(PDOModel.PDO_START_DATE, startDateStr);
-                event.addRow(pdoStartDate);
-            }
-            if (endDate!=null) {
-                String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
-                SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
-                String endDateStr = dateFormatOutput.format(endDate);
-
-                String pdoEndDate = generateRow(PDOModel.PDO_END_DATE, endDateStr);
-                event.addRow(pdoEndDate);
+        if (enc!= null) {
+            if (!enc.getPeriod().isEmpty()) {
+                PeriodDt period = enc.getPeriod();
+                startDate = period.getStart();
+                endDate = period.getEnd();
             }
         }
+
+        if (startDate!=null) {
+            String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
+            SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
+            String startDateStr = dateFormatOutput.format(startDate);
+
+            String pdoStartDate = generateRow(PDOModel.PDO_START_DATE, startDateStr);
+            event.addRow(pdoStartDate);
+        }
+        if (endDate!=null) {
+            String outputDataFormat = AppConfig.getProp(AppConfig.FORMAT_DATE_I2B2);
+            SimpleDateFormat dateFormatOutput = new SimpleDateFormat(outputDataFormat);
+            String endDateStr = dateFormatOutput.format(endDate);
+
+            String pdoEndDate = generateRow(PDOModel.PDO_END_DATE, endDateStr);
+            event.addRow(pdoEndDate);
+        }
+
         eventSet.addElement(event);
         return eventSet;
     }
