@@ -178,7 +178,9 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         String pdoModifierCd = generateRow(PDOModel.PDO_MODIFIER_CD, "@");
         out.addRow(pdoModifierCd);
 
+        System.out.println("Link: " + link);
         if (mapConceptCodeType.containsKey(link)) {
+            System.out.println("Link IN: " + link);
             String pdoValueTypeCd = null;
             String type = mapConceptCodeType.get(link);
             if (isNumericType(type)) {
