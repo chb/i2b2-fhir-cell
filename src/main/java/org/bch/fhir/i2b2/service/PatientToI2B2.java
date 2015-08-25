@@ -51,9 +51,12 @@ public class PatientToI2B2 extends FHIRToPDO {
         String zip = address.split(SEP)[0];
         String state = address.split(SEP)[1];
         String zipElement = this.generateRow(PDOModel.PDO_PARAM, zip,
-                genParamStr(PDOModel.PDO_COLUMN, PDOModel.PDO_COLUMN_ZIP_CD));
+                genParamStr(PDOModel.PDO_COLUMN, PDOModel.PDO_COLUMN_ZIP_CD),
+                genParamStr(PDOModel.PDO_TYPE, "string"));
+        
         String stateElement = this.generateRow(PDOModel.PDO_PARAM, state,
-                genParamStr(PDOModel.PDO_COLUMN, PDOModel.PDO_COLUMN_STATE_PATH));
+                genParamStr(PDOModel.PDO_COLUMN, PDOModel.PDO_COLUMN_STATE_PATH),
+                genParamStr(PDOModel.PDO_TYPE, "string"));
 
         boolean isInfoPresent=false;
         if (zip.length()!=0) {

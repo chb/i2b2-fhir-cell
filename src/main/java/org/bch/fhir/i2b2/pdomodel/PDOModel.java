@@ -28,6 +28,7 @@ public class PDOModel {
     public static final String PDO_COLUMN_STATE_PATH =  "statecityzip_path";
     public static final String PDO_SOURCE =             "source";
     public static final String PDO_COLUMN =             "column";
+    public static final String PDO_TYPE =               "type";
 
 
 
