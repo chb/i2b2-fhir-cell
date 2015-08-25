@@ -10,20 +10,24 @@ import java.util.List;
  * Created by ipinyol on 7/9/15.
  */
 public class PDOModel {
-    public static final String PDO_EVENT_ID = "event_id";
-    public static final String PDO_PATIENT_ID = "patient_id";
-    public static final String PDO_START_DATE = "start_date";
-    public static final String PDO_END_DATE = "end_date";
-    public static final String PDO_OBSERVER_CD = "observer_cd";
-    public static final String PDO_CONCEPT_CD = "concept_cd";
-    public static final String PDO_INSTANCE_NUM = "instance_num";
-    public static final String PDO_TVAL_CHAR = "tval_char";
-    public static final String PDO_NVAL_NUM = "nval_num";
-    public static final String PDO_UNITS_CD = "units_cd";
-    public static final String PDO_MODIFIER_CD = "modifier_cd";
-    public static final String PDO_VALUETYPE_CD = "valuetype_cd";
-    public static final String PDO_PATIENT_ID_SOURCE = "patient_id_source";
-    public static final String PDO_SOURCE = "source";
+    public static final String PDO_EVENT_ID =           "event_id";
+    public static final String PDO_PATIENT_ID =         "patient_id";
+    public static final String PDO_START_DATE =         "start_date";
+    public static final String PDO_END_DATE =           "end_date";
+    public static final String PDO_OBSERVER_CD =        "observer_cd";
+    public static final String PDO_CONCEPT_CD =         "concept_cd";
+    public static final String PDO_INSTANCE_NUM =       "instance_num";
+    public static final String PDO_TVAL_CHAR =          "tval_char";
+    public static final String PDO_NVAL_NUM =           "nval_num";
+    public static final String PDO_UNITS_CD =           "units_cd";
+    public static final String PDO_MODIFIER_CD =        "modifier_cd";
+    public static final String PDO_VALUETYPE_CD =       "valuetype_cd";
+    public static final String PDO_PATIENT_ID_SOURCE =  "patient_id_source";
+    public static final String PDO_PARAM =              "param";
+    public static final String PDO_COLUMN_ZIP_CD =      "zip_cd";
+    public static final String PDO_COLUMN_STATE_PATH =  "statecityzip_path";
+    public static final String PDO_SOURCE =             "source";
+    public static final String PDO_COLUMN =             "column";
 
 
 

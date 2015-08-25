@@ -29,12 +29,6 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
 
     Logger log = LoggerFactory.getLogger(QuestionnaireAnswerResourceProvider.class);
 
-    private Map<String, Deque<QuestionnaireAnswers>> myIdToQVersions = new HashMap<>();
-
-    protected String generateNewId() {
-        return UUID.randomUUID().toString();
-    }
-
     protected FhirContext ctx = FhirContext.forDstu2();
 
     protected FHIRToPDO mapper = new QAnswersToI2B2();
@@ -92,34 +86,4 @@ public class QuestionnaireAnswerResourceProvider implements IResourceProvider  {
         existingVersions.add(theQA);
     }
 */
-    @Read(version = true)
-    public QuestionnaireAnswers readQA(@IdParam IdDt theId) {
-        Deque<QuestionnaireAnswers> retVal;
-        retVal = myIdToQVersions.get(theId.getIdPart());
-
-        if (theId.hasVersionIdPart() == false) {
-            return retVal.getLast();
-        } else {
-            for (QuestionnaireAnswers nextVersion : retVal) {
-                String nextVersionId = nextVersion.getId().getVersionIdPart();
-                if (theId.getVersionIdPart().equals(nextVersionId)) {
-                    return nextVersion;
-                }
-            }
-            // No matching version
-            throw new ResourceNotFoundException("Unknown version: " + theId.getValue());
-        }
-    }
-
-    @Search
-    public List<QuestionnaireAnswers> findQAUsingArbitraryCtriteria() {
-        LinkedList<QuestionnaireAnswers> retVal = new LinkedList<>();
-
-        for (Deque<QuestionnaireAnswers> nextQList : myIdToQVersions.values()) {
-            QuestionnaireAnswers nextQA = nextQList.getLast();
-            retVal.add(nextQA);
-        }
-
-        return retVal;
-    }
 }

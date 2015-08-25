@@ -32,10 +32,6 @@ import java.util.UUID;
 public class ObservationResourceProvider implements IResourceProvider {
     Logger log = LoggerFactory.getLogger(ObservationResourceProvider.class);
 
-    protected String generateNewId() {
-        return UUID.randomUUID().toString();
-    }
-
     protected FhirContext ctx = FhirContext.forDstu2();
 
     protected FHIRToPDO mapper = new ObservationToI2B2();

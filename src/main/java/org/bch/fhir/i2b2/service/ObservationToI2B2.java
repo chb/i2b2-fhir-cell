@@ -9,7 +9,6 @@ import ca.uhn.fhir.model.dstu2.composite.CodingDt;
 import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Observation;
-import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
 import ca.uhn.fhir.model.primitive.IntegerDt;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;

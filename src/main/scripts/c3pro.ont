@@ -1,0 +1,301 @@
+----------------------
+-- SHORT SURVEY
+----------------------
+## physicalFunctioning-vigorous_1
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Vigorous activities/Yes, limited a lot
+## physicalFunctioning-vigorous_2
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Vigorous activities/Yes, limited a little
+## physicalFunctioning-vigorous_3
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Vigorous activities/No, not limited at all
+
+## physicalFunctioning-moderate_1
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Moderate activities/Yes, limited a lot
+## physicalFunctioning-moderate_2
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Moderate activities/Yes, limited a little
+## physicalFunctioning-moderate_3
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Moderate activities/No, not limited at all
+
+## physicalFunctioning-walking-blocks_1
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Walking several blocks/Yes, limited a lot
+## physicalFunctioning-walking-blocks_2
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Walking several blocks/Yes, limited a little
+## physicalFunctioning-walking-blocks_3
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Walking several blocks/No, not limited at all
+
+## physicalFunctioning-bathing_1
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Bathing or dressing yourself/Yes, limited a lot
+## physicalFunctioning-bathing_2
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Bathing or dressing yourself/Yes, limited a little
+## physicalFunctioning-bathing_3
+c-tracker/Surveys/Short Activity/Does your health now limit you in these activities? If so, how much?/Bathing or dressing yourself/No, not limited at all
+
+## roleLimitations-reduce-work_Y
+c-tracker/Surveys/Short Activity/Cut down the amount of time you spent on work or other activities/Yes
+## roleLimitations-reduce-work_N
+c-tracker/Surveys/Short Activity/Cut down the amount of time you spent on work or other activities/No
+
+## isEmployed_N
+c-tracker/Surveys/Short Activity/Effect of your hepatitis C on your ability to work/Are you currently employed?/No
+
+## hoursMissedFromWorkBecauseOfHepC
+c-tracker/Surveys/Short Activity/Effect of your hepatitis C on your ability to work/Are you currently employed?/Yes/Hours missed from work because of hepatitis C
+
+## hoursWorked
+c-tracker/Surveys/Short Activity/Effect of your hepatitis C on your ability to work/Are you currently employed?/Yes/How many hours did you actually work?
+
+## effectOfHepCOnWork
+c-tracker/Surveys/Short Activity/Effect of your hepatitis C on your ability to work/Are you currently employed?/Yes/How much did your hepatitis C affect your productivity
+
+## effectOfHepCOnDailyLiving
+c-tracker/Surveys/Short Activity/how much did your hepatitis C affect your ability to perform normal daily activities, outside of work?
+
+----------------------
+-- LONG SURVEY
+----------------------
+
+##consideredAntivirals_completed
+c-tracker/Surveys/Main/Have you taken or considered taking antivirals for hep C?/I have taken antiviral medications for hepatitis C and completed my course
+##consideredAntivirals_considered-not-started
+c-tracker/Surveys/Main/Have you taken or considered taking antivirals for hep C?/I have considered taking antiviral medications for hepatitis C but have not started
+##consideredAntivirals_considered-cannot-afford
+c-tracker/Surveys/Main/Have you taken or considered taking antivirals for hep C?/I have considered taking antiviral medications for hepatitis C, but cannot afford them
+##consideredAntivirals_considered-not-taking-for-medical-reasons
+c-tracker/Surveys/Main/Have you taken or considered taking antivirals for hep C?/I have considered taking antiviral medications for hepatitis C, but there are medical reasons I cannot take them
+##consideredAntivirals_considered-not-taking-as-per-physician
+c-tracker/Surveys/Main/Have you taken or considered taking antivirals for hep C?/I have considered taking antiviral medications for hepatitis C, but my physician recommended against taking them
+##consideredAntivirals_not-considered
+c-tracker/Surveys/Main/Have you taken or considered taking antivirals for hep C?/I have not considered taking antiviral medications for hepatitis C
+
+##insuranceYesNo_N
+c-tracker/Surveys/Main/Do you have health insurance?/No
+##insuranceYesNo_asked
+c-tracker/Surveys/Main/Do you have health insurance?/Do not know
+
+##insuranceName_medicare
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Medicare
+##insuranceName_medicaid
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Medicaid
+##insuranceName_aetna
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Aetna
+##insuranceName_blue-cross-blue-shield
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Blue Cross Blue Shield
+##insuranceName_cigna
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Cigna
+##insuranceName_humana
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Humana
+##insuranceName_other
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Type of health insurance for prescription medications?/Other
+
+##paysForMeds_Y
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Does your health insurance pay for your medications?/Yes
+##paysForMeds_asked
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Does your health insurance pay for your medications?/Do not know
+
+##medsNotPaidBecause_not-severe-enough
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Does your health insurance pay for your medications?/No/Disease not severe enough
+##medsNotPaidBecause_wrong-genotype
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Does your health insurance pay for your medications?/No/I had the wrong genotype of hepatitis C
+##medsNotPaidBecause_labs-outstanding
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Does your health insurance pay for your medications?/No/I have not yet had the proper laboratory testing
+
+##physicianAbility_not-offered
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Was your physician able to prescribe antiviral medications for your condition?/Treatment not offered by my doctor
+##physicianAbility_dont-know
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Was your physician able to prescribe antiviral medications for your condition?/Do not know
+##physicianAbility_other
+c-tracker/Surveys/Main/Do you have health insurance?/Yes/Was your physician able to prescribe antiviral medications for your condition?/Other
+
+##antiviralMedsYesNo_N
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/No
+##antiviralMedsYesNo_asked
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Do not know
+
+##antiviralMeds_9344
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Ribavirin
+##antiviralMeds_1484919
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Sovaldi (sofosbuvir)
+##antiviralMeds_1591946
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Harvoni (ledipasvir, sofosbuvir)
+##antiviralMeds_1606218
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Daklinza (daclatasvir)
+##antiviralMeds_1482804
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Olysio (simeprevir)
+##antiviralMeds_1597377
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Technivie (ombitasvir, paritaprevir, ribavirin)
+##antiviralMeds_1597388
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/Viekira Pak (ombitasvir, paritaprevir, dasabuvir)
+##antiviralMeds_0
+c-tracker/Surveys/Main/Are you on antiviral medications to treat hepatitis now?/Yes/Which medications?/None of the above
+
+##physicalFunctioning-vigorous_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Vigorous activities/Yes, limited a lot
+##physicalFunctioning-vigorous_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Vigorous activities/Yes, limited a little
+##physicalFunctioning-vigorous_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Vigorous activities/No, not limited at all
+
+##physicalFunctioning-moderate_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Moderate activities/Yes, limited a lot
+##physicalFunctioning-moderate_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Moderate activities/Yes, limited a little
+##physicalFunctioning-moderate_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Moderate activities/No, not limited at all
+
+##physicalFunctioning-groceries_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Lifting or carrying groceries/Yes, limited a lot
+##physicalFunctioning-groceries_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Lifting or carrying groceries/Yes, limited a little
+##physicalFunctioning-groceries_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Lifting or carrying groceries/No, not limited at all
+
+##physicalFunctioning-stairs-flights_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Climbing several flights of stairs/Yes, limited a lot
+##physicalFunctioning-stairs-flights_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Climbing several flights of stairs/Yes, limited a little
+##physicalFunctioning-stairs-flights_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Climbing several flights of stairs/No, not limited at all
+
+##physicalFunctioning-one-flight_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Climbing one flight of stairs/Yes, limited a lot
+##physicalFunctioning-one-flight_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Climbing one flight of stairs/Yes, limited a little
+##physicalFunctioning-one-flight_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Climbing one flight of stairs/No, not limited at all
+
+##physicalFunctioning-kneeling_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Bending, kneeling, or stooping/Yes, limited a lot
+##physicalFunctioning-kneeling_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Bending, kneeling, or stooping/Yes, limited a little
+##physicalFunctioning-kneeling_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Bending, kneeling, or stooping/No, not limited at all
+
+##physicalFunctioning-walking-mile_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking more than a mile/Yes, limited a lot
+##physicalFunctioning-walking-mile_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking more than a mile/Yes, limited a little
+##physicalFunctioning-walking-mile_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking more than a mile/No, not limited at all
+
+##physicalFunctioning-walking-blocks_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking several blocks/Yes, limited a lot
+##physicalFunctioning-walking-blocks_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking several blocks/Yes, limited a little
+##physicalFunctioning-walking-blocks_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking several blocks/No, not limited at all
+
+##physicalFunctioning-walking-one-block_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking one block/Yes, limited a lot
+##physicalFunctioning-walking-one-block_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking one block/Yes, limited a little
+##physicalFunctioning-walking-one-block_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Walking one block/No, not limited at all
+
+##physicalFunctioning-bathing_1
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Bathing or dressing yourself/Yes, limited a lot
+##physicalFunctioning-bathing_2
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Bathing or dressing yourself/Yes, limited a little
+##physicalFunctioning-bathing_3
+c-tracker/Surveys/Main/Does your health now limit you in these activities? If so, how much?/Bathing or dressing yourself/No, not limited at all
+
+##roleLimitations-reduce-work_Y
+c-tracker/Surveys/Main/Role limitations due to physical health/Cut down the amount of time you spent on work or other activities/Yes
+##roleLimitations-reduce-work_N
+c-tracker/Surveys/Main/Role limitations due to physical health/Cut down the amount of time you spent on work or other activities/No
+
+##roleLimitations-accomplished-less_Y
+c-tracker/Surveys/Main/Role limitations due to physical health/Accomplished less than you would like/Yes
+##roleLimitations-accomplished-less_N
+c-tracker/Surveys/Main/Role limitations due to physical health/Accomplished less than you would like/No
+
+##roleLimitations-limited-other_Y
+c-tracker/Surveys/Main/Role limitations due to physical health/Were limited in the kind of work or other activities/Yes
+##roleLimitations-limited-other_N
+c-tracker/Surveys/Main/Role limitations due to physical health/Were limited in the kind of work or other activities/No
+
+##roleLimitations-had-difficulties_Y
+c-tracker/Surveys/Main/Role limitations due to physical health/Had difficulty performing the work or other activities/Yes
+##roleLimitations-had-difficulties_N
+c-tracker/Surveys/Main/Role limitations due to physical health/Had difficulty performing the work or other activities/No
+
+##employedYesNo_N
+c-tracker/Surveys/Main/Effect of Hepatitis C on your ability to work and perform normal daily activities/Are you currently employed (working for pay)?/No
+
+##hoursMissedFromWorkBecauseOfHepC
+c-tracker/Surveys/Main/Effect of Hepatitis C on your ability to work and perform normal daily activities/Are you currently employed (working for pay)?/Yes/Hours missed from work because of hepatitis C
+
+##hoursWorked
+c-tracker/Surveys/Main/Effect of Hepatitis C on your ability to work and perform normal daily activities/Are you currently employed (working for pay)?/Yes/Hours Hours worked
+
+##effectOfHepCOnWork
+c-tracker/Surveys/Main/Effect of Hepatitis C on your ability to work and perform normal daily activities/Are you currently employed (working for pay)?/Yes/How much did your hepatitis C affect your productivity?
+
+
+----------------------
+-- Withdrawal Survey
+----------------------
+
+## withdrawalReason_time-commitment
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../Surveys take too much time
+## withdrawalReason_too-difficult
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../App is too difficult to use
+## withdrawalReason_no-benefit
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../App is not beneficial to me
+## withdrawalReason_privacy-concerns
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../I have privacy concerns
+## withdrawalReason_dislike-alerts
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../I do not like receiving notifications from the app
+## withdrawalReason_not-infected
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../I no longer have hepatitis C
+## withdrawalReason_other
+c-tracker/Surveys/Withdrawal/I wish to withdraw because.../Other
+
+----------------------
+-- ACTIVITY DATA
+----------------------
+
+## motion-coprocessor.light
+c-tracker/Activity/Motion-coprocessor/Light
+
+## motion-coprocessor.moderate
+c-tracker/Activity/Motion-coprocessor/Moderate
+
+## motion-coprocessor.sedentary
+c-tracker/Activity/Motion-coprocessor/Sedentary
+
+## motion-coprocessor.driving
+c-tracker/Activity/Motion-coprocessor/Driving
+
+## motion-coprocessor.cycling
+c-tracker/Activity/Motion-coprocessor/Cycling
+
+## motion-coprocessor.running
+c-tracker/Activity/Motion-coprocessor/Running
+
+## motion-coprocessor.sleeping
+c-tracker/Activity/Motion-coprocessor/Sleeping
+
+## motion-coprocessor.unknown
+c-tracker/Activity/Motion-coprocessor/Unknown
+
+## healthkit.HKQuantityTypeIdentifierFlightsClimbed
+c-tracker/Activity/Healthkit/Flights Climbed
+
+## healthkit.HKQuantityTypeIdentifierStepCount
+c-tracker/Activity/Healthkit/Step Count
+
+## healthkit.HKQuantityTypeIdentifierActiveEnergyBurned
+c-tracker/Activity/Healthkit/Energy Burned
+
+
+----------------------
+-- OBSERVATION
+----------------------
+
+## http://loinc.org/3141-9
+c-tracker/Observation/Body Weight
+
+## http://loinc.org/8302-2
+c-tracker/Observation/Body Height
+
+
+
