@@ -26,10 +26,11 @@ public class PatientToI2B2 extends FHIRToPDO {
         if (patient!=null) {
             this.patientIde = this.getPatiendIde(patient);
             ElementSet patientSet = this.generatePatientSet(patient);
-
+            pdo.addElementSet(patientSet);
             // If patientSet is null, nothing to update
             if (patientSet == null) return null;
             ElementSet pidSet = this.generatePIDSet();
+            pdo.addElementSet(pidSet);
         }
 
         return pdo.generatePDOXML();
