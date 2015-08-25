@@ -130,8 +130,8 @@ public class PatientToI2B2 extends FHIRToPDO {
         try {
             con = DriverManager.getConnection(jdbcCon, auths[0], auths[1]);
 
-            String numPatientSql = "select patient_num from patient_mapping where patient_ide = '" + subjectId + "' and" +
-                    "patient_ide_source='" + source + "'";
+            String numPatientSql = "select patient_num from patient_mapping where patient_ide = '" + subjectId +
+                    "' and patient_ide_source='" + source + "'";
 
             System.out.println(numPatientSql);
             stmt = con.createStatement();
