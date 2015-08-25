@@ -3,6 +3,7 @@ package org.bch.fhir.i2b2.service;
 import ca.uhn.fhir.model.dstu2.composite.AddressDt;
 import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Patient;
+import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.pdomodel.Element;
 import org.bch.fhir.i2b2.pdomodel.ElementSet;
@@ -10,6 +11,7 @@ import org.bch.fhir.i2b2.pdomodel.PDOModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -50,9 +52,9 @@ public class PatientToI2B2 extends FHIRToPDO {
         String address = this.getAddressInfo(patient);
         String zip = address.split(SEP)[0];
         String state = address.split(SEP)[1];
-        String zipElement = this.generateRow(PDOModel.PDO_COLUMN_ZIP_CD,zip);
-        String stateElement = this.generateRow(PDOModel.PDO_COLUMN_STATE_PATH,state);
-        /*
+        //String zipElement = this.generateRow(PDOModel.PDO_COLUMN_ZIP_CD,zip);
+        //String stateElement = this.generateRow(PDOModel.PDO_COLUMN_STATE_PATH,state);
+
         String zipElement = this.generateRow(PDOModel.PDO_PARAM, zip,
                 genParamStr(PDOModel.PDO_COLUMN, PDOModel.PDO_COLUMN_ZIP_CD),
                 genParamStr(PDOModel.PDO_TYPE, "string"));
@@ -60,7 +62,7 @@ public class PatientToI2B2 extends FHIRToPDO {
         String stateElement = this.generateRow(PDOModel.PDO_PARAM, state,
                 genParamStr(PDOModel.PDO_COLUMN, PDOModel.PDO_COLUMN_STATE_PATH),
                 genParamStr(PDOModel.PDO_TYPE, "string"));
-        */
+
         boolean isInfoPresent=false;
         if (zip.length()!=0) {
             patientElement.addRow(zipElement);
@@ -71,6 +73,17 @@ public class PatientToI2B2 extends FHIRToPDO {
             isInfoPresent = true;
         }
         if (!isInfoPresent) return null;
+
+        // Provisional until CRCLoader works properly with patients that already exists
+        boolean b=false;
+        try {
+            b = updateI2B2DB(zip, state, this.patientIde, this.patientIdeSource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // No need to bother i2b2, since the upload as been done directly into i2b2
+        if (b) return null;
 
         patientSet.addElement(patientElement);
         return patientSet;
@@ -93,5 +106,71 @@ public class PatientToI2B2 extends FHIRToPDO {
     // PRE: patient is not null
     private String getPatiendIde(Patient patient) {
         return patient.getId().getIdPart();
+    }
+
+    /**
+     * This is a provisional method. Currently, the CRCLoader does not work when uploading patient information if the
+     * patient is already there. So, we do it directly on DB for the moment.
+     * @param zip
+     * @param state
+     * @param subjectId
+     * @return
+     * @throws Exception
+     */
+
+    // Return true if updated was done
+    private boolean updateI2B2DB(String zip, String state, String subjectId, String source) throws Exception {
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        String jdbcCon = AppConfig.getProp(AppConfig.I2B2_JDBC);
+        String auth = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_DB_I2B2);
+        String[] auths = auth.split(":");
+        Connection con = null;
+        Statement stmt = null;
+        boolean b = true;
+        try {
+            con = DriverManager.getConnection(jdbcCon, auths[0], auths[1]);
+
+            String numPatientSql = "select patient_num from patient_mapping where patient_ide = '" + subjectId + "' and" +
+                    "patient_ide_source='" + source + "'";
+
+            System.out.println(numPatientSql);
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(numPatientSql);
+            // It must be one entry
+            if (!rs.next()) {
+                b=false;
+                rs.close();
+            } else {
+                String patientNum = rs.getString("patient_num");
+                rs.close();
+
+                String updateSql = "update patient_dimension set " + PDOModel.PDO_COLUMN_ZIP_CD + "='" + zip + "', " +
+                        PDOModel.PDO_COLUMN_STATE_PATH + "'" + state + "' where patient_num=" + patientNum;
+
+                System.out.println(updateSql);
+                stmt.executeUpdate(updateSql);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{
+                if(stmt!=null) {
+                    stmt.close();
+                }
+            } catch(SQLException se){
+                se.printStackTrace();
+            }// do nothing
+            try{
+                if(con!=null) {
+                    con.close();
+                }
+            }catch(SQLException se){
+                se.printStackTrace();
+            }
+        }
+        return b;
     }
 }

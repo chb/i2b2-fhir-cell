@@ -40,6 +40,7 @@ public class AppConfig {
 
     // The location file of the credentials
     public static String CREDENTIALS_FILE_I2B2 =        "app.authfile.i2b2.fr";
+    public static String CREDENTIALS_FILE_DB_I2B2 =     "app.authfile.db.i2b2";
 
     // The message templates for i2b2 messages
     public static String FIELNAME_SOAP_TEMP_I2B2_FR_SEND =  "app.filename.soap.template.i2b2.fr.send";
