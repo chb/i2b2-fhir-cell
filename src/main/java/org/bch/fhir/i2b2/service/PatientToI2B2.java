@@ -145,7 +145,7 @@ public class PatientToI2B2 extends FHIRToPDO {
                 rs.close();
 
                 String updateSql = "update patient_dimension set " + PDOModel.PDO_COLUMN_ZIP_CD + "='" + zip + "', " +
-                        PDOModel.PDO_COLUMN_STATE_PATH + "'" + state + "' where patient_num=" + patientNum;
+                        PDOModel.PDO_COLUMN_STATE_PATH + "='" + state + "' where patient_num=" + patientNum;
 
                 System.out.println(updateSql);
                 stmt.executeUpdate(updateSql);
