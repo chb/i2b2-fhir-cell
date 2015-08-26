@@ -109,8 +109,9 @@ public class PatientToI2B2 extends FHIRToPDO {
     }
 
     /**
+     * TODO: Refactor when I2B2 CRCLoader works properly with patients that already exists
      * This is a provisional method. Currently, the CRCLoader does not work when uploading patient information if the
-     * patient is already there. So, we do it directly on DB for the moment.
+     * patient is already there. So, we do it directly on DB.
      * @param zip
      * @param state
      * @param subjectId
@@ -133,7 +134,6 @@ public class PatientToI2B2 extends FHIRToPDO {
             String numPatientSql = "select patient_num from patient_mapping where patient_ide = '" + subjectId +
                     "' and patient_ide_source='" + source + "'";
 
-            System.out.println(numPatientSql);
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(numPatientSql);
             // It must be one entry
@@ -146,8 +146,6 @@ public class PatientToI2B2 extends FHIRToPDO {
 
                 String updateSql = "update patient_dimension set " + PDOModel.PDO_COLUMN_ZIP_CD + "='" + zip + "', " +
                         PDOModel.PDO_COLUMN_STATE_PATH + "='" + state + "' where patient_num=" + patientNum;
-
-                System.out.println(updateSql);
                 stmt.executeUpdate(updateSql);
             }
 

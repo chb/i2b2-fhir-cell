@@ -61,16 +61,27 @@ public class QAnswersToI2B2 extends FHIRToPDO {
     }
 
     private String getQReference(QuestionnaireAnswers qa) {
+        System.out.println("AAA");
         ResourceReferenceDt questionnaireRef = qa.getQuestionnaire();
+        String ret = null;
         if (questionnaireRef!=null) {
-            return questionnaireRef.getReference().getIdPart();
-        } else {
-            QuestionnaireAnswers.Group gr = qa.getGroup();
-            if (gr != null) {
-                return qa.getGroup().getLinkId();
+            if (questionnaireRef.getReference() != null) {
+                ret = questionnaireRef.getReference().getIdPart();
             }
         }
-        return "";
+        if (ret!=null) {
+            if (ret.isEmpty()) ret = null;
+        }
+
+        if (ret == null) {
+            System.out.println("IN getQRef null REFERENCE to QUESTIONNAIRE");
+            QuestionnaireAnswers.Group gr = qa.getGroup();
+            if (gr != null) {
+                ret = gr.getLinkId();
+            }
+        }
+
+        return ret;
     }
 
     private Encounter findEncounter(QuestionnaireAnswers qa) throws FHIRI2B2Exception{

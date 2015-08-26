@@ -42,12 +42,27 @@
             "answer":[
               {
                 "valueCoding":{
-                  "code":"N",
+                  "code":"Y",
                   "system":"http:\/\/hl7.org\/fhir\/v2\/vs\/0136"
                 }
               }
             ],
             "linkId":"antiviralMedsYesNo"
+          }
+        ]
+      },
+      {
+        "question":[
+          {
+            "answer":[
+              {
+                "valueCoding":{
+                  "code":"0",
+		  "system":"http:\/\/sf-36.org\/fhir\/ValueSet\/antivirals"
+                }
+              }
+            ],
+            "linkId":"antiviralMeds"
           }
         ]
       },
