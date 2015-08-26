@@ -61,7 +61,6 @@ public class QAnswersToI2B2 extends FHIRToPDO {
     }
 
     private String getQReference(QuestionnaireAnswers qa) {
-        System.out.println("AAA");
         ResourceReferenceDt questionnaireRef = qa.getQuestionnaire();
         String ret = null;
         if (questionnaireRef!=null) {
@@ -74,7 +73,6 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         }
 
         if (ret == null) {
-            System.out.println("IN getQRef null REFERENCE to QUESTIONNAIRE");
             QuestionnaireAnswers.Group gr = qa.getGroup();
             if (gr != null) {
                 ret = gr.getLinkId();
