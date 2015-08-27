@@ -57,7 +57,7 @@
             "answer":[
               {
                 "valueCoding":{
-                  "code":"0",
+                  "code":"1484919",
 		  "system":"http:\/\/sf-36.org\/fhir\/ValueSet\/antivirals"
                 }
               }
