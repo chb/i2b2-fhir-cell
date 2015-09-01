@@ -282,7 +282,7 @@
             <!--
             Profile for PROD
             -->
-            <id>production</id>
+            <id>prod</id>
             <activation>
                 <property>
                     <name>prod</name>
