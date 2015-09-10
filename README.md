@@ -1,6 +1,6 @@
 #Description#
 
-I2B2 FHIR CELL offers a FHIR REST API compliant to push and retrieve data from I2B2. In this first release, only Questionnaires and QuestionnaireAnswers resources are considered.
+I2B2 FHIR CELL offers a FHIR REST API compliant to push data into I2B2.
 
 ###Other external systems###
 
@@ -14,10 +14,7 @@ java7, maven 3, JBoss AS7
 
 ###I2B2 FHIR CELL configuration###
 
-The cell consumes and stores data from/to i2b2. See https://www.i2b2.org/
-Some tables must be created to i2b2 crc schema that are specific for i2me2. The creation scripts are located in 
-    
-    src/main/scripts 
+The cell uses the FR and CRC i2b2 cells to store data. Thus, an instance of i2b2 should be accessible via http. Configuration details are set in *config.properties* files for each environment (dev, qa, prod)
 
 #Building the war from source
 Clone the project in a local directory, access it and:
