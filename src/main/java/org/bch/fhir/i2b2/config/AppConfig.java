@@ -40,7 +40,7 @@ public class AppConfig {
 
     // The location file of the credentials
     public static String CREDENTIALS_FILE_I2B2 =        "app.authfile.i2b2.fr";
-    public static String CREDENTIALS_FILE_DB_I2B2 =     "app.authfile.db.i2b2";
+    //public static String CREDENTIALS_FILE_DB_I2B2 =     "app.authfile.db.i2b2";
 
     // The message templates for i2b2 messages
     public static String FIELNAME_SOAP_TEMP_I2B2_FR_SEND =  "app.filename.soap.template.i2b2.fr.send";
@@ -65,7 +65,8 @@ public class AppConfig {
     // The patient and encounter source when data comming from surescripts and from bch
     public static String I2B2_PDO_SOURCE_BCH =              "app.i2b2.pdo.source.bch";
 
-    public static String I2B2_JDBC =                        "app.jdbc.i2b2";
+    //public static String I2B2_JDBC =                        "app.jdbc.i2b2";
+    public static final String I2B2_DATASOURCE =            "app.datasource.i2b2";
 
     // Other constants
     public static int HTTP_TRANSPORT_BUFFER_SIZE = 500;
@@ -151,46 +152,10 @@ public class AppConfig {
 
     public static Map<String, String> getRealConceptCodesMap() {
         return getRealConceptCodesMapGeneric(REAL_CONCEPT_CODES_FILE, realConceptCodes);
-        /*
-        if (realConceptCodes.isEmpty()) {
-            StringBuffer sb = new StringBuffer();
-            try {
-                Utils.textFileToStringBuffer(WrapperService.class, REAL_CONCEPT_CODES_FILE, sb, ",");
-            } catch (Exception e) {
-                return realConceptCodes;
-            }
-            String [] modifiers = sb.toString().split(",");
-            for (String modifier: modifiers){
-                if (modifier.contains(":")) {
-                    String[] codes = modifier.split(":");
-                    realConceptCodes.put(codes[0].trim(), codes[1].trim());
-                }
-            }
-        }
-        return realConceptCodes;
-        */
     }
 
     public static Map<String, String> getConceptCodesTypeMap() {
         return getRealConceptCodesMapGeneric(CONCEPT_CODES_TYPE_FILE, conceptCodesType);
-        /*
-        if (conceptCodesType.isEmpty()) {
-            StringBuffer sb = new StringBuffer();
-            try {
-                Utils.textFileToStringBuffer(WrapperService.class, CONCEPT_CODES_TYPE_FILE, sb, ",");
-            } catch (Exception e) {
-                return conceptCodesType;
-            }
-            String [] modifiers = sb.toString().split(",");
-            for (String modifier: modifiers){
-                if (modifier.contains(":")) {
-                    String[] codes = modifier.split(":");
-                    conceptCodesType.put(codes[0].trim(), codes[1].trim());
-                }
-            }
-        }
-        return conceptCodesType;
-        */
     }
 
     public static Map<String, String> getRealModifiersMap() {

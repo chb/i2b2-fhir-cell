@@ -11,6 +11,8 @@ import org.bch.fhir.i2b2.pdomodel.PDOModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
@@ -122,15 +124,18 @@ public class PatientToI2B2 extends FHIRToPDO {
     // Return true if updated was done
     private boolean updateI2B2DB(String zip, String state, String subjectId, String source) throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        String jdbcCon = AppConfig.getProp(AppConfig.I2B2_JDBC);
-        String auth = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_DB_I2B2);
-        String[] auths = auth.split(":");
+        //String jdbcCon = AppConfig.getProp(AppConfig.I2B2_JDBC);
+        //String auth = AppConfig.getAuthCredentials(AppConfig.CREDENTIALS_FILE_DB_I2B2);
+        //String[] auths = auth.split(":");
+
         Connection con = null;
         Statement stmt = null;
         boolean b = true;
         try {
-            con = DriverManager.getConnection(jdbcCon, auths[0], auths[1]);
-
+            //con = DriverManager.getConnection(jdbcCon, auths[0], auths[1]);
+            InitialContext context = new InitialContext();
+            DataSource dataSource = (DataSource) context.lookup(AppConfig.getProp(AppConfig.I2B2_DATASOURCE));
+            con = dataSource.getConnection();
             String numPatientSql = "select patient_num from patient_mapping where patient_ide = '" + subjectId +
                     "' and patient_ide_source='" + source + "'";
 
