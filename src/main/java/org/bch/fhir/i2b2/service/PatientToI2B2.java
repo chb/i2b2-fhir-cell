@@ -52,8 +52,8 @@ public class PatientToI2B2 extends FHIRToPDO {
         patientElement.addRow(pdoPatientId);
 
         String address = this.getAddressInfo(patient);
-        String zip = address.split(SEP)[0];
-        String state = address.split(SEP)[1];
+        String zip = address.split(SEP,0)[0];
+        String state = address.split(SEP,0)[1];
         //String zipElement = this.generateRow(PDOModel.PDO_COLUMN_ZIP_CD,zip);
         //String stateElement = this.generateRow(PDOModel.PDO_COLUMN_STATE_PATH,state);
 
