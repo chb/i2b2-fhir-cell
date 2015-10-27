@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 
 # Set the proxy to enable http connections from the VM
-export http_proxy=http://proxy.tch.harvard.edu:3128
+# export http_proxy=http://proxy.tch.harvard.edu:3128
 
 # Install basic tools
 sudo apt-get clean
-sudo apt-get update
-sudo apt-get install openjdk-7-jdk
-sudo apt-get install unzip
-sudo apt-get install maven
-
-# To be changed in the near future.
-# We should move this to the pom.xml of the project
-cp /vagrant/settings.xml /home/vagrant/.m2
+sudo apt-get -y update
+sudo apt-get -y install openjdk-7-jdk
+sudo apt-get -y install unzip
+sudo apt-get -y install maven
 
 # Install jboss as7
 wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip
