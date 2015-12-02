@@ -2,25 +2,19 @@ package org.bch.fhir.i2b2.iresource;
 
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.model.dstu2.resource.Observation;
-import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
 import ca.uhn.fhir.rest.annotation.Create;
 import ca.uhn.fhir.rest.annotation.ResourceParam;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.exceptions.InternalErrorException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.external.I2B2CellFR;
 import org.bch.fhir.i2b2.service.FHIRToPDO;
 import org.bch.fhir.i2b2.service.ObservationToI2B2;
-import org.bch.fhir.i2b2.service.QAnswersToI2B2;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +24,7 @@ import java.util.UUID;
  * To change this template use File | Settings | File Templates.
  */
 public class ObservationResourceProvider implements IResourceProvider {
-    Logger log = LoggerFactory.getLogger(ObservationResourceProvider.class);
+    Log log = LogFactory.getLog(ObservationResourceProvider.class);
 
     protected FhirContext ctx = FhirContext.forDstu2();
 

@@ -1,5 +1,5 @@
 {
-  "resourceType":"QuestionnaireAnswers",
+  "resourceType":"QuestionnaireResponse",
   "subject":{
     "reference":"Patient\/0EF6498C-EB4B-4131-8291-4D48BAD4B0D4"
   },

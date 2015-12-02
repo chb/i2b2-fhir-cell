@@ -142,6 +142,6 @@
       }
     ]
   },
-  "resourceType": "QuestionnaireAnswers",
+  "resourceType": "QuestionnaireResponse",
   "status": "completed"
 }

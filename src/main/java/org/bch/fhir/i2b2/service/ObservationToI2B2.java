@@ -10,13 +10,13 @@ import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
 import ca.uhn.fhir.model.dstu2.resource.Observation;
 import ca.uhn.fhir.model.primitive.IntegerDt;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.pdomodel.Element;
 import org.bch.fhir.i2b2.pdomodel.ElementSet;
 import org.bch.fhir.i2b2.pdomodel.PDOModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -32,7 +32,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class ObservationToI2B2 extends FHIRToPDO {
-    Logger log = LoggerFactory.getLogger(ObservationToI2B2.class);
+    Log log = LogFactory.getLog(ObservationToI2B2.class);
 
 
     @Override
@@ -173,7 +173,7 @@ public class ObservationToI2B2 extends FHIRToPDO {
         if (type.equals(FHIR_TAG_VALUE_QUANTITY))  {
             QuantityDt qdt = (QuantityDt) data;
             BigDecimal value = qdt.getValue();
-            String units = qdt.getUnits();
+            String units = qdt.getUnit();
             System.out.println(value + ", " + units);
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, ""+value);
             out.addRow(pdoNValNum);

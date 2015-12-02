@@ -2,23 +2,24 @@ package org.bch.fhir.i2b2.service;
 
 import ca.uhn.fhir.model.api.IDatatype;
 import ca.uhn.fhir.model.api.IResource;
-import ca.uhn.fhir.model.dstu2.composite.*;
+import ca.uhn.fhir.model.dstu2.composite.CodingDt;
+import ca.uhn.fhir.model.dstu2.composite.ContainedDt;
+import ca.uhn.fhir.model.dstu2.composite.QuantityDt;
+import ca.uhn.fhir.model.dstu2.composite.ResourceReferenceDt;
 import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Encounter;
-import ca.uhn.fhir.model.dstu2.resource.Questionnaire;
-import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
+import ca.uhn.fhir.model.dstu2.resource.QuestionnaireResponse;
 import ca.uhn.fhir.model.primitive.BooleanDt;
 import ca.uhn.fhir.model.primitive.DecimalDt;
 import ca.uhn.fhir.model.primitive.IntegerDt;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.pdomodel.Element;
 import org.bch.fhir.i2b2.pdomodel.ElementSet;
 import org.bch.fhir.i2b2.pdomodel.PDOModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.security.auth.message.callback.PrivateKeyCallback;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,14 +30,14 @@ import java.util.Map;
  * Converts a QuestionnaireAnswer FHIR resource to the corresponding XMLPDO
  * Created by ipinyol on 7/9/15.
  */
-public class QAnswersToI2B2 extends FHIRToPDO {
+public class QResponseToI2B2 extends FHIRToPDO {
 
-    Logger log = LoggerFactory.getLogger(QAnswersToI2B2.class);
+    Log log = LogFactory.getLog(QResponseToI2B2.class);
 
 
     @Override
     public String getPDOXML(BaseResource resource) throws FHIRI2B2Exception {
-        QuestionnaireAnswers qa = (QuestionnaireAnswers) resource;
+        QuestionnaireResponse qa = (QuestionnaireResponse) resource;
         PDOModel pdo = new PDOModel();
         if (qa!=null) {
             this.patientIde = this.getPatientId(qa);
@@ -60,7 +61,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         return pdo.generatePDOXML();
     }
 
-    private String getQReference(QuestionnaireAnswers qa) {
+    private String getQReference(QuestionnaireResponse qa) {
         ResourceReferenceDt questionnaireRef = qa.getQuestionnaire();
         String ret = null;
         if (questionnaireRef!=null) {
@@ -73,7 +74,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         }
 
         if (ret == null) {
-            QuestionnaireAnswers.Group gr = qa.getGroup();
+            QuestionnaireResponse.Group gr = qa.getGroup();
             if (gr != null) {
                 ret = gr.getLinkId();
             }
@@ -82,7 +83,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         return ret;
     }
 
-    private Encounter findEncounter(QuestionnaireAnswers qa) throws FHIRI2B2Exception{
+    private Encounter findEncounter(QuestionnaireResponse qa) throws FHIRI2B2Exception{
         ResourceReferenceDt refEncounter = qa.getEncounter();
         if (refEncounter.isEmpty()) {
             log.warn("Encounter reference is not informed. We continue");
@@ -101,7 +102,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         return enc;
     }
 
-    private String getPatientId(QuestionnaireAnswers qa) throws FHIRI2B2Exception {
+    private String getPatientId(QuestionnaireResponse qa) throws FHIRI2B2Exception {
         ResourceReferenceDt refPatient = qa.getSubject();
         if (refPatient.isEmpty()) throw new FHIRI2B2Exception("Subject reference is not informed");
         String idPat = refPatient.getReference().getIdPart();
@@ -110,53 +111,62 @@ public class QAnswersToI2B2 extends FHIRToPDO {
 
 
 
-    private ElementSet generateObservationSet(QuestionnaireAnswers qa) throws FHIRI2B2Exception {
+    private ElementSet generateObservationSet(QuestionnaireResponse qa) throws FHIRI2B2Exception {
         ElementSet observationSet = new ElementSet();
         observationSet.setTypePDOSet(ElementSet.PDO_OBSERVATION_SET);
 
-        QuestionnaireAnswers.Group group = qa.getGroup();
+        QuestionnaireResponse.Group group = qa.getGroup();
 
         processGroup(group, observationSet);
         return observationSet;
     }
 
-    private void processGroup(QuestionnaireAnswers.Group group, ElementSet observationSet) throws FHIRI2B2Exception{
+    private void processGroup(QuestionnaireResponse.Group group, ElementSet observationSet) throws FHIRI2B2Exception{
         if (group.getGroup().isEmpty() && group.getQuestion().isEmpty())
             throw new FHIRI2B2Exception("Group does not have any question nor group");
 
         if (!group.getGroup().isEmpty()) {
-            List<QuestionnaireAnswers.Group> groups = group.getGroup();
-            for (QuestionnaireAnswers.Group gr : groups) {
+            List<QuestionnaireResponse.Group> groups = group.getGroup();
+            for (QuestionnaireResponse.Group gr : groups) {
                 processGroup(gr, observationSet);
             }
         } else {
-            List<QuestionnaireAnswers.GroupQuestion> questions = group.getQuestion();
-            for (QuestionnaireAnswers.GroupQuestion question: questions) {
+            List<QuestionnaireResponse.GroupQuestion> questions = group.getQuestion();
+            for (QuestionnaireResponse.GroupQuestion question: questions) {
                 processQuestion(question, observationSet);
             }
         }
     }
 
-    private void processQuestion(QuestionnaireAnswers.GroupQuestion question, ElementSet observationSet)
+    private void processQuestion(QuestionnaireResponse.GroupQuestion question, ElementSet observationSet)
             throws FHIRI2B2Exception {
         if (!question.getAnswer().isEmpty()) {
-            List<QuestionnaireAnswers.GroupQuestionAnswer> answers = question.getAnswer();
+            List<QuestionnaireResponse.GroupQuestionAnswer> answers = question.getAnswer();
             String link = question.getLinkId();
             int i=1;
-            for (QuestionnaireAnswers.GroupQuestionAnswer answer: answers) {
+            for (QuestionnaireResponse.GroupQuestionAnswer answer: answers) {
                 Element observation = generateObservation(answer, i, link);
                 observationSet.addElement(observation);
+                // TODO: test it
+                if (!answer.getGroup().isEmpty()) {
+                    for(QuestionnaireResponse.Group gr: answer.getGroup()) {
+                        processGroup(gr, observationSet);
+                    }
+                }
             }
         }
 
+        // This is the old version fhir
+        /*
         if (!question.getGroup().isEmpty()) {
-            for(QuestionnaireAnswers.Group gr: question.getGroup()) {
+            for(QuestionnaireResponse.Group gr: question.getGroup()) {
                 processGroup(gr, observationSet);
             }
         }
+        */
     }
 
-    private Element generateObservation(QuestionnaireAnswers.GroupQuestionAnswer answer, int i, String link)
+    private Element generateObservation(QuestionnaireResponse.GroupQuestionAnswer answer, int i, String link)
             throws FHIRI2B2Exception{
         Element out = new Element();
         out.setTypePDO(Element.PDO_OBSERVATION);
@@ -228,7 +238,7 @@ public class QAnswersToI2B2 extends FHIRToPDO {
 
     }
 
-    private String getRealLink(String link, QuestionnaireAnswers.GroupQuestionAnswer answer, String type) {
+    private String getRealLink(String link, QuestionnaireResponse.GroupQuestionAnswer answer, String type) {
         String out = link;
         if (type.equals(FHIR_TAG_VALUE_CODING)) {
             CodingDt cdt = (CodingDt) answer.getValue();
@@ -246,12 +256,12 @@ public class QAnswersToI2B2 extends FHIRToPDO {
         return out;
     }
 
-    private void addValuesPdo(QuestionnaireAnswers.GroupQuestionAnswer answer, String type, Element observation) {
+    private void addValuesPdo(QuestionnaireResponse.GroupQuestionAnswer answer, String type, Element observation) {
         IDatatype data = answer.getValue();
         if (type.equals(FHIR_TAG_VALUE_QUANTITY))  {
             QuantityDt qdt = (QuantityDt) data;
             BigDecimal value = qdt.getValue();
-            String units = qdt.getUnits();
+            String units = qdt.getUnit();
             System.out.println(value + ", " + units);
             String pdoNValNum = generateRow(PDOModel.PDO_NVAL_NUM, "" + value);
             observation.addRow(pdoNValNum);

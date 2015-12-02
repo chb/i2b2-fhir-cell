@@ -1,7 +1,7 @@
 package org.bch.fhir.i2b2.service;
 
 import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.model.dstu2.resource.QuestionnaireAnswers;
+import ca.uhn.fhir.model.dstu2.resource.QuestionnaireResponse;
 import ca.uhn.fhir.parser.IParser;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class QAnswerToI2B2Test {
         String jsonStr = readTextFile("fhirQA_0.json");
         IParser jsonParser = this.ctx.newJsonParser();
         jsonParser.setPrettyPrint(true);
-        QuestionnaireAnswers qa = (QuestionnaireAnswers) jsonParser.parseResource(jsonStr);
-        QAnswersToI2B2 mapper = new QAnswersToI2B2();
+        QuestionnaireResponse qa = (QuestionnaireResponse) jsonParser.parseResource(jsonStr);
+        QResponseToI2B2 mapper = new QResponseToI2B2();
         String pdoxml = mapper.getPDOXML(qa);
         System.out.println(pdoxml);
     }

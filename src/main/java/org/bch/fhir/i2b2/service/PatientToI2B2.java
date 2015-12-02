@@ -3,13 +3,13 @@ package org.bch.fhir.i2b2.service;
 import ca.uhn.fhir.model.dstu2.composite.AddressDt;
 import ca.uhn.fhir.model.dstu2.resource.BaseResource;
 import ca.uhn.fhir.model.dstu2.resource.Patient;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bch.fhir.i2b2.config.AppConfig;
 import org.bch.fhir.i2b2.exception.FHIRI2B2Exception;
 import org.bch.fhir.i2b2.pdomodel.Element;
 import org.bch.fhir.i2b2.pdomodel.ElementSet;
 import org.bch.fhir.i2b2.pdomodel.PDOModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -20,7 +20,7 @@ import java.util.List;
  * Created by ipinyol on 8/25/15.
  */
 public class PatientToI2B2 extends FHIRToPDO {
-    Logger log = LoggerFactory.getLogger(PatientToI2B2.class);
+    Log log = LogFactory.getLog(PatientToI2B2.class);
     public static final String SEP = "##";
 
     @Override

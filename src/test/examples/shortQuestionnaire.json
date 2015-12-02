@@ -1,5 +1,5 @@
 {
-    "resourceType":"QuestionnaireAnswers",
+    "resourceType":"QuestionnaireResponse",
      "id":"24351aae-5eed-4726-9d3e-221712b70d2c",
      "meta":{
          "versionId":"0",
