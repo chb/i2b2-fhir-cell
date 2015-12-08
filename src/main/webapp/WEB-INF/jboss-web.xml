@@ -1,4 +1,4 @@
 <jboss-web>
 	<security-domain>java:/jaas/other</security-domain>
-	<context-root>/fhir-i2b2/dstu2-1.0.2</context-root>
+	<context-root>/fhir-i2b2/1.0.2</context-root>
 </jboss-web>
