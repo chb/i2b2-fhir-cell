@@ -1,6 +1,6 @@
 #Description#
 
-I2B2 FHIR CELL offers a FHIR REST API compliant to push data into I2B2.
+I2B2 FHIR CELL offers a FHIR 1.0.2 REST API compliant to push data into I2B2.
 
 ###Other external systems###
 
