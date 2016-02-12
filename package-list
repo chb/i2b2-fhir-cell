@@ -1,0 +1,8 @@
+org.bch.fhir.i2b2.config
+org.bch.fhir.i2b2.exception
+org.bch.fhir.i2b2.external
+org.bch.fhir.i2b2.iresource
+org.bch.fhir.i2b2.pdomodel
+org.bch.fhir.i2b2.service
+org.bch.fhir.i2b2.servlet
+org.bch.fhir.i2b2.util
