@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>I2ME2 core cell tester</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel=stylesheet href="libs/codemirror/lib/codemirror.css">
+    <script src="libs/codemirror/lib/codemirror.js"></script>
+    <script src="libs/codemirror/mode/xml/xml.js"></script>
+    <script src="libs/codemirror/mode/javascript/javascript.js"></script>
+    <script src="libs/codemirror/mode/css/css.js"></script>
+
+    <style type="text/css" id=style>
+        .CodeMirror {border: 1px solid black; height: 400px;}
+        .tab-pane {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-radius: 0px 0px 5px 5px;
+            padding: 10px;
+        }
+        .nav-tabs {
+            margin-bottom: 0;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>I2ME2 REST Tester page
+            <small>Boston Children's Hospital</small>
+        </h1>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav active"><a href="#getMed" data-toggle="tab">Get Medications</a></li>
+        <li class="nav"><a href="#putMed" data-toggle="tab">Put Medications</a></li>
+        <li class="nav"><a href="#idm" data-toggle="tab">IDM Access</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="getMed">
+            <form role="form" id="getMedForm" method="post" action="/i2me2/rest/medications/getMedications">
+                <div class="form-group">
+                    <label>Paste a valid token:</label>
+                    <input class="form-control" name="token" id="token" placeholder="Paste token">
+                </div>
+            </form>
+            <br>
+            <button id="btnGetMed" class="btn btn-default">Submit</button>
+            <br><br>
+            <label>Output</label>
+            <div id="divTextArea">
+                <textarea id='outputPdo'></textarea>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="putMed">
+            <form role="form" id="putMedForm" method="post" action="/i2me2/rest/medications/putMedications">
+                <div class="form-group">
+                    <label>Place a valid token:</label>
+                    <input class="form-control" name="token" id="tokenPut" placeholder="Paste token">
+                    <input type="hidden" type="text" name="content" id="content">
+                </div>
+            </form>
+            <label>Place a valid json string:</label>
+            <textarea id="inputJson" form="putMedForm"></textarea><br>
+            <button id="btnPutMed" class="btn btn-default">Submit</button>
+        </div>
+        <div class="tab-pane fade" id="idm">Content inside tab C</div>
+    </div>
+</div>
+<script>
+    $("#btnGetMed").on('click', function() {
+        $("body").css('cursor','wait');
+        $.ajax({
+            url: $('#getMedForm').attr('action'),
+            type: "POST",
+            data: $("#getMedForm").serialize(),
+            dataType: "text",
+            success: function(xmlPdo) {
+                $("body").css('cursor','default');
+                //$("#outputPdo").val(xmlPdo);
+                outputPdoMirror.setValue(xmlPdo);
+                outputPdoMirror.refresh();
+            },
+            error: function(r,m,x) {
+                $("body").css('cursor','default');
+                alert(x);
+            }
+        });
+    });
+    $("#btnPutMed").on('click', function() {
+        var aux = inputJsonMirror.getValue();
+        $('#content').val(aux);
+        $("body").css('cursor','wait');
+        $.ajax({
+            url: $('#putMedForm').attr('action'),
+            type: "POST",
+            data: $("#putMedForm").serialize(),
+            success: function(xmlPdo) {
+                $("body").css('cursor','default');
+                alert("Successful transaction");
+            },
+            error: function(r,m,x) {
+                $("body").css('cursor','default');
+                alert(x);
+            }
+        });
+    });
+
+    var outputPdoMirror = CodeMirror.fromTextArea(document.getElementById("outputPdo"), {
+        lineNumbers: true,
+        readOnly:true,
+        mode: "application/xml"
+    });
+
+    outputPdoMirror.refresh();
+    var inputJsonMirror = CodeMirror.fromTextArea(document.getElementById("inputJson"), {
+        lineNumbers: true,
+        mode: "application/ld+json"
+    });
+    inputJsonMirror.refresh();
+</script>
+
+</body>
+</html>

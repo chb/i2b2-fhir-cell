@@ -1,0 +1,71 @@
+<ns7:request xmlns:ns7="http://www.i2b2.org/xsd/hive/msg/1.1/"
+              xmlns:ns2="http://www.i2b2.org/xsd/hive/pdo/1.1/"
+              xmlns:ns4="http://www.i2b2.org/xsd/cell/crc/psm/1.1/"
+              xmlns:ns3="http://www.i2b2.org/xsd/cell/crc/pdo/1.1/"
+              xmlns:ns9="http://www.i2b2.org/xsd/cell/pm/1.1/"
+              xmlns:ns5="http://www.i2b2.org/xsd/cell/crc/loader/1.1/"
+              xmlns:ns6="http://www.i2b2.org/xsd/cell/fr/1.0/"
+              xmlns:ns10="http://www.i2b2.org/xsd/cell/crc/psm/querydefinition/1.1/"
+              xmlns:ns8="http://www.i2b2.org/xsd/hive/msg/result/1.1/"
+              xmlns:ns11="http://www.i2b2.org/xsd/cell/crc/psm/analysisdefinition/1.1/">
+    <message_header>
+        <i2b2_version_compatible>1.1</i2b2_version_compatible>
+        <hl7_version_compatible>2.4</hl7_version_compatible>
+        <sending_application>
+                <application_name>Manual</application_name>
+                <application_version>1.700</application_version>
+            </sending_application>
+        <sending_facility>
+                <facility_name>i2b2 Hive</facility_name>
+            </sending_facility>
+        <receiving_application>
+            <application_name>Project Management Cell</application_name>
+            <application_version>1.700</application_version>
+        </receiving_application>
+        <receiving_facility>
+            <facility_name>i2b2 Hive</facility_name>
+            </receiving_facility>
+        <datetime_of_message>%s</datetime_of_message>"
+        <security>
+            <domain>%s</domain>
+            <username>%s</username>
+            <password>%s</password>
+        </security>
+        <message_control_id>
+            <instance_num>0</instance_num>
+            </message_control_id>
+        <processing_id>
+            <processing_id>P</processing_id>
+            <processing_mode>I</processing_mode>
+        </processing_id>
+        <accept_acknowledgement_type>AL</accept_acknowledgement_type>
+        <application_acknowledgement_type>AL</application_acknowledgement_type>
+        <country_code>US</country_code>
+        <project_id>%s</project_id>
+    </message_header>
+        <message_body>
+           <ns5:publish_data_request>
+                <input_list>
+                    <data_file>
+                        <location_uri protocol_name="LOCAL">%s</location_uri>
+                        <data_format_type>PDO</data_format_type>
+                        <source_system_cd>i2b2</source_system_cd>
+                         <load_label>%s</load_label>
+                    </data_file>
+                </input_list>
+                <load_list clear_temp_load_tables="true" commit_flag="true">
+                    <load_observation_set append_flag="true" />
+                    <load_patient_set ignore_bad_data="true" encrypt_blob="false" delete_existing_data="false" />
+                    <load_pid_set xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns5:fact_load_optionType" append_flag="true" />
+                    <load_eid_set xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns5:fact_load_optionType" append_flag="true" />
+                    <load_event_set ignore_bad_data="true" encrypt_blob="false" delete_existing_data="false" />
+                </load_list>
+                <output_list detail="true">
+                    <observation_set onlykeys="true" />
+                    <patient_set onlykeys="true" />
+                    <pid_set onlykeys="true" />
+                    <eid_set onlykeys="true" />
+                </output_list>
+           </ns5:publish_data_request>
+    </message_body>
+</ns7:request>
